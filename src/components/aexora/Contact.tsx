@@ -2,7 +2,8 @@ import { useState } from "react";
 import portrait from "@/assets/contact-portrait.jpg";
 
 const inputBase =
-  "w-full bg-white/5 backdrop-blur-md text-lavender border border-lavender/20 focus:border-lavender outline-none px-4 py-3 label-mono text-[11px] placeholder:text-bone/30 transition-colors";
+  "w-full bg-transparent text-bone border border-lavender focus:border-bone outline-none px-4 py-3 label-mono text-[11px] placeholder:text-bone/30 transition-colors";
+
 
 
 export function Contact() {
