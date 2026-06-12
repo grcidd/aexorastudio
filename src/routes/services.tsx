@@ -231,26 +231,27 @@ function ServicesPage() {
       <Header />
 
       {/* Hero */}
-      <section className="px-6 md:px-10 pt-40 md:pt-48 pb-24">
-        <p className="label-mono text-[11px] text-lavender mb-10">
+      <section className="px-6 md:px-10 pt-40 md:pt-48 pb-24 bg-lavender text-plum">
+        <p className="label-mono text-[11px] text-plum mb-10">
           / SERVICES — AEXORA STUDIO
         </p>
-        <h1 className="font-display text-[14vw] md:text-[10vw] leading-[0.95] tracking-[-0.02em] max-w-[16ch]">
+        <h1 className="font-display text-plum text-[14vw] md:text-[10vw] leading-[0.95] tracking-[-0.02em] max-w-[16ch]">
           Quatre expertises,<br />
           une seule <em className="italic font-light">vision</em>.
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mt-16">
-          <p className="md:col-span-6 md:col-start-1 label-mono text-[11px] text-bone/70 leading-relaxed">
+          <p className="md:col-span-6 md:col-start-1 label-mono text-[11px] text-plum/80 leading-relaxed">
             AEXORA EST UNE AGENCE IA SPÉCIALISÉE DANS LES SECTEURS<br />
             DE LA BEAUTÉ ET DE LA MODE. NOUS COMBINONS INTELLIGENCE<br />
             ARTIFICIELLE, DIRECTION ARTISTIQUE ET STRATÉGIE DIGITALE.
           </p>
-          <p className="md:col-span-4 md:col-start-8 label-mono text-[11px] text-bone/70 leading-relaxed italic">
+          <p className="md:col-span-4 md:col-start-8 label-mono text-[11px] text-plum/80 leading-relaxed italic">
             « NOUS NE FAISONS PAS DE LA COMMUNICATION.<br />
             NOUS CONSTRUISONS DES PRÉSENCES QUI S'IMPOSENT. »
           </p>
         </div>
       </section>
+
 
       {/* Pourquoi AEXORA */}
       <section className="px-6 md:px-10 py-20 border-t border-lavender/20">
