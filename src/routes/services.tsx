@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Header } from "@/components/aexora/Header";
 import { Footer } from "@/components/aexora/Footer";
+import { CampaignVideos } from "@/components/aexora/CampaignVideos";
 import { ArrowUpRight } from "lucide-react";
 
 export const Route = createFileRoute("/services")({
