@@ -3,12 +3,6 @@ import { ArrowUpRight } from "lucide-react";
 export function Hero() {
   return (
     <section id="top" className="relative min-h-screen bg-ink text-bone overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
-        style={{
-          backgroundImage: "linear-gradient(to right, #f6f6f6 1px, transparent 1px), linear-gradient(to bottom, #f6f6f6 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
-        }}
-      />
 
       <div className="relative z-10 px-6 md:px-10 pt-40 md:pt-48 pb-20">
         <p className="label-mono text-[11px] text-lavender mb-10">
