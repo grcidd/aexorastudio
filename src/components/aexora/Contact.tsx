@@ -17,7 +17,7 @@ export function Contact() {
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Thanks — we'll be in touch.");
+    alert("Merci — nous vous recontactons rapidement.");
   };
 
   return (
@@ -28,7 +28,7 @@ export function Contact() {
         </div>
         <div className="md:col-span-10">
           <h2 className="font-display text-[18vw] md:text-[14vw] leading-[0.9] tracking-tight">
-            Let's <em className="italic font-light">talk</em>.
+            Discutons<em className="italic font-light"> ensemble</em>.
           </h2>
         </div>
       </div>
@@ -38,7 +38,7 @@ export function Contact() {
           <div className="border border-lavender p-2 sticky top-32">
             <img
               src={portrait}
-              alt="Editorial portrait"
+              alt="Portrait éditorial"
               width={800}
               height={1024}
               loading="lazy"
@@ -52,43 +52,43 @@ export function Contact() {
         </div>
 
         <form onSubmit={submit} className="lg:col-span-7 p-8 md:p-12 flex flex-col gap-8">
-          <Field label="Full name">
-            <input required value={form.name} onChange={update("name")} className={inputBase} placeholder="JANE DOE" />
+          <Field label="Nom complet">
+            <input required value={form.name} onChange={update("name")} className={inputBase} placeholder="JEANNE DUPONT" />
           </Field>
           <Field label="Email">
-            <input required type="email" value={form.email} onChange={update("email")} className={inputBase} placeholder="HELLO@BRAND.COM" />
+            <input required type="email" value={form.email} onChange={update("email")} className={inputBase} placeholder="BONJOUR@MARQUE.COM" />
           </Field>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Field label="Company name">
+            <Field label="Nom de l'entreprise">
               <input value={form.company} onChange={update("company")} className={inputBase} placeholder="MAISON X" />
             </Field>
-            <Field label="Company website">
+            <Field label="Site web">
               <input value={form.website} onChange={update("website")} className={inputBase} placeholder="HTTPS://" />
             </Field>
           </div>
-          <Field label="What are you looking for?">
+          <Field label="Que recherchez-vous ?">
             <select value={form.looking} onChange={update("looking")} className={inputBase}>
-              <option value="">SELECT —</option>
+              <option value="">SÉLECTIONNER —</option>
               <option>BRANDING</option><option>WEB DESIGN</option>
-              <option>CONTENT AI</option><option>STRATEGY</option><option>OTHER</option>
+              <option>CONTENU IA</option><option>STRATÉGIE</option><option>AUTRE</option>
             </select>
           </Field>
-          <Field label="Tell us about your project">
-            <textarea rows={5} value={form.project} onChange={update("project")} className={inputBase} placeholder="A FEW LINES ABOUT YOUR VISION…" />
+          <Field label="Parlez-nous de votre projet">
+            <textarea rows={5} value={form.project} onChange={update("project")} className={inputBase} placeholder="QUELQUES LIGNES SUR VOTRE VISION…" />
           </Field>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Field label="What is your budget?">
+            <Field label="Quel est votre budget ?">
               <select value={form.budget} onChange={update("budget")} className={inputBase}>
-                <option value="">SELECT —</option>
+                <option value="">SÉLECTIONNER —</option>
                 <option>{"< 5K"}</option><option>5 — 15K</option>
                 <option>15 — 30K</option><option>30K +</option>
               </select>
             </Field>
-            <Field label="When are you looking to start?">
+            <Field label="Quand souhaitez-vous démarrer ?">
               <select value={form.start} onChange={update("start")} className={inputBase}>
-                <option value="">SELECT —</option>
-                <option>ASAP</option><option>1 MONTH</option>
-                <option>3 MONTHS</option><option>JUST EXPLORING</option>
+                <option value="">SÉLECTIONNER —</option>
+                <option>DÈS QUE POSSIBLE</option><option>1 MOIS</option>
+                <option>3 MOIS</option><option>SIMPLE EXPLORATION</option>
               </select>
             </Field>
           </div>
@@ -97,19 +97,18 @@ export function Contact() {
             type="submit"
             className="mt-4 bg-transparent text-bone label-mono text-[11px] py-5 border border-lavender hover:bg-lavender hover:text-ink transition-colors"
           >
-            SUBMIT INQUIRY ↗
+            ENVOYER LA DEMANDE ↗
           </button>
-
-
         </form>
       </div>
 
       <div className="mt-32 flex flex-col items-center gap-4 label-mono text-[10px] text-lavender">
-        <span>INSTAGRAM · HELLO@AEXORA.STUDIO</span>
+        <span>INSTAGRAM · BONJOUR@AEXORA.STUDIO</span>
       </div>
     </section>
   );
 }
+
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
