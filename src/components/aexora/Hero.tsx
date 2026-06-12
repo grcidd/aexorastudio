@@ -34,7 +34,7 @@ export function Hero() {
           </div>
 
           <div className="md:col-span-4 md:col-start-8">
-            <div className="p-6 bg-ink/40 backdrop-blur-sm flex flex-col gap-6">
+            <div className="p-6 bg-white/5 backdrop-blur-2xl border border-white/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15)] flex flex-col gap-6">
               <div className="flex items-start justify-between">
                 <span className="font-display text-3xl text-bone">Discutons</span>
                 <ArrowUpRight className="text-lavender" size={28} strokeWidth={1} />
