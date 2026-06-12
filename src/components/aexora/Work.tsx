@@ -1,17 +1,18 @@
 const projects = [
   { n: "/01", client: "MAISON OBSCURA", cat: "Branding · Web", year: "2025" },
-  { n: "/02", client: "LUMEN BEAUTY", cat: "Content AI · Strategy", year: "2025" },
-  { n: "/03", client: "ATELIER VOID", cat: "Identity · E-commerce", year: "2024" },
-  { n: "/04", client: "NORTH PARFUMS", cat: "Brand System", year: "2024" },
+  { n: "/02", client: "LUMEN BEAUTY", cat: "Contenu IA · Stratégie", year: "2025" },
+  { n: "/03", client: "ATELIER VOID", cat: "Identité · E-commerce", year: "2024" },
+  { n: "/04", client: "NORTH PARFUMS", cat: "Système de Marque", year: "2024" },
 ];
 
 export function Work() {
   return (
     <section id="work" className="bg-bone text-ink px-6 md:px-10 py-32 border-t border-ink">
       <div className="flex items-end justify-between mb-16">
-        <span className="label-mono text-[11px] text-ink/60">[ 03 — SELECTED WORK ]</span>
+        <span className="label-mono text-[11px] text-ink/60">[ 03 — PROJETS SÉLECTIONNÉS ]</span>
         <span className="label-mono text-[11px] text-ink/60">2024 — 2025</span>
       </div>
+
 
       <div className="border-t border-ink">
         {projects.map((p) => (

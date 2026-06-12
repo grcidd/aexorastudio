@@ -1,8 +1,8 @@
 const services = [
-  { n: "01", title: "Branding", desc: "Identity systems, visual language, naming and editorial direction for emerging beauty houses." },
-  { n: "02", title: "Content AI", desc: "AI-generated campaigns, lookbooks and editorial imagery — trained on your brand DNA." },
-  { n: "03", title: "Web Design", desc: "Editorial e-commerce, brand sites and digital experiences with surgical attention to typography." },
-  { n: "04", title: "Strategy", desc: "Positioning, narrative architecture and go-to-market for fashion and beauty challengers." },
+  { n: "01", title: "Branding", desc: "Systèmes d'identité, langage visuel, naming et direction éditoriale pour les maisons de beauté émergentes." },
+  { n: "02", title: "Contenu IA", desc: "Campagnes, lookbooks et imageries éditoriales générés par IA — entraînés sur l'ADN de votre marque." },
+  { n: "03", title: "Web Design", desc: "E-commerce éditorial, sites de marque et expériences digitales avec une attention chirurgicale à la typographie." },
+  { n: "04", title: "Stratégie", desc: "Positionnement, architecture narrative et go-to-market pour les challengers de la mode et de la beauté." },
 ];
 
 export function Services() {
@@ -14,11 +14,12 @@ export function Services() {
         </div>
         <div className="md:col-span-7">
           <h2 className="font-display text-5xl md:text-7xl leading-[1.02] tracking-tight">
-            A studio operating at the<br />
-            intersection of <em className="italic font-light">craft</em> and <em className="italic font-light">code</em>.
+            Un studio à l'intersection<br />
+            de l'<em className="italic font-light">artisanat</em> et du <em className="italic font-light">code</em>.
           </h2>
         </div>
       </div>
+
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t border-l border-ink">
         {services.map((s) => (

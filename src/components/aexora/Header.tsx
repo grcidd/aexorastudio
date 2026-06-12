@@ -7,9 +7,10 @@ export function Header() {
           <span className="label-mono text-[10px] mt-1 opacity-80">STUDIO</span>
         </a>
         <nav className="flex gap-6 md:gap-10 label-mono text-[11px] text-bone">
-          <a href="#work" className="hover:opacity-60 transition">WORK</a>
+          <a href="#work" className="hover:opacity-60 transition">PROJETS</a>
           <a href="#services" className="hover:opacity-60 transition">SERVICES</a>
           <a href="#contact" className="hover:opacity-60 transition">CONTACT</a>
+
         </nav>
       </div>
     </header>
