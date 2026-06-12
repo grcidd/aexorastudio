@@ -1,5 +1,4 @@
 import { useState } from "react";
-import portrait from "@/assets/contact-portrait.jpg";
 
 const inputBase =
   "w-full bg-transparent text-bone border border-lavender focus:border-bone outline-none px-4 py-3 label-mono text-[11px] placeholder:text-bone/30 transition-colors";
@@ -34,24 +33,8 @@ export function Contact() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-        <div className="lg:col-span-5">
-          <div className="border border-lavender p-2 sticky top-32">
-            <img
-              src={portrait}
-              alt="Portrait éditorial"
-              width={800}
-              height={1024}
-              loading="lazy"
-              className="w-full h-auto grayscale"
-            />
-            <div className="flex justify-between label-mono text-[10px] text-lavender p-3">
-              <span>NORTH ATELIER / 002</span>
-              <span>FILM 35MM</span>
-            </div>
-          </div>
-        </div>
 
-        <form onSubmit={submit} className="lg:col-span-7 p-8 md:p-12 flex flex-col gap-8">
+        <form onSubmit={submit} className="lg:col-span-12 p-8 md:p-12 flex flex-col gap-8">
           <Field label="Nom complet">
             <input required value={form.name} onChange={update("name")} className={inputBase} placeholder="JEANNE DUPONT" />
           </Field>
