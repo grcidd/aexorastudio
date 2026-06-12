@@ -1,8 +1,19 @@
 import { ArrowUpRight } from "lucide-react";
+import heroVideo from "@/assets/hero-bg.mp4.asset.json";
 
 export function Hero() {
   return (
     <section id="top" className="relative min-h-screen bg-ink text-bone overflow-hidden">
+      <video
+        src={heroVideo.url}
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover opacity-60"
+      />
+      <div className="absolute inset-0 bg-ink/50 pointer-events-none" />
+
 
       <div className="relative z-10 px-6 md:px-10 pt-40 md:pt-48 pb-20">
         <p className="label-mono text-[11px] text-lavender mb-10">
