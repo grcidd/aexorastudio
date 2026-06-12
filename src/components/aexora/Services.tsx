@@ -1,8 +1,26 @@
+import { Link } from "@tanstack/react-router";
+
 const services = [
-  { n: "01", title: "Branding", desc: "Systèmes d'identité, langage visuel, naming et direction éditoriale pour les maisons de beauté émergentes." },
-  { n: "02", title: "Contenu IA", desc: "Campagnes, lookbooks et imageries éditoriales générés par IA — entraînés sur l'ADN de votre marque." },
-  { n: "03", title: "Web Design", desc: "E-commerce éditorial, sites de marque et expériences digitales avec une attention chirurgicale à la typographie." },
-  { n: "04", title: "Stratégie", desc: "Positionnement, architecture narrative et go-to-market pour les challengers de la mode et de la beauté." },
+  {
+    n: "01",
+    title: "Sites Web Luxe",
+    desc: "Sites vitrines et landing pages haut de gamme, design éditorial premium et conversions optimisées pour les maisons beauté & mode.",
+  },
+  {
+    n: "02",
+    title: "Production Visuelle IA",
+    desc: "Campagnes photo et vidéo générées par IA — mannequins virtuels, shootings produits, lookbooks et contenus social media.",
+  },
+  {
+    n: "03",
+    title: "Acquisition & Analytics",
+    desc: "Stratégie de croissance data-driven, campagnes Meta & Google et reporting actionnable pour un ROI mesurable.",
+  },
+  {
+    n: "04",
+    title: "Automatisation Agents IA",
+    desc: "Des agents IA qui travaillent 24h/24 — social media, SAV, reporting, prospection automatisée.",
+  },
 ];
 
 export function Services() {
@@ -23,8 +41,9 @@ export function Services() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t border-l border-ink">
         {services.map((s) => (
-          <div
+          <Link
             key={s.n}
+            to="/services"
             className="group border-r border-b border-ink p-8 min-h-[340px] flex flex-col justify-between transition-colors duration-300 hover:bg-plum hover:text-bone cursor-pointer"
           >
             <div className="flex items-start justify-between">
@@ -37,7 +56,7 @@ export function Services() {
                 {s.desc.toUpperCase()}
               </p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>
