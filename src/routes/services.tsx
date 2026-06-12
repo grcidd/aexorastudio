@@ -284,7 +284,7 @@ function ServicesPage() {
         const body = dark ? "text-bone/80" : "text-ink/80";
         const bodyMuted = dark ? "text-bone/70" : "text-ink/70";
         const bodyFaint = dark ? "text-bone/50" : "text-ink/50";
-        const hover = dark ? "hover:bg-bone/5" : "hover:bg-ink/5";
+        const hover = dark ? "hover:bg-bone/5" : "hover:bg-lavender hover:text-plum";
         return (
           <section
             key={s.n}
