@@ -68,9 +68,6 @@ export function Hero() {
                 <a href="#work" className="flex items-center justify-between hover:text-lavender transition">
                   <span>VOIR NOS PROJETS</span><span>↗</span>
                 </a>
-                <a href="#contact" className="flex items-center justify-between hover:text-lavender transition">
-                  <span>NOUS RECRUTONS</span><span>↗</span>
-                </a>
               </div>
             </div>
           </div>
