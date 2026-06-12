@@ -78,7 +78,7 @@ export function Contact() {
 
           <button
             type="submit"
-            className="mt-4 bg-transparent text-bone label-mono text-[11px] py-5 border border-lavender hover:bg-lavender hover:text-ink transition-colors"
+            className="mt-4 bg-transparent text-bone label-mono text-[11px] py-5 border border-lavender/20 hover:bg-lavender hover:text-ink transition-colors"
           >
             ENVOYER LA DEMANDE ↗
           </button>
