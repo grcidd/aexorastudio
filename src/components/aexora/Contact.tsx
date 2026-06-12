@@ -95,10 +95,11 @@ export function Contact() {
 
           <button
             type="submit"
-            className="mt-4 bg-white/10 backdrop-blur-md text-bone label-mono text-[11px] py-5 border border-lavender/40 hover:bg-lavender hover:text-ink hover:border-lavender transition-colors shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2)]"
+            className="mt-4 bg-transparent text-bone label-mono text-[11px] py-5 border border-lavender hover:bg-lavender hover:text-ink transition-colors"
           >
             SUBMIT INQUIRY ↗
           </button>
+
 
         </form>
       </div>
