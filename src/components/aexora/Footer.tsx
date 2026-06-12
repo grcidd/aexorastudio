@@ -7,11 +7,12 @@ export function Footer() {
           <span className="label-mono text-[10px] mt-1">STUDIO · PARIS</span>
         </div>
         <div className="label-mono text-[10px]">
-          BRAND & AI EXPERIENCE STUDIO
+          STUDIO DE MARQUE & D'EXPÉRIENCE IA
         </div>
         <div className="label-mono text-[10px]">
-          © {new Date().getFullYear()} — ALL RIGHTS RESERVED
+          © {new Date().getFullYear()} — TOUS DROITS RÉSERVÉS
         </div>
+
       </div>
     </footer>
   );
