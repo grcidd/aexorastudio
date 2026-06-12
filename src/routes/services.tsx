@@ -267,7 +267,7 @@ function ServicesPage() {
             { k: "100%", v: "digital — zéro frais fixes inutiles" },
             { k: "24h", v: "délai de réponse garanti" },
           ].map((s) => (
-            <div key={s.k} className="border-r border-b border-ink/20 p-8 flex flex-col gap-4">
+            <div key={s.k} className="border-r border-b border-ink/20 p-8 flex flex-col gap-4 transition-colors hover:bg-lavender hover:text-plum">
               <span className="font-display text-5xl md:text-6xl">{s.k}</span>
               <span className="label-mono text-[10px] text-ink/70 leading-relaxed">{s.v.toUpperCase()}</span>
             </div>
@@ -350,7 +350,7 @@ function ServicesPage() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-5 border-t border-l border-ink/20">
           {process.map((p) => (
-            <div key={p.n} className="border-r border-b border-ink/20 p-6 flex flex-col gap-6 min-h-[220px]">
+            <div key={p.n} className="border-r border-b border-ink/20 p-6 flex flex-col gap-6 min-h-[220px] transition-colors hover:bg-lavender hover:text-plum">
               <span className="label-mono text-[10px] text-plum">{p.n}</span>
               <span className="font-display text-2xl">{p.title}</span>
               <p className="label-mono text-[10px] text-ink/70 leading-relaxed">{p.desc.toUpperCase()}</p>
