@@ -63,12 +63,6 @@ export function Hero() {
                 <span className="font-display text-3xl text-bone">Discutons</span>
                 <ArrowUpRight className="text-lavender" size={28} strokeWidth={1} />
               </div>
-              <div className="h-px bg-lavender/40" />
-              <div className="flex flex-col gap-3 label-mono text-[10px] text-bone/80">
-                <a href="#work" className="flex items-center justify-between hover:text-lavender transition">
-                  <span>VOIR NOS PROJETS</span><span>↗</span>
-                </a>
-              </div>
             </div>
           </div>
         </div>
