@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Instagram, Linkedin } from "lucide-react";
 
 const inputBase =
   "w-full bg-transparent text-bone border border-lavender/20 focus:border-lavender/50 outline-none px-4 py-3 label-mono text-[11px] placeholder:text-bone/30 transition-colors";
@@ -85,8 +86,25 @@ export function Contact() {
         </form>
       </div>
 
-      <div className="mt-32 flex flex-col items-center gap-4 label-mono text-[10px] text-lavender">
-        <span>INSTAGRAM · BONJOUR@AEXORA.STUDIO</span>
+      <div className="mt-32 flex items-center justify-center gap-6 text-lavender">
+        <a
+          href="https://www.instagram.com/aexorastudio?utm_source=qr"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram"
+          className="hover:text-bone transition-colors"
+        >
+          <Instagram size={22} strokeWidth={1.25} />
+        </a>
+        <a
+          href="https://www.linkedin.com/company/112583031/admin/dashboard/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn"
+          className="hover:text-bone transition-colors"
+        >
+          <Linkedin size={22} strokeWidth={1.25} />
+        </a>
       </div>
     </section>
   );
