@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const inputBase =
-  "w-full bg-transparent text-bone border border-lavender focus:border-bone outline-none px-4 py-3 label-mono text-[11px] placeholder:text-bone/30 transition-colors";
+  "w-full bg-transparent text-bone border border-lavender/20 focus:border-lavender/50 outline-none px-4 py-3 label-mono text-[11px] placeholder:text-bone/30 transition-colors";
 
 
 
