@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Header } from "@/components/aexora/Header";
 import { Footer } from "@/components/aexora/Footer";
+import { CampaignVideos } from "@/components/aexora/CampaignVideos";
 import { ArrowUpRight } from "lucide-react";
 
 export const Route = createFileRoute("/services")({
@@ -231,24 +232,28 @@ function ServicesPage() {
       <Header />
 
       {/* Hero */}
-      <section className="px-6 md:px-10 pt-40 md:pt-48 pb-24 bg-lavender text-plum">
-        <p className="label-mono text-[11px] text-plum mb-10 whitespace-pre-wrap">
-          {"\n"}
-        </p>
-        <h1 className="font-display text-plum text-[14vw] md:text-[10vw] leading-[0.95] tracking-[-0.02em] max-w-[16ch]">
-          Quatre expertises,<br />
-          une seule <em className="italic font-light">vision</em>.
-        </h1>
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mt-16">
-          <p className="md:col-span-6 md:col-start-1 label-mono text-[11px] text-plum/80 leading-relaxed">
-            AEXORA EST UNE AGENCE IA SPÉCIALISÉE DANS LES SECTEURS<br />
-            DE LA BEAUTÉ ET DE LA MODE. NOUS COMBINONS INTELLIGENCE<br />
-            ARTIFICIELLE, DIRECTION ARTISTIQUE ET STRATÉGIE DIGITALE.
+      <section className="relative px-6 md:px-10 pt-40 md:pt-48 pb-24 bg-ink text-bone overflow-hidden">
+        <CampaignVideos />
+        <div className="absolute inset-0 bg-ink/50 pointer-events-none" />
+        <div className="relative z-10">
+          <p className="label-mono text-[11px] text-bone mb-10 whitespace-pre-wrap">
+            {"\n"}
           </p>
-          <p className="md:col-span-4 md:col-start-8 label-mono text-[11px] text-plum/80 leading-relaxed italic">
-            « NOUS NE FAISONS PAS DE LA COMMUNICATION.<br />
-            NOUS CONSTRUISONS DES PRÉSENCES QUI S'IMPOSENT. »
-          </p>
+          <h1 className="font-display text-bone text-[14vw] md:text-[10vw] leading-[0.95] tracking-[-0.02em] max-w-[16ch]">
+            Quatre expertises,<br />
+            une seule <em className="italic font-light">vision</em>.
+          </h1>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mt-16">
+            <p className="md:col-span-6 md:col-start-1 label-mono text-[11px] text-bone/80 leading-relaxed">
+              AEXORA EST UNE AGENCE IA SPÉCIALISÉE DANS LES SECTEURS<br />
+              DE LA BEAUTÉ ET DE LA MODE. NOUS COMBINONS INTELLIGENCE<br />
+              ARTIFICIELLE, DIRECTION ARTISTIQUE ET STRATÉGIE DIGITALE.
+            </p>
+            <p className="md:col-span-4 md:col-start-8 label-mono text-[11px] text-bone/80 leading-relaxed italic">
+              « NOUS NE FAISONS PAS DE LA COMMUNICATION.<br />
+              NOUS CONSTRUISONS DES PRÉSENCES QUI S'IMPOSENT. »
+            </p>
+          </div>
         </div>
       </section>
 
