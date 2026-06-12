@@ -227,12 +227,12 @@ const process = [
 
 function ServicesPage() {
   return (
-    <main className="bg-ink text-bone min-h-screen">
+    <main className="bg-bone text-ink min-h-screen">
       <Header />
 
       {/* Hero */}
       <section className="px-6 md:px-10 pt-40 md:pt-48 pb-24">
-        <p className="label-mono text-[11px] text-lavender mb-10">
+        <p className="label-mono text-[11px] text-plum mb-10">
           / SERVICES — AEXORA STUDIO
         </p>
         <h1 className="font-display text-[14vw] md:text-[10vw] leading-[0.95] tracking-[-0.02em] max-w-[16ch]">
@@ -240,12 +240,12 @@ function ServicesPage() {
           une seule <em className="italic font-light">vision</em>.
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mt-16">
-          <p className="md:col-span-6 md:col-start-1 label-mono text-[11px] text-bone/70 leading-relaxed">
+          <p className="md:col-span-6 md:col-start-1 label-mono text-[11px] text-ink/70 leading-relaxed">
             AEXORA EST UNE AGENCE IA SPÉCIALISÉE DANS LES SECTEURS<br />
             DE LA BEAUTÉ ET DE LA MODE. NOUS COMBINONS INTELLIGENCE<br />
             ARTIFICIELLE, DIRECTION ARTISTIQUE ET STRATÉGIE DIGITALE.
           </p>
-          <p className="md:col-span-4 md:col-start-8 label-mono text-[11px] text-bone/70 leading-relaxed italic">
+          <p className="md:col-span-4 md:col-start-8 label-mono text-[11px] text-ink/70 leading-relaxed italic">
             « NOUS NE FAISONS PAS DE LA COMMUNICATION.<br />
             NOUS CONSTRUISONS DES PRÉSENCES QUI S'IMPOSENT. »
           </p>
@@ -253,105 +253,115 @@ function ServicesPage() {
       </section>
 
       {/* Pourquoi AEXORA */}
-      <section className="px-6 md:px-10 py-20 border-t border-lavender/20">
+      <section className="px-6 md:px-10 py-20 border-t border-ink/20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
-          <span className="md:col-span-2 label-mono text-[11px] text-lavender">[ POURQUOI AEXORA ]</span>
+          <span className="md:col-span-2 label-mono text-[11px] text-plum">[ POURQUOI AEXORA ]</span>
           <h2 className="md:col-span-8 font-display text-4xl md:text-6xl leading-[1.02] tracking-tight">
             Ce qui nous rend <em className="italic font-light">uniques</em>.
           </h2>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 border-t border-l border-lavender/20">
+        <div className="grid grid-cols-2 md:grid-cols-4 border-t border-l border-ink/20">
           {[
             { k: "70%", v: "d'économie vs un shooting classique" },
             { k: "3×", v: "plus rapide qu'une agence traditionnelle" },
             { k: "100%", v: "digital — zéro frais fixes inutiles" },
             { k: "24h", v: "délai de réponse garanti" },
           ].map((s) => (
-            <div key={s.k} className="border-r border-b border-lavender/20 p-8 flex flex-col gap-4">
+            <div key={s.k} className="border-r border-b border-ink/20 p-8 flex flex-col gap-4">
               <span className="font-display text-5xl md:text-6xl">{s.k}</span>
-              <span className="label-mono text-[10px] text-bone/70 leading-relaxed">{s.v.toUpperCase()}</span>
+              <span className="label-mono text-[10px] text-ink/70 leading-relaxed">{s.v.toUpperCase()}</span>
             </div>
           ))}
         </div>
       </section>
 
       {/* Services détaillés */}
-      {services.map((s, idx) => (
-        <section
-          key={s.n}
-          className={`px-6 md:px-10 py-28 border-t border-lavender/20 ${idx % 2 === 1 ? "bg-plum" : ""}`}
-        >
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-14">
-            <div className="md:col-span-3">
-              <span className="label-mono text-[11px] text-lavender">[ SERVICE {s.n} ]</span>
-            </div>
-            <div className="md:col-span-9">
-              <h3 className="font-display text-5xl md:text-7xl leading-[1.02] tracking-tight mb-6">
-                {s.title}
-              </h3>
-              <p className="label-mono text-[11px] text-lavender mb-6">{s.tagline.toUpperCase()}</p>
-              <p className="text-bone/80 text-lg md:text-xl max-w-3xl leading-relaxed">{s.intro}</p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 border-t border-l border-lavender/20">
-            {s.tiers.map((t) => (
-              <div
-                key={t.name}
-                className="border-r border-b border-lavender/20 p-8 flex flex-col gap-6 min-h-[360px] hover:bg-bone/5 transition-colors"
-              >
-                <div className="flex items-start justify-between">
-                  <span className="font-display text-3xl">{t.name}</span>
-                  <ArrowUpRight className="text-lavender" size={22} strokeWidth={1} />
-                </div>
-                <div className="h-px bg-lavender/30" />
-                <ul className="flex flex-col gap-3 label-mono text-[10px] text-bone/80 leading-relaxed">
-                  {t.bullets.map((b) => (
-                    <li key={b} className="flex gap-2">
-                      <span className="text-lavender">›</span>
-                      <span>{b.toUpperCase()}</span>
-                    </li>
-                  ))}
-                </ul>
+      {services.map((s, idx) => {
+        const dark = idx % 2 === 1;
+        const bg = dark ? "bg-plum text-bone" : "";
+        const accent = dark ? "text-lavender" : "text-plum";
+        const border = dark ? "border-lavender/20" : "border-ink/20";
+        const body = dark ? "text-bone/80" : "text-ink/80";
+        const bodyMuted = dark ? "text-bone/70" : "text-ink/70";
+        const bodyFaint = dark ? "text-bone/50" : "text-ink/50";
+        const hover = dark ? "hover:bg-bone/5" : "hover:bg-ink/5";
+        return (
+          <section
+            key={s.n}
+            className={`px-6 md:px-10 py-28 border-t ${border} ${bg}`}
+          >
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-14">
+              <div className="md:col-span-3">
+                <span className={`label-mono text-[11px] ${accent}`}>[ SERVICE {s.n} ]</span>
               </div>
-            ))}
-          </div>
-
-          {s.recurring && (
-            <div className="mt-6 border border-lavender/20 p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-              <span className="label-mono text-[11px] text-lavender">
-                {s.recurring.label.toUpperCase()}
-              </span>
-              <span className="label-mono text-[10px] text-bone/70">{s.recurring.desc.toUpperCase()}</span>
+              <div className="md:col-span-9">
+                <h3 className="font-display text-5xl md:text-7xl leading-[1.02] tracking-tight mb-6">
+                  {s.title}
+                </h3>
+                <p className={`label-mono text-[11px] mb-6 ${accent}`}>{s.tagline.toUpperCase()}</p>
+                <p className={`text-lg md:text-xl max-w-3xl leading-relaxed ${body}`}>{s.intro}</p>
+              </div>
             </div>
-          )}
 
-          <p className="mt-8 label-mono text-[10px] text-bone/50">{s.tools}</p>
-        </section>
-      ))}
+            <div className={`grid grid-cols-1 md:grid-cols-3 border-t border-l ${border}`}>
+              {s.tiers.map((t) => (
+                <div
+                  key={t.name}
+                  className={`border-r border-b ${border} p-8 flex flex-col gap-6 min-h-[360px] ${hover} transition-colors`}
+                >
+                  <div className="flex items-start justify-between">
+                    <span className="font-display text-3xl">{t.name}</span>
+                    <ArrowUpRight className={accent} size={22} strokeWidth={1} />
+                  </div>
+                  <div className={dark ? "h-px bg-lavender/30" : "h-px bg-ink/20"} />
+                  <ul className={`flex flex-col gap-3 label-mono text-[10px] leading-relaxed ${body}`}>
+                    {t.bullets.map((b) => (
+                      <li key={b} className="flex gap-2">
+                        <span className={accent}>›</span>
+                        <span>{b.toUpperCase()}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            {s.recurring && (
+              <div className={`mt-6 border ${border} p-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3`}>
+                <span className={`label-mono text-[11px] ${accent}`}>
+                  {s.recurring.label.toUpperCase()}
+                </span>
+                <span className={`label-mono text-[10px] ${bodyMuted}`}>{s.recurring.desc.toUpperCase()}</span>
+              </div>
+            )}
+
+            <p className={`mt-8 label-mono text-[10px] ${bodyFaint}`}>{s.tools}</p>
+          </section>
+        );
+      })}
 
       {/* Process */}
-      <section className="px-6 md:px-10 py-28 border-t border-lavender/20">
+      <section className="px-6 md:px-10 py-28 border-t border-ink/20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-14">
-          <span className="md:col-span-2 label-mono text-[11px] text-lavender">[ COMMENT ÇA MARCHE ]</span>
+          <span className="md:col-span-2 label-mono text-[11px] text-plum">[ COMMENT ÇA MARCHE ]</span>
           <h2 className="md:col-span-8 font-display text-5xl md:text-7xl leading-[1.02] tracking-tight">
             Un process <em className="italic font-light">limpide</em>.
           </h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-5 border-t border-l border-lavender/20">
+        <div className="grid grid-cols-1 md:grid-cols-5 border-t border-l border-ink/20">
           {process.map((p) => (
-            <div key={p.n} className="border-r border-b border-lavender/20 p-6 flex flex-col gap-6 min-h-[220px]">
-              <span className="label-mono text-[10px] text-lavender">{p.n}</span>
+            <div key={p.n} className="border-r border-b border-ink/20 p-6 flex flex-col gap-6 min-h-[220px]">
+              <span className="label-mono text-[10px] text-plum">{p.n}</span>
               <span className="font-display text-2xl">{p.title}</span>
-              <p className="label-mono text-[10px] text-bone/70 leading-relaxed">{p.desc.toUpperCase()}</p>
+              <p className="label-mono text-[10px] text-ink/70 leading-relaxed">{p.desc.toUpperCase()}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* CTA */}
-      <section className="px-6 md:px-10 py-32 border-t border-lavender/20 text-center">
-        <p className="label-mono text-[11px] text-lavender mb-8">
+      <section className="px-6 md:px-10 py-32 border-t border-ink/20 text-center">
+        <p className="label-mono text-[11px] text-plum mb-8">
           PRÊT À TRANSFORMER VOTRE PRÉSENCE DIGITALE ?
         </p>
         <h2 className="font-display text-[14vw] md:text-[10vw] leading-[0.95] tracking-[-0.02em]">
@@ -360,7 +370,7 @@ function ServicesPage() {
         </h2>
         <Link
           to="/contact"
-          className="inline-flex items-center gap-3 mt-12 label-mono text-[11px] border border-lavender/40 px-8 py-5 hover:bg-lavender hover:text-ink transition-colors"
+          className="inline-flex items-center gap-3 mt-12 label-mono text-[11px] border border-ink/40 px-8 py-5 hover:bg-ink hover:text-bone transition-colors"
         >
           DEMANDER UN DEVIS <ArrowUpRight size={18} strokeWidth={1} />
         </Link>
