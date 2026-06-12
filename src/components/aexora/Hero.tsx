@@ -1,18 +1,36 @@
 import { ArrowUpRight } from "lucide-react";
-import heroVideo from "@/assets/hero-bg.mp4.asset.json";
+import { useEffect, useState } from "react";
+import v1 from "@/assets/hero-prada.mp4.asset.json";
+import v2 from "@/assets/hero-ysl.mp4.asset.json";
+import v3 from "@/assets/hero-jpg.mp4.asset.json";
+import v4 from "@/assets/hero-tomford.mp4.asset.json";
+
+const heroVideos = [v1.url, v2.url, v3.url, v4.url];
 
 export function Hero() {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setIdx((i) => (i + 1) % heroVideos.length), 2000);
+    return () => clearInterval(id);
+  }, []);
+
   return (
     <section id="top" className="relative min-h-screen bg-ink text-bone overflow-hidden">
-      <video
-        src={heroVideo.url}
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover opacity-60"
-      />
+      {heroVideos.map((u, i) => (
+        <video
+          key={u}
+          src={u}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+            i === idx ? "opacity-60" : "opacity-0"
+          }`}
+        />
+      ))}
       <div className="absolute inset-0 bg-ink/50 pointer-events-none" />
+
 
 
       <div className="relative z-10 px-6 md:px-10 pt-40 md:pt-48 pb-20">
