@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const inputBase =
-  "w-full bg-transparent text-bone border border-lavender focus:border-bone outline-none px-4 py-3 label-mono text-[11px] placeholder:text-bone/30 transition-colors";
+  "w-full bg-transparent text-bone border border-lavender/20 focus:border-lavender/50 outline-none px-4 py-3 label-mono text-[11px] placeholder:text-bone/30 transition-colors";
 
 
 
@@ -78,7 +78,7 @@ export function Contact() {
 
           <button
             type="submit"
-            className="mt-4 bg-transparent text-bone label-mono text-[11px] py-5 border border-lavender hover:bg-lavender hover:text-ink transition-colors"
+            className="mt-4 bg-transparent text-bone label-mono text-[11px] py-5 border border-lavender/20 hover:bg-lavender hover:text-ink transition-colors"
           >
             ENVOYER LA DEMANDE ↗
           </button>
