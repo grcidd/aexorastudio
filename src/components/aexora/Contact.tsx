@@ -50,7 +50,7 @@ export function Contact() {
           </div>
         </div>
 
-        <form onSubmit={submit} className="lg:col-span-7 border border-lavender p-8 md:p-12 flex flex-col gap-8">
+        <form onSubmit={submit} className="lg:col-span-7 relative border border-lavender/30 p-8 md:p-12 flex flex-col gap-8 bg-white/5 backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15),inset_0_-1px_0_0_rgba(255,255,255,0.05)]">
           <Field label="Full name">
             <input required value={form.name} onChange={update("name")} className={inputBase} placeholder="JANE DOE" />
           </Field>
