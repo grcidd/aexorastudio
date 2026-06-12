@@ -284,7 +284,7 @@ function ServicesPage() {
         >
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-14">
             <div className="md:col-span-3">
-              <span className="label-mono text-[11px] text-lavender">{s.n === "03" ? "" : s.n === "01" || s.n === "02" || s.n === "04" ? "]" : `[ SERVICE ${s.n} ]`}</span>
+              <span className="label-mono text-[11px] text-lavender"></span>
             </div>
             <div className="md:col-span-9">
               <h3 className="font-display text-5xl md:text-7xl leading-[1.02] tracking-tight mb-6">
