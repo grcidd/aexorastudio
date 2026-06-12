@@ -41,7 +41,7 @@ const services: Service[] = [
     tagline: "Digital Presence — Framer · Wix Studio · Webflow",
     intro:
       "Sites vitrines et landing pages haut de gamme pour les boutiques e-commerce beauté et mode. Design éditorial premium, animations soignées, optimisés pour la conversion.",
-    tools: "FRAMER · WIX STUDIO · RELUME · WEBFLOW",
+    tools: "",
     tiers: [
       {
         name: "Essentiel",
@@ -88,7 +88,7 @@ const services: Service[] = [
     tagline: "Visual Lab — Midjourney · Kling · Higgsfield · Sora",
     intro:
       "Campagnes photo et vidéo entièrement générées par IA — mannequins virtuels, shootings produits, lookbooks et contenus social media. Rendu professionnel, délais réduits.",
-    tools: "MIDJOURNEY · KLING · HIGGSFIELD · SORA · RUNWAY",
+    tools: "",
     tiers: [
       {
         name: "Capsule",
@@ -135,7 +135,7 @@ const services: Service[] = [
     tagline: "Growth Intelligence — Meta · Google · Data",
     intro:
       "Stratégie de croissance data-driven pensée pour les boutiques e-commerce beauté et mode. Audit, tracking, campagnes payantes, rapports clairs et actionnables.",
-    tools: "GA4 · META ADS · GOOGLE ADS · SEMRUSH · HOTJAR",
+    tools: "",
     tiers: [
       {
         name: "Audit",
@@ -178,7 +178,7 @@ const services: Service[] = [
     tagline: "AI Automation — Make · Voiceflow · Relevance AI · N8N",
     intro:
       "Des agents IA qui travaillent 24h/24 à votre place — social media, SAV, reporting, prospection. Un setup unique, une économie mensuelle permanente.",
-    tools: "MAKE · VOICEFLOW · RELEVANCE AI · N8N · CLAY",
+    tools: "",
     tiers: [
       {
         name: "Starter",
@@ -232,8 +232,8 @@ function ServicesPage() {
 
       {/* Hero */}
       <section className="px-6 md:px-10 pt-40 md:pt-48 pb-24 bg-lavender text-plum">
-        <p className="label-mono text-[11px] text-plum mb-10">
-          / SERVICES — AEXORA STUDIO
+        <p className="label-mono text-[11px] text-plum mb-10 whitespace-pre-wrap">
+          {"\n"}
         </p>
         <h1 className="font-display text-plum text-[14vw] md:text-[10vw] leading-[0.95] tracking-[-0.02em] max-w-[16ch]">
           Quatre expertises,<br />
@@ -284,7 +284,7 @@ function ServicesPage() {
         >
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-14">
             <div className="md:col-span-3">
-              <span className="label-mono text-[11px] text-lavender">[ SERVICE {s.n} ]</span>
+              <span className="label-mono text-[11px] text-lavender">{s.n === "03" ? "" : s.n === "01" || s.n === "02" || s.n === "04" ? "]" : `[ SERVICE ${s.n} ]`}</span>
             </div>
             <div className="md:col-span-9">
               <h3 className="font-display text-5xl md:text-7xl leading-[1.02] tracking-tight mb-6">
