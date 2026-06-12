@@ -2,7 +2,8 @@ import { useState } from "react";
 import portrait from "@/assets/contact-portrait.jpg";
 
 const inputBase =
-  "w-full bg-white/5 backdrop-blur-md text-lavender border border-lavender/20 focus:border-lavender outline-none px-4 py-3 label-mono text-[11px] placeholder:text-bone/30 transition-colors";
+  "w-full bg-transparent text-bone border border-lavender focus:border-bone outline-none px-4 py-3 label-mono text-[11px] placeholder:text-bone/30 transition-colors";
+
 
 
 export function Contact() {
@@ -50,7 +51,7 @@ export function Contact() {
           </div>
         </div>
 
-        <form onSubmit={submit} className="lg:col-span-7 relative p-8 md:p-12 flex flex-col gap-8 bg-white/5 backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.15),inset_0_-1px_0_0_rgba(255,255,255,0.05)]">
+        <form onSubmit={submit} className="lg:col-span-7 p-8 md:p-12 flex flex-col gap-8">
           <Field label="Full name">
             <input required value={form.name} onChange={update("name")} className={inputBase} placeholder="JANE DOE" />
           </Field>
@@ -94,10 +95,11 @@ export function Contact() {
 
           <button
             type="submit"
-            className="mt-4 bg-white/10 backdrop-blur-md text-bone label-mono text-[11px] py-5 border border-lavender/40 hover:bg-lavender hover:text-ink hover:border-lavender transition-colors shadow-[inset_0_1px_0_0_rgba(255,255,255,0.2)]"
+            className="mt-4 bg-transparent text-bone label-mono text-[11px] py-5 border border-lavender hover:bg-lavender hover:text-ink transition-colors"
           >
             SUBMIT INQUIRY ↗
           </button>
+
 
         </form>
       </div>
