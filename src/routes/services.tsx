@@ -235,11 +235,10 @@ function ServicesPage() {
         <p className="label-mono text-[11px] text-plum mb-10">
           / SERVICES — AEXORA STUDIO
         </p>
-        <h1 className="font-display text-[#7c3aed] text-[14vw] md:text-[10vw] leading-[0.95] tracking-[-0.02em] max-w-[16ch]">
+        <h1 className="font-display text-plum text-[14vw] md:text-[10vw] leading-[0.95] tracking-[-0.02em] max-w-[16ch]">
           Quatre expertises,<br />
           une seule <em className="italic font-light">vision</em>.
         </h1>
-
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mt-16">
           <p className="md:col-span-6 md:col-start-1 label-mono text-[11px] text-plum/80 leading-relaxed">
             AEXORA EST UNE AGENCE IA SPÉCIALISÉE DANS LES SECTEURS<br />
