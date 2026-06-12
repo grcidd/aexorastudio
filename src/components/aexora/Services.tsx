@@ -52,7 +52,7 @@ export function Services() {
           <Link
             key={s.n}
             to="/services"
-            className="group relative border-r border-b border-ink min-h-[340px] flex flex-col justify-between overflow-hidden transition-colors duration-500 hover:text-bone cursor-pointer"
+            className="group relative border-r border-b border-ink min-h-[420px] flex flex-col justify-between overflow-hidden text-bone cursor-pointer"
           >
             <video
               src={s.video}
@@ -60,9 +60,9 @@ export function Services() {
               loop
               muted
               playsInline
-              className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+              className="absolute inset-0 w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-plum/0 group-hover:bg-plum/60 transition-colors duration-500" />
+            <div className="absolute inset-0 bg-ink/50 group-hover:bg-plum/60 transition-colors duration-500" />
             <div className="relative z-10 p-8 flex flex-col justify-between h-full">
               <div className="flex items-start justify-between">
                 <span className="label-mono text-[10px]">{s.n}</span>
