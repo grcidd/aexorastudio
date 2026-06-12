@@ -34,22 +34,6 @@ export function Contact() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-        <div className="lg:col-span-5">
-          <div className="border border-lavender p-2 sticky top-32">
-            <img
-              src={portrait}
-              alt="Portrait éditorial"
-              width={800}
-              height={1024}
-              loading="lazy"
-              className="w-full h-auto grayscale"
-            />
-            <div className="flex justify-between label-mono text-[10px] text-lavender p-3">
-              <span>NORTH ATELIER / 002</span>
-              <span>FILM 35MM</span>
-            </div>
-          </div>
-        </div>
 
         <form onSubmit={submit} className="lg:col-span-7 p-8 md:p-12 flex flex-col gap-8">
           <Field label="Nom complet">
