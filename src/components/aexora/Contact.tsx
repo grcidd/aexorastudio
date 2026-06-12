@@ -34,7 +34,7 @@ export function Contact() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
 
-        <form onSubmit={submit} className="lg:col-span-7 p-8 md:p-12 flex flex-col gap-8">
+        <form onSubmit={submit} className="lg:col-span-12 p-8 md:p-12 flex flex-col gap-8">
           <Field label="Nom complet">
             <input required value={form.name} onChange={update("name")} className={inputBase} placeholder="JEANNE DUPONT" />
           </Field>
