@@ -1,5 +1,4 @@
 import { useState } from "react";
-import portrait from "@/assets/contact-portrait.jpg";
 
 const inputBase =
   "w-full bg-transparent text-bone border border-lavender focus:border-bone outline-none px-4 py-3 label-mono text-[11px] placeholder:text-bone/30 transition-colors";
