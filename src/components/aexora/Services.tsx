@@ -1,25 +1,33 @@
 import { Link } from "@tanstack/react-router";
+import v1 from "@/assets/service-01.mp4.asset.json";
+import v2 from "@/assets/service-02.mp4.asset.json";
+import v3 from "@/assets/service-03.mp4.asset.json";
+import v4 from "@/assets/service-04.mp4.asset.json";
 
 const services = [
   {
     n: "01",
     title: "Sites Web Luxe",
     desc: "Sites vitrines et landing pages haut de gamme, design éditorial premium et conversions optimisées pour les maisons beauté & mode.",
+    video: v1.url,
   },
   {
     n: "02",
     title: "Production Visuelle IA",
     desc: "Campagnes photo et vidéo générées par IA — mannequins virtuels, shootings produits, lookbooks et contenus social media.",
+    video: v2.url,
   },
   {
     n: "03",
     title: "Acquisition & Analytics",
     desc: "Stratégie de croissance data-driven, campagnes Meta & Google et reporting actionnable pour un ROI mesurable.",
+    video: v3.url,
   },
   {
     n: "04",
     title: "Automatisation Agents IA",
     desc: "Des agents IA qui travaillent 24h/24 — social media, SAV, reporting, prospection automatisée.",
+    video: v4.url,
   },
 ];
 
@@ -44,17 +52,28 @@ export function Services() {
           <Link
             key={s.n}
             to="/services"
-            className="group border-r border-b border-ink p-8 min-h-[340px] flex flex-col justify-between transition-colors duration-300 hover:bg-plum hover:text-bone cursor-pointer"
+            className="group relative border-r border-b border-ink min-h-[340px] flex flex-col justify-between overflow-hidden transition-colors duration-500 hover:text-bone cursor-pointer"
           >
-            <div className="flex items-start justify-between">
-              <span className="label-mono text-[10px]">{s.n}</span>
-              <span className="label-mono text-[10px] opacity-0 group-hover:opacity-100 transition">↗</span>
-            </div>
-            <div>
-              <h3 className="font-display text-4xl mb-6">{s.title}</h3>
-              <p className="label-mono text-[10px] leading-relaxed opacity-80">
-                {s.desc.toUpperCase()}
-              </p>
+            <video
+              src={s.video}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+            />
+            <div className="absolute inset-0 bg-plum/0 group-hover:bg-plum/60 transition-colors duration-500" />
+            <div className="relative z-10 p-8 flex flex-col justify-between h-full">
+              <div className="flex items-start justify-between">
+                <span className="label-mono text-[10px]">{s.n}</span>
+                <span className="label-mono text-[10px] opacity-0 group-hover:opacity-100 transition">↗</span>
+              </div>
+              <div>
+                <h3 className="font-display text-4xl mb-6">{s.title}</h3>
+                <p className="label-mono text-[10px] leading-relaxed opacity-80">
+                  {s.desc.toUpperCase()}
+                </p>
+              </div>
             </div>
           </Link>
         ))}
