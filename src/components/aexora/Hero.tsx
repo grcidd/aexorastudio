@@ -40,7 +40,7 @@ export function Hero() {
 
 
       <div className="relative z-10 px-6 md:px-10 pt-40 md:pt-48 pb-20">
-        <p className="label-mono text-[11px] text-lavender mb-10">
+        <p className="label-mono text-[11px] text-bone mb-10">
           / STUDIO CRÉATIF PROPULSÉ PAR L'IA — EST. 2024
         </p>
 
