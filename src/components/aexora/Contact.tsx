@@ -113,9 +113,10 @@ export function Contact() {
 
           <button
             type="submit"
-            className="mt-4 bg-transparent text-bone label-mono text-[11px] py-5 border border-lavender/20 hover:bg-lavender hover:text-ink transition-colors"
+            disabled={submitting}
+            className="mt-4 bg-transparent text-bone label-mono text-[11px] py-5 border border-lavender/20 hover:bg-lavender hover:text-ink transition-colors disabled:opacity-50"
           >
-            ENVOYER LA DEMANDE ↗
+            {submitting ? "ENVOI…" : "ENVOYER LA DEMANDE ↗"}
           </button>
         </form>
       </div>
