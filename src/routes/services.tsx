@@ -259,23 +259,23 @@ function ServicesPage() {
 
 
       {/* Pourquoi AEXORA */}
-      <section className="px-6 md:px-10 py-20 border-t border-lavender/20">
+      <section className="px-6 md:px-10 py-20 border-t border-plum/20 bg-lavender text-plum">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
-          <span className="md:col-span-2 label-mono text-[11px] text-lavender">[ POURQUOI AEXORA ]</span>
-          <h2 className="md:col-span-8 font-display text-4xl md:text-6xl leading-[1.02] tracking-tight">
+          <span className="md:col-span-2 label-mono text-[11px] text-plum">[ POURQUOI AEXORA ]</span>
+          <h2 className="md:col-span-8 font-display text-4xl md:text-6xl leading-[1.02] tracking-tight text-plum">
             Ce qui nous rend <em className="italic font-light">uniques</em>.
           </h2>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 border-t border-l border-lavender/20">
+        <div className="grid grid-cols-2 md:grid-cols-4 border-t border-l border-plum/20">
           {[
             { k: "70%", v: "d'économie vs un shooting classique" },
             { k: "3×", v: "plus rapide qu'une agence traditionnelle" },
             { k: "100%", v: "digital — zéro frais fixes inutiles" },
             { k: "24h", v: "délai de réponse garanti" },
           ].map((s) => (
-            <div key={s.k} className="border-r border-b border-lavender/20 p-8 flex flex-col gap-4">
-              <span className="font-display text-5xl md:text-6xl">{s.k}</span>
-              <span className="label-mono text-[10px] text-bone/70 leading-relaxed">{s.v.toUpperCase()}</span>
+            <div key={s.k} className="border-r border-b border-plum/20 p-8 flex flex-col gap-4">
+              <span className="font-display text-5xl md:text-6xl text-plum">{s.k}</span>
+              <span className="label-mono text-[10px] text-plum/70 leading-relaxed">{s.v.toUpperCase()}</span>
             </div>
           ))}
         </div>
