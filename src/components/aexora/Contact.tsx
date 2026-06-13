@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Instagram, Linkedin } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const inputBase =
   "w-full bg-transparent text-bone border border-lavender/20 focus:border-lavender/50 outline-none px-4 py-3 label-mono text-[11px] placeholder:text-bone/30 transition-colors";
@@ -7,6 +9,7 @@ const inputBase =
 
 
 export function Contact() {
+  const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({
     name: "", email: "", company: "", website: "",
     looking: "", project: "", budget: "", start: "",
@@ -15,9 +18,40 @@ export function Contact() {
   const update = (k: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setForm({ ...form, [k]: e.target.value });
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert("Merci — nous vous recontactons rapidement.");
+    if (submitting) return;
+
+    // Validation basique côté client
+    if (!form.name.trim() || !form.email.trim()) {
+      toast.error("Nom et email requis.");
+      return;
+    }
+    if (form.name.length > 200 || form.email.length > 320 || form.project.length > 5000) {
+      toast.error("Un des champs est trop long.");
+      return;
+    }
+
+    setSubmitting(true);
+    const { error } = await supabase.from("contact_submissions").insert({
+      name: form.name.trim(),
+      email: form.email.trim(),
+      company: form.company.trim() || null,
+      website: form.website.trim() || null,
+      looking: form.looking || null,
+      project: form.project.trim() || null,
+      budget: form.budget || null,
+      start_when: form.start || null,
+    });
+    setSubmitting(false);
+
+    if (error) {
+      toast.error("Une erreur est survenue. Réessayez.");
+      return;
+    }
+
+    toast.success("Merci — nous vous recontactons rapidement.");
+    setForm({ name: "", email: "", company: "", website: "", looking: "", project: "", budget: "", start: "" });
   };
 
   return (
