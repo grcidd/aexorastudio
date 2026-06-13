@@ -356,20 +356,24 @@ function ServicesPage() {
       </section>
 
       {/* CTA */}
-      <section className="px-6 md:px-10 py-32 border-t border-lavender/20 text-center">
-        <p className="label-mono text-[11px] text-lavender mb-8">
-          PRÊT À TRANSFORMER VOTRE PRÉSENCE DIGITALE ?
-        </p>
-        <h2 className="font-display text-[14vw] md:text-[10vw] leading-[0.95] tracking-[-0.02em]">
-          Travaillons<br />
-          <em className="italic font-light">ensemble</em>.
-        </h2>
-        <Link
-          to="/contact"
-          className="inline-flex items-center gap-3 mt-12 label-mono text-[11px] border border-lavender/40 px-8 py-5 hover:bg-lavender hover:text-ink transition-colors"
-        >
-          DEMANDER UN DEVIS <ArrowUpRight size={18} strokeWidth={1} />
-        </Link>
+      <section className="relative overflow-hidden px-6 md:px-10 py-32 border-t border-lavender/20 text-center">
+        <CampaignVideos />
+        <div className="absolute inset-0 bg-ink/60 pointer-events-none" />
+        <div className="relative z-10">
+          <p className="label-mono text-[11px] text-bone mb-8">
+            PRÊT À TRANSFORMER VOTRE PRÉSENCE DIGITALE ?
+          </p>
+          <h2 className="font-display text-bone text-[14vw] md:text-[10vw] leading-[0.95] tracking-[-0.02em]">
+            Travaillons<br />
+            <em className="italic font-light">ensemble</em>.
+          </h2>
+          <Link
+            to="/contact"
+            className="inline-flex items-center gap-3 mt-12 label-mono text-[11px] border border-bone/40 text-bone px-8 py-5 hover:bg-bone hover:text-ink transition-colors"
+          >
+            DEMANDER UN DEVIS <ArrowUpRight size={18} strokeWidth={1} />
+          </Link>
+        </div>
       </section>
 
       <Footer />
