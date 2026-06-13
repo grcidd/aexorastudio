@@ -38,8 +38,8 @@ type Service = {
 const services: Service[] = [
   {
     n: "01",
-    title: "Sites Web Luxe",
-    tagline: "Digital Presence — Framer · Wix Studio · Webflow",
+    title: "Sites Web\u00a0",
+    tagline: "Digital Presence\u00a0",
     intro:
       "Sites vitrines et landing pages haut de gamme pour les boutiques e-commerce beauté et mode. Design éditorial premium, animations soignées, optimisés pour la conversion.",
     tools: "",
@@ -86,7 +86,7 @@ const services: Service[] = [
   {
     n: "02",
     title: "Production Visuelle IA",
-    tagline: "Visual Lab — Midjourney · Kling · Higgsfield · Sora",
+    tagline: "Visual Lab",
     intro:
       "Campagnes photo et vidéo entièrement générées par IA — mannequins virtuels, shootings produits, lookbooks et contenus social media. Rendu professionnel, délais réduits.",
     tools: "",
@@ -133,7 +133,7 @@ const services: Service[] = [
   {
     n: "03",
     title: "Acquisition & Analytics",
-    tagline: "Growth Intelligence — Meta · Google · Data",
+    tagline: "Growth Intelligence - Meta - Google - Data",
     intro:
       "Stratégie de croissance data-driven pensée pour les boutiques e-commerce beauté et mode. Audit, tracking, campagnes payantes, rapports clairs et actionnables.",
     tools: "",
@@ -176,7 +176,7 @@ const services: Service[] = [
   {
     n: "04",
     title: "Automatisation Agents IA",
-    tagline: "AI Automation — Make · Voiceflow · Relevance AI · N8N",
+    tagline: "AI Automation\u00a0",
     intro:
       "Des agents IA qui travaillent 24h/24 à votre place — social media, SAV, reporting, prospection. Un setup unique, une économie mensuelle permanente.",
     tools: "",
