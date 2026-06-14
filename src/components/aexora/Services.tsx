@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { Reveal } from "@/components/aexora/Reveal";
 import s01a from "@/assets/srv-01a.mp4.asset.json";
 import s01b from "@/assets/srv-01b.mp4.asset.json";
 import s02a from "@/assets/srv-02a.mp4.asset.json";
@@ -64,7 +65,7 @@ function RotatingVideos({ urls }: { urls: string[] }) {
 export function Services() {
   return (
     <section id="services" className="bg-bone text-ink px-6 md:px-10 py-32">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-20">
+      <Reveal className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-20">
         <span className="md:col-span-2 label-mono text-[11px] text-ink/60">
           [ 02 — SERVICES
         </span>
@@ -74,31 +75,32 @@ export function Services() {
             de l'<em className="italic font-light">artisanat</em> et du <em className="italic font-light">code</em>.
           </h2>
         </div>
-      </div>
+      </Reveal>
 
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t border-l border-ink">
-        {services.map((s) => (
-          <Link
-            key={s.n}
-            to="/services"
-            className="group relative border-r border-b border-ink min-h-[420px] flex flex-col justify-between overflow-hidden text-bone cursor-pointer"
-          >
-            <RotatingVideos urls={s.videos} />
-            <div className="absolute inset-0 bg-ink/50 group-hover:bg-plum/60 transition-colors duration-500" />
-            <div className="relative z-10 p-8 flex flex-col justify-between h-full">
-              <div className="flex items-start justify-between">
-                <span className="label-mono text-[10px]">{s.n}</span>
-                <span className="label-mono text-[10px] opacity-0 group-hover:opacity-100 transition">↗</span>
+        {services.map((s, i) => (
+          <Reveal key={s.n} delay={i * 120} y={32}>
+            <Link
+              to="/services"
+              className="group relative border-r border-b border-ink min-h-[420px] flex flex-col justify-between overflow-hidden text-bone cursor-pointer"
+            >
+              <RotatingVideos urls={s.videos} />
+              <div className="absolute inset-0 bg-ink/50 group-hover:bg-plum/60 transition-colors duration-500" />
+              <div className="relative z-10 p-8 flex flex-col justify-between h-full">
+                <div className="flex items-start justify-between">
+                  <span className="label-mono text-[10px]">{s.n}</span>
+                  <span className="label-mono text-[10px] opacity-0 group-hover:opacity-100 transition">↗</span>
+                </div>
+                <div>
+                  <h3 className="font-display text-4xl mb-6">{s.title}</h3>
+                  <p className="label-mono text-[10px] leading-relaxed opacity-80">
+                    {s.desc.toUpperCase()}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="font-display text-4xl mb-6">{s.title}</h3>
-                <p className="label-mono text-[10px] leading-relaxed opacity-80">
-                  {s.desc.toUpperCase()}
-                </p>
-              </div>
-            </div>
-          </Link>
+            </Link>
+          </Reveal>
         ))}
       </div>
     </section>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Instagram, Linkedin } from "lucide-react";
 import { toast } from "sonner";
+import { Reveal } from "@/components/aexora/Reveal";
 
 const inputBase =
   "w-full bg-transparent text-bone border border-lavender/20 focus:border-lavender/50 outline-none px-4 py-3 label-mono text-[11px] placeholder:text-bone/30 transition-colors";
@@ -58,7 +59,7 @@ export function Contact() {
 
   return (
     <section id="contact" className="bg-plum text-bone px-6 md:px-10 py-32">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-20">
+      <Reveal className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-20">
         <span className="md:col-span-2 label-mono text-[11px] text-lavender">
           [ 04 — CONTACT
         </span>
@@ -67,9 +68,10 @@ export function Contact() {
             Discutons<em className="italic font-light"> ensemble</em>.
           </h2>
         </div>
-      </div>
+      </Reveal>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+      <Reveal as="div" delay={150} className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+
 
         <form onSubmit={submit} className="lg:col-span-12 p-8 md:p-12 flex flex-col gap-8">
           <Field label="Nom complet">
@@ -121,7 +123,7 @@ export function Contact() {
             {submitting ? "ENVOI…" : "ENVOYER LA DEMANDE ↗"}
           </button>
         </form>
-      </div>
+      </Reveal>
 
       <div className="mt-32 flex items-center justify-center gap-6 text-lavender">
         <a
