@@ -58,7 +58,7 @@ export function Header() {
                 key={item.to}
                 to={item.to}
                 onClick={() => setOpen(false)}
-                className="font-display text-5xl tracking-tight hover:text-lavender transition-colors"
+                className="font-display text-5xl tracking-tight hover:text-plum transition-colors"
                 style={{
                   transitionDelay: open ? `${100 + i * 80}ms` : "0ms",
                   opacity: open ? 1 : 0,
