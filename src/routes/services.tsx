@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Header } from "@/components/aexora/Header";
 import { Footer } from "@/components/aexora/Footer";
 import { CampaignVideos } from "@/components/aexora/CampaignVideos";
+import { Reveal } from "@/components/aexora/Reveal";
 import { ArrowUpRight } from "lucide-react";
 
 export const Route = createFileRoute("/services")({
@@ -239,11 +240,11 @@ function ServicesPage() {
           <p className="label-mono text-[11px] text-bone mb-10 whitespace-pre-wrap">
             {"\n"}
           </p>
-          <h1 className="font-display text-bone text-[14vw] md:text-[10vw] leading-[0.95] tracking-[-0.02em] max-w-[16ch]">
+          <Reveal as="h1" y={40} duration={1100} className="font-display text-bone text-[14vw] md:text-[10vw] leading-[0.95] tracking-[-0.02em] max-w-[16ch]">
             Quatre expertises,<br />
             une seule <em className="italic font-light">vision</em>.
-          </h1>
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mt-16">
+          </Reveal>
+          <Reveal delay={200} className="grid grid-cols-1 md:grid-cols-12 gap-8 mt-16">
             <p className="md:col-span-6 md:col-start-1 label-mono text-[11px] text-bone/80 leading-relaxed">
               AEXORA EST UNE AGENCE IA SPÉCIALISÉE DANS LES SECTEURS<br />
               DE LA BEAUTÉ ET DE LA MODE. NOUS COMBINONS INTELLIGENCE<br />
@@ -253,7 +254,7 @@ function ServicesPage() {
               « NOUS NE FAISONS PAS DE LA COMMUNICATION.<br />
               NOUS CONSTRUISONS DES PRÉSENCES QUI S'IMPOSENT. »
             </p>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -272,11 +273,13 @@ function ServicesPage() {
             { k: "3×", v: "plus rapide qu'une agence traditionnelle" },
             { k: "100%", v: "digital — zéro frais fixes inutiles" },
             { k: "24h", v: "délai de réponse garanti" },
-          ].map((s) => (
-            <div key={s.k} className="border-r border-b border-ink/10 p-8 flex flex-col gap-4">
-              <span className="font-display text-5xl md:text-6xl text-ink">{s.k}</span>
-              <span className="label-mono text-[10px] text-ink/70 leading-relaxed">{s.v.toUpperCase()}</span>
-            </div>
+          ].map((s, i) => (
+            <Reveal key={s.k} delay={i * 120}>
+              <div className="border-r border-b border-ink/10 p-8 flex flex-col gap-4 h-full">
+                <span className="font-display text-5xl md:text-6xl text-ink">{s.k}</span>
+                <span className="label-mono text-[10px] text-ink/70 leading-relaxed">{s.v.toUpperCase()}</span>
+              </div>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -287,7 +290,7 @@ function ServicesPage() {
           key={s.n}
           className={`px-6 md:px-10 py-28 border-t border-lavender/20 ${idx % 2 === 1 ? "bg-plum" : ""}`}
         >
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-14">
+          <Reveal className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-14">
             <div className="md:col-span-3">
               <span className="label-mono text-[11px] text-lavender"></span>
             </div>
@@ -298,28 +301,29 @@ function ServicesPage() {
               <p className="label-mono text-[11px] text-lavender mb-6">{s.tagline.toUpperCase()}</p>
               <p className="text-bone/80 text-lg md:text-xl max-w-3xl leading-relaxed">{s.intro}</p>
             </div>
-          </div>
+          </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 border-t border-l border-lavender/20">
-            {s.tiers.map((t) => (
-              <div
-                key={t.name}
-                className="border-r border-b border-lavender/20 p-8 flex flex-col gap-6 min-h-[360px] hover:bg-bone/5 transition-colors"
-              >
-                <div className="flex items-start justify-between">
-                  <span className="font-display text-3xl">{t.name}</span>
-                  <ArrowUpRight className="text-lavender" size={22} strokeWidth={1} />
+            {s.tiers.map((t, i) => (
+              <Reveal key={t.name} delay={i * 130}>
+                <div
+                  className="border-r border-b border-lavender/20 p-8 flex flex-col gap-6 min-h-[360px] h-full hover:bg-bone/5 transition-colors"
+                >
+                  <div className="flex items-start justify-between">
+                    <span className="font-display text-3xl">{t.name}</span>
+                    <ArrowUpRight className="text-lavender" size={22} strokeWidth={1} />
+                  </div>
+                  <div className="h-px bg-lavender/30" />
+                  <ul className="flex flex-col gap-3 label-mono text-[10px] text-bone/80 leading-relaxed">
+                    {t.bullets.map((b) => (
+                      <li key={b} className="flex gap-2">
+                        <span className="text-lavender">›</span>
+                        <span>{b.toUpperCase()}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="h-px bg-lavender/30" />
-                <ul className="flex flex-col gap-3 label-mono text-[10px] text-bone/80 leading-relaxed">
-                  {t.bullets.map((b) => (
-                    <li key={b} className="flex gap-2">
-                      <span className="text-lavender">›</span>
-                      <span>{b.toUpperCase()}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              </Reveal>
             ))}
           </div>
 
@@ -345,12 +349,14 @@ function ServicesPage() {
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-5 border-t border-l border-lavender/20">
-          {process.map((p) => (
-            <div key={p.n} className="border-r border-b border-lavender/20 p-6 flex flex-col gap-6 min-h-[220px]">
-              <span className="label-mono text-[10px] text-lavender">{p.n}</span>
-              <span className="font-display text-2xl">{p.title}</span>
-              <p className="label-mono text-[10px] text-bone/70 leading-relaxed">{p.desc.toUpperCase()}</p>
-            </div>
+          {process.map((p, i) => (
+            <Reveal key={p.n} delay={i * 100}>
+              <div className="border-r border-b border-lavender/20 p-6 flex flex-col gap-6 min-h-[220px] h-full">
+                <span className="label-mono text-[10px] text-lavender">{p.n}</span>
+                <span className="font-display text-2xl">{p.title}</span>
+                <p className="label-mono text-[10px] text-bone/70 leading-relaxed">{p.desc.toUpperCase()}</p>
+              </div>
+            </Reveal>
           ))}
         </div>
       </section>
