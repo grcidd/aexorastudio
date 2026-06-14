@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Instagram, Linkedin } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const inputBase =
@@ -22,7 +21,6 @@ export function Contact() {
     e.preventDefault();
     if (submitting) return;
 
-    // Validation basique côté client
     if (!form.name.trim() || !form.email.trim()) {
       toast.error("Nom et email requis.");
       return;
@@ -33,25 +31,29 @@ export function Contact() {
     }
 
     setSubmitting(true);
-    const { error } = await supabase.from("contact_submissions").insert({
-      name: form.name.trim(),
-      email: form.email.trim(),
-      company: form.company.trim() || null,
-      website: form.website.trim() || null,
-      looking: form.looking || null,
-      project: form.project.trim() || null,
-      budget: form.budget || null,
-      start_when: form.start || null,
-    });
-    setSubmitting(false);
-
-    if (error) {
+    try {
+      const res = await fetch("/api/public/contact/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          email: form.email.trim(),
+          company: form.company.trim(),
+          website: form.website.trim(),
+          looking: form.looking,
+          project: form.project.trim(),
+          budget: form.budget,
+          start: form.start,
+        }),
+      });
+      if (!res.ok) throw new Error("submit failed");
+      toast.success("Merci — nous vous recontactons rapidement.");
+      setForm({ name: "", email: "", company: "", website: "", looking: "", project: "", budget: "", start: "" });
+    } catch {
       toast.error("Une erreur est survenue. Réessayez.");
-      return;
+    } finally {
+      setSubmitting(false);
     }
-
-    toast.success("Merci — nous vous recontactons rapidement.");
-    setForm({ name: "", email: "", company: "", website: "", looking: "", project: "", budget: "", start: "" });
   };
 
   return (
