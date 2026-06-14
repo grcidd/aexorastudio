@@ -72,7 +72,7 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="mt-auto flex items-center gap-6 text-lavender pt-10 border-t border-lavender/20">
+          <div className="mt-auto flex items-center gap-6 text-plum pt-10 border-t border-ink/20">
             <a
               href="https://www.instagram.com/aexorastudio?utm_source=qr"
               target="_blank"
