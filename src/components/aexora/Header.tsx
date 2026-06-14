@@ -43,7 +43,7 @@ export function Header() {
 
       {/* Mobile overlay */}
       <div
-        className={`fixed inset-0 z-40 bg-ink text-bone md:hidden transition-opacity duration-500 ${
+        className={`fixed inset-0 z-40 bg-bone text-ink md:hidden transition-opacity duration-500 ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
