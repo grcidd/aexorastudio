@@ -14,15 +14,15 @@ export function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-bone border-b border-ink/10">
+      <header className="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
         <div className="flex items-center justify-between px-6 md:px-10 py-6">
-          <Link to="/" className="flex flex-col leading-none text-ink" onClick={() => setOpen(false)}>
+          <Link to="/" className="flex flex-col leading-none text-bone" onClick={() => setOpen(false)}>
             <span className="text-lg md:text-xl font-light tracking-[0.4em]">AEXORA</span>
             <span className="label-mono text-[10px] mt-1 opacity-80">STUDIO</span>
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex gap-10 label-mono text-[11px] text-ink">
+          <nav className="hidden md:flex gap-10 label-mono text-[11px] text-bone">
             <Link to="/projets" className="hover:opacity-60 transition">PROJETS</Link>
             <Link to="/services" className="hover:opacity-60 transition">SERVICES</Link>
             <Link to="/contact" className="hover:opacity-60 transition">CONTACT</Link>
@@ -34,7 +34,7 @@ export function Header() {
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="md:hidden text-ink p-1"
+            className="md:hidden text-bone p-1"
           >
             {open ? <X size={26} strokeWidth={1.25} /> : <Menu size={26} strokeWidth={1.25} />}
           </button>
