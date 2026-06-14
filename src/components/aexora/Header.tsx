@@ -12,7 +12,7 @@ export function Header() {
           <Link to="/projets" className="hover:opacity-60 transition">PROJETS</Link>
           <Link to="/services" className="hover:opacity-60 transition">SERVICES</Link>
           <Link to="/contact" className="hover:opacity-60 transition">CONTACT</Link>
-          <Link to="/auth" className="hover:opacity-60 transition">CONNEXION</Link>
+          
         </nav>
       </div>
     </header>
