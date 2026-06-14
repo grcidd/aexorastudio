@@ -1,3 +1,5 @@
+import { Instagram, Linkedin } from "lucide-react";
+
 export function Footer() {
   return (
     <footer className="bg-bone text-ink border-t border-ink/20 px-6 md:px-10 py-10">
@@ -9,10 +11,29 @@ export function Footer() {
         <div className="label-mono text-[10px]">
           STUDIO DE MARQUE & D'EXPÉRIENCE IA
         </div>
+        <div className="flex items-center gap-5">
+          <a
+            href="https://www.instagram.com/aexorastudio?utm_source=qr"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            className="hover:text-plum transition-colors"
+          >
+            <Instagram size={20} strokeWidth={1.25} />
+          </a>
+          <a
+            href="https://www.linkedin.com/company/112583031/admin/dashboard/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className="hover:text-plum transition-colors"
+          >
+            <Linkedin size={20} strokeWidth={1.25} />
+          </a>
+        </div>
         <div className="label-mono text-[10px]">
           © {new Date().getFullYear()} — TOUS DROITS RÉSERVÉS
         </div>
-
       </div>
     </footer>
   );
