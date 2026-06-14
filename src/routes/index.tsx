@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/aexora/Header";
 import { Hero } from "@/components/aexora/Hero";
+import { About } from "@/components/aexora/About";
 import { Services } from "@/components/aexora/Services";
 import { Work } from "@/components/aexora/Work";
 import { Contact } from "@/components/aexora/Contact";
@@ -23,6 +24,7 @@ function Index() {
     <main className="bg-bone text-ink">
       <Header />
       <Hero />
+      <About />
       <Services />
       <Work />
       <Contact />
