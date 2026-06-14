@@ -349,12 +349,14 @@ function ServicesPage() {
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-5 border-t border-l border-lavender/20">
-          {process.map((p) => (
-            <div key={p.n} className="border-r border-b border-lavender/20 p-6 flex flex-col gap-6 min-h-[220px]">
-              <span className="label-mono text-[10px] text-lavender">{p.n}</span>
-              <span className="font-display text-2xl">{p.title}</span>
-              <p className="label-mono text-[10px] text-bone/70 leading-relaxed">{p.desc.toUpperCase()}</p>
-            </div>
+          {process.map((p, i) => (
+            <Reveal key={p.n} delay={i * 100}>
+              <div className="border-r border-b border-lavender/20 p-6 flex flex-col gap-6 min-h-[220px] h-full">
+                <span className="label-mono text-[10px] text-lavender">{p.n}</span>
+                <span className="font-display text-2xl">{p.title}</span>
+                <p className="label-mono text-[10px] text-bone/70 leading-relaxed">{p.desc.toUpperCase()}</p>
+              </div>
+            </Reveal>
           ))}
         </div>
       </section>
