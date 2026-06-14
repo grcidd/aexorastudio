@@ -60,7 +60,7 @@ export function Contact() {
     <section id="contact" className="bg-plum text-bone px-6 md:px-10 py-32">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-20">
         <div className="md:col-span-2 label-mono text-[11px] text-lavender">
-          [ 04 — CONTACT ]
+          [ 04 — CONTACT </span>
         </div>
         <div className="md:col-span-10">
           <h2 className="font-display text-[18vw] md:text-[14vw] leading-[0.9] tracking-tight">

@@ -66,7 +66,7 @@ export function Services() {
     <section id="services" className="bg-bone text-ink px-6 md:px-10 py-32">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-20">
         <div className="md:col-span-2 label-mono text-[11px] text-ink/60">
-          [ 02 — SERVICES ]
+          [ 02 — SERVICES </span>
         </div>
         <div className="md:col-span-7">
           <h2 className="font-display text-5xl md:text-7xl leading-[1.02] tracking-tight">
