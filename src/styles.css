@@ -73,7 +73,7 @@
 
 .dark {
   --background: #2e2e2e;
-  --foreground: #f6f6f6;
+  --foreground: #ffffff;
 }
 
 @layer base {
