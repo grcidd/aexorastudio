@@ -1,4 +1,5 @@
 import React from 'react'
+import { BrandHeader } from './_brand'
 import {
   Body,
   Container,
@@ -46,6 +47,7 @@ const Email = ({
     <Preview>Nouvelle demande de {name || 'un visiteur'} — Aexora Studio</Preview>
     <Body style={main}>
       <Container style={container}>
+        <BrandHeader />
         <Heading style={h1}>Nouvelle demande de contact</Heading>
         <Text style={intro}>
           Une nouvelle demande vient d'arriver depuis aexorastudio.com.
