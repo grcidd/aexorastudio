@@ -45,12 +45,12 @@
 :root {
   --radius: 0px;
 
-  --bone: #f6f6f6;
+  --bone: #ffffff;
   --ink: #2e2e2e;
   --plum: #190B13;
   --lavender: #c8d0ff;
 
-  --background: #f6f6f6;
+  --background: #ffffff;
   --foreground: #2e2e2e;
   --card: #f6f6f6;
   --card-foreground: #2e2e2e;
