@@ -290,7 +290,7 @@ function ServicesPage() {
           key={s.n}
           className={`px-6 md:px-10 py-28 border-t border-lavender/20 ${idx % 2 === 1 ? "bg-plum" : ""}`}
         >
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-14">
+          <Reveal className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-14">
             <div className="md:col-span-3">
               <span className="label-mono text-[11px] text-lavender"></span>
             </div>
@@ -301,28 +301,29 @@ function ServicesPage() {
               <p className="label-mono text-[11px] text-lavender mb-6">{s.tagline.toUpperCase()}</p>
               <p className="text-bone/80 text-lg md:text-xl max-w-3xl leading-relaxed">{s.intro}</p>
             </div>
-          </div>
+          </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 border-t border-l border-lavender/20">
-            {s.tiers.map((t) => (
-              <div
-                key={t.name}
-                className="border-r border-b border-lavender/20 p-8 flex flex-col gap-6 min-h-[360px] hover:bg-bone/5 transition-colors"
-              >
-                <div className="flex items-start justify-between">
-                  <span className="font-display text-3xl">{t.name}</span>
-                  <ArrowUpRight className="text-lavender" size={22} strokeWidth={1} />
+            {s.tiers.map((t, i) => (
+              <Reveal key={t.name} delay={i * 130}>
+                <div
+                  className="border-r border-b border-lavender/20 p-8 flex flex-col gap-6 min-h-[360px] h-full hover:bg-bone/5 transition-colors"
+                >
+                  <div className="flex items-start justify-between">
+                    <span className="font-display text-3xl">{t.name}</span>
+                    <ArrowUpRight className="text-lavender" size={22} strokeWidth={1} />
+                  </div>
+                  <div className="h-px bg-lavender/30" />
+                  <ul className="flex flex-col gap-3 label-mono text-[10px] text-bone/80 leading-relaxed">
+                    {t.bullets.map((b) => (
+                      <li key={b} className="flex gap-2">
+                        <span className="text-lavender">›</span>
+                        <span>{b.toUpperCase()}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="h-px bg-lavender/30" />
-                <ul className="flex flex-col gap-3 label-mono text-[10px] text-bone/80 leading-relaxed">
-                  {t.bullets.map((b) => (
-                    <li key={b} className="flex gap-2">
-                      <span className="text-lavender">›</span>
-                      <span>{b.toUpperCase()}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              </Reveal>
             ))}
           </div>
 
