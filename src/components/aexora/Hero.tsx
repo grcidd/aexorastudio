@@ -52,8 +52,7 @@ export function Hero() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mt-24">
           <div className="md:col-span-5 md:col-start-1">
             <p className="label-mono text-[11px] text-bone/70 leading-relaxed">
-              NOUS CONCEVONS DES IDENTITÉS, CONTENUS & EXPÉRIENCES<br />
-              DIGITALES POUR LES MARQUES DE BEAUTÉ, MODE&nbsp; & JOELERIE .
+              {"\n"}
             </p>
             <p className="label-mono text-[11px] text-bone/70 leading-relaxed mt-4">
               SITES WEB, PRODUCTION VISUELLE IA, STRATÉGIES DE CROISSANCE ET AGENTS D'AUTOMATISATION POUR LES MARQUES DE BEAUTÉ, MODE & JOAILLERIE.
