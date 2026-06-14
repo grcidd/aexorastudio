@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { Reveal } from "@/components/aexora/Reveal";
 import s01a from "@/assets/srv-01a.mp4.asset.json";
 import s01b from "@/assets/srv-01b.mp4.asset.json";
 import s02a from "@/assets/srv-02a.mp4.asset.json";
