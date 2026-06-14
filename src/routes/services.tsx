@@ -240,11 +240,11 @@ function ServicesPage() {
           <p className="label-mono text-[11px] text-bone mb-10 whitespace-pre-wrap">
             {"\n"}
           </p>
-          <h1 className="font-display text-bone text-[14vw] md:text-[10vw] leading-[0.95] tracking-[-0.02em] max-w-[16ch]">
+          <Reveal as="h1" y={40} duration={1100} className="font-display text-bone text-[14vw] md:text-[10vw] leading-[0.95] tracking-[-0.02em] max-w-[16ch]">
             Quatre expertises,<br />
             une seule <em className="italic font-light">vision</em>.
-          </h1>
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mt-16">
+          </Reveal>
+          <Reveal delay={200} className="grid grid-cols-1 md:grid-cols-12 gap-8 mt-16">
             <p className="md:col-span-6 md:col-start-1 label-mono text-[11px] text-bone/80 leading-relaxed">
               AEXORA EST UNE AGENCE IA SPÉCIALISÉE DANS LES SECTEURS<br />
               DE LA BEAUTÉ ET DE LA MODE. NOUS COMBINONS INTELLIGENCE<br />
@@ -254,7 +254,7 @@ function ServicesPage() {
               « NOUS NE FAISONS PAS DE LA COMMUNICATION.<br />
               NOUS CONSTRUISONS DES PRÉSENCES QUI S'IMPOSENT. »
             </p>
-          </div>
+          </Reveal>
         </div>
       </section>
 
