@@ -78,7 +78,7 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="hover:text-bone transition-colors"
+              className="hover:text-ink transition-colors"
             >
               <Instagram size={22} strokeWidth={1.25} />
             </a>
@@ -87,7 +87,7 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="hover:text-bone transition-colors"
+              className="hover:text-ink transition-colors"
             >
               <Linkedin size={22} strokeWidth={1.25} />
             </a>
