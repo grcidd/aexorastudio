@@ -21,7 +21,7 @@ export function Work() {
           <Reveal key={p.n} delay={i * 100} y={20}>
             <a
               href="#contact"
-              className="group grid grid-cols-12 gap-4 border-b border-ink py-8 items-center hover:bg-ink hover:text-bone transition-colors duration-300 px-2"
+              className="group grid grid-cols-12 gap-4 border-b border-ink py-8 items-center hover:bg-plum hover:text-bone transition-colors duration-300 px-2"
             >
               <span className="col-span-1 label-mono text-[10px]">{p.n}</span>
               <span className="col-span-5 md:col-span-5 font-display text-3xl md:text-5xl">{p.client}</span>
