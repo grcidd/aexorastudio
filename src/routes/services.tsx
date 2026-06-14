@@ -273,11 +273,13 @@ function ServicesPage() {
             { k: "3×", v: "plus rapide qu'une agence traditionnelle" },
             { k: "100%", v: "digital — zéro frais fixes inutiles" },
             { k: "24h", v: "délai de réponse garanti" },
-          ].map((s) => (
-            <div key={s.k} className="border-r border-b border-ink/10 p-8 flex flex-col gap-4">
-              <span className="font-display text-5xl md:text-6xl text-ink">{s.k}</span>
-              <span className="label-mono text-[10px] text-ink/70 leading-relaxed">{s.v.toUpperCase()}</span>
-            </div>
+          ].map((s, i) => (
+            <Reveal key={s.k} delay={i * 120}>
+              <div className="border-r border-b border-ink/10 p-8 flex flex-col gap-4 h-full">
+                <span className="font-display text-5xl md:text-6xl text-ink">{s.k}</span>
+                <span className="label-mono text-[10px] text-ink/70 leading-relaxed">{s.v.toUpperCase()}</span>
+              </div>
+            </Reveal>
           ))}
         </div>
       </section>
