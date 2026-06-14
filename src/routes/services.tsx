@@ -261,7 +261,7 @@ function ServicesPage() {
       {/* Pourquoi AEXORA */}
       <section className="px-6 md:px-10 py-20 border-t border-ink/10 bg-bone text-ink">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
-          <span className="md:col-span-2 label-mono text-[11px] text-ink/60">[ POURQUOI AEXORA ]</span>
+          <span className="md:col-span-2 label-mono text-[11px] text-ink/60">[ POURQUOI AEXORA </span>
           <h2 className="md:col-span-8 font-display text-4xl md:text-6xl leading-[1.02] tracking-tight text-ink">
             Ce qui nous rend <em className="italic font-light">uniques</em>.
           </h2>
@@ -339,7 +339,7 @@ function ServicesPage() {
       {/* Process */}
       <section className="px-6 md:px-10 py-28 border-t border-lavender/20">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-14">
-          <span className="md:col-span-2 label-mono text-[11px] text-lavender">[ COMMENT ÇA MARCHE ]</span>
+          <span className="md:col-span-2 label-mono text-[11px] text-lavender">[ COMMENT ÇA MARCHE </span>
           <h2 className="md:col-span-8 font-display text-5xl md:text-7xl leading-[1.02] tracking-tight">
             Un process <em className="italic font-light">limpide</em>.
           </h2>

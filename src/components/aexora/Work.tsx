@@ -9,7 +9,7 @@ export function Work() {
   return (
     <section id="work" className="bg-bone text-ink px-6 md:px-10 py-32 border-t border-ink">
       <div className="flex items-end justify-between mb-16">
-        <span className="label-mono text-[11px] text-ink/60">[ 03 — PROJETS SÉLECTIONNÉS ]</span>
+        <span className="label-mono text-[11px] text-ink/60">[ 03 — PROJETS SÉLECTIONNÉS </span>
         <span className="label-mono text-[11px] text-ink/60">2024 — 2025</span>
       </div>
 
