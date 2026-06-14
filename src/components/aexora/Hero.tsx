@@ -41,7 +41,7 @@ export function Hero() {
 
       <div className="relative z-10 px-6 md:px-10 pt-40 md:pt-48 pb-20">
         <p className="label-mono text-[11px] text-bone mb-10">
-          / STUDIO CRÉATIF PROPULSÉ PAR L'IA — EST. 2024
+          AGENCE AI CREATIVE
         </p>
 
         <h1 className="font-display text-bone text-[14vw] md:text-[10vw] leading-[0.95] tracking-[-0.02em] max-w-[18ch]">
@@ -53,7 +53,10 @@ export function Hero() {
           <div className="md:col-span-5 md:col-start-1">
             <p className="label-mono text-[11px] text-bone/70 leading-relaxed">
               NOUS CONCEVONS DES IDENTITÉS, CONTENUS & EXPÉRIENCES<br />
-              DIGITALES POUR LES MARQUES DE BEAUTÉ & MODE.
+              DIGITALES POUR LES MARQUES DE BEAUTÉ, MODE&nbsp; & JOELERIE .
+            </p>
+            <p className="label-mono text-[11px] text-bone/70 leading-relaxed mt-4">
+              SITES WEB, PRODUCTION VISUELLE IA, STRATÉGIES DE CROISSANCE ET AGENTS D'AUTOMATISATION POUR LES MARQUES DE BEAUTÉ, MODE & JOAILLERIE.
             </p>
           </div>
 
@@ -68,9 +71,9 @@ export function Hero() {
         </div>
 
         <div className="mt-32 flex items-end justify-between label-mono text-[10px] text-bone/50">
-          <span>[ 01 — INDEX </span>
-          <span>DÉFILER ↓</span>
-          <span>PARIS · 48.85°N</span>
+          <span>{"\n"}</span>
+          <span>{"\n"}</span>
+          <span>{"\n"}</span>
         </div>
       </div>
 
