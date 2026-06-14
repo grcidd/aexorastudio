@@ -68,7 +68,7 @@ export function Hero() {
         </div>
 
         <div className="mt-32 flex items-end justify-between label-mono text-[10px] text-bone/50">
-          <span>[ 01 — INDEX ]</span>
+          <span>[ 01 — INDEX </span>
           <span>DÉFILER ↓</span>
           <span>PARIS · 48.85°N</span>
         </div>
