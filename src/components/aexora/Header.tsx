@@ -43,7 +43,7 @@ export function Header() {
 
       {/* Mobile overlay */}
       <div
-        className={`fixed inset-0 z-40 bg-ink text-bone md:hidden transition-opacity duration-500 ${
+        className={`fixed inset-0 z-40 bg-bone text-ink md:hidden transition-opacity duration-500 ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
@@ -58,7 +58,7 @@ export function Header() {
                 key={item.to}
                 to={item.to}
                 onClick={() => setOpen(false)}
-                className="font-display text-5xl tracking-tight hover:text-lavender transition-colors"
+                className="font-display text-5xl tracking-tight hover:text-plum transition-colors"
                 style={{
                   transitionDelay: open ? `${100 + i * 80}ms` : "0ms",
                   opacity: open ? 1 : 0,
@@ -72,13 +72,13 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="mt-auto flex items-center gap-6 text-lavender pt-10 border-t border-lavender/20">
+          <div className="mt-auto flex items-center gap-6 text-plum pt-10 border-t border-ink/20">
             <a
               href="https://www.instagram.com/aexorastudio?utm_source=qr"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="hover:text-bone transition-colors"
+              className="hover:text-ink transition-colors"
             >
               <Instagram size={22} strokeWidth={1.25} />
             </a>
@@ -87,7 +87,7 @@ export function Header() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
-              className="hover:text-bone transition-colors"
+              className="hover:text-ink transition-colors"
             >
               <Linkedin size={22} strokeWidth={1.25} />
             </a>
