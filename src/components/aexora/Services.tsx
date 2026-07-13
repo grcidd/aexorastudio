@@ -4,7 +4,7 @@ import { Reveal } from "@/components/aexora/Reveal";
 const services = [
   {
     n: "01",
-    title: "Sites Web Luxe",
+    title: "Sites Web\u00a0",
     desc: "Sites vitrines, e-commerce et landing pages haut de gamme, design éditorial premium et conversions optimisées pour les maisons beauté, mode & joaillerie.",
   },
   {
