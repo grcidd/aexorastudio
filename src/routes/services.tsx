@@ -247,7 +247,7 @@ function ServicesPage() {
           <Reveal delay={200} className="grid grid-cols-1 md:grid-cols-12 gap-8 mt-16">
             <p className="md:col-span-6 md:col-start-1 label-mono text-[11px] text-bone/80 leading-relaxed">
               AEXORA EST UNE AGENCE IA SPÉCIALISÉE DANS LES SECTEURS<br />
-              DE LA BEAUTÉ ET DE LA MODE. NOUS COMBINONS INTELLIGENCE<br />
+              DE LA BEAUTÉ, MODE & JOAILLERIE. NOUS COMBINONS INTELLIGENCE<br />
               ARTIFICIELLE, DIRECTION ARTISTIQUE ET STRATÉGIE DIGITALE.
             </p>
             <p className="md:col-span-4 md:col-start-8 label-mono text-[11px] text-bone/80 leading-relaxed italic">
