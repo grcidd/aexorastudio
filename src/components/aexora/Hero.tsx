@@ -45,7 +45,7 @@ export function Hero() {
         </p>
 
         <h1 className="font-display text-bone text-[14vw] md:text-[10vw] leading-[0.95] tracking-[-0.02em] max-w-[18ch]">
-          Nous créons des marques<br />
+          Des présences digitales<br />
           qui semblent <em className="italic font-light">inévitables</em>.
         </h1>
 
