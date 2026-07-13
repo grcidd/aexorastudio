@@ -23,7 +23,6 @@ export function Header() {
 
           {/* Desktop nav */}
           <nav className="hidden md:flex gap-10 label-mono text-[11px] text-bone">
-            <Link to="/projets" className="hover:opacity-60 transition">PROJETS</Link>
             <Link to="/services" className="hover:opacity-60 transition">SERVICES</Link>
             <Link to="/a-propos" className="hover:opacity-60 transition">À PROPOS</Link>
             <Link to="/contact" className="hover:opacity-60 transition">CONTACT</Link>
@@ -51,7 +50,6 @@ export function Header() {
         <div className="flex flex-col h-full px-6 pt-28 pb-10">
           <nav className="flex flex-col gap-8">
             {[
-              { to: "/projets", label: "PROJETS" },
               { to: "/services", label: "SERVICES" },
               { to: "/a-propos", label: "À PROPOS" },
               { to: "/contact", label: "CONTACT" },
