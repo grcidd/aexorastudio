@@ -41,7 +41,7 @@ export function Hero() {
 
       <div className="relative z-10 px-6 md:px-10 pt-40 md:pt-48 pb-20">
         <p className="label-mono text-[11px] text-bone mb-10">
-          AGENCE AI CREATIVE FULL-SERVICE
+          AGENCE AI FULL-SERVICE
         </p>
 
         <h1 className="font-display text-bone text-[14vw] md:text-[10vw] leading-[0.95] tracking-[-0.02em] max-w-[18ch]">
