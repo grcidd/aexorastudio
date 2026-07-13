@@ -18,7 +18,6 @@ export function Header() {
         <div className="flex items-center justify-between px-6 md:px-10 py-6">
           <Link to="/" className="flex flex-col leading-none text-bone" onClick={() => setOpen(false)}>
             <span className="text-lg md:text-xl font-light tracking-[0.4em]">AEXORA</span>
-            <span className="label-mono text-[10px] mt-1 opacity-80">STUDIO</span>
           </Link>
 
           {/* Desktop nav */}
