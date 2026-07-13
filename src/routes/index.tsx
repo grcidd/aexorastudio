@@ -3,7 +3,6 @@ import { Header } from "@/components/aexora/Header";
 import { Hero } from "@/components/aexora/Hero";
 
 import { Services } from "@/components/aexora/Services";
-import { Work } from "@/components/aexora/Work";
 import { Contact } from "@/components/aexora/Contact";
 import { Footer } from "@/components/aexora/Footer";
 
@@ -25,7 +24,6 @@ function Index() {
       <Header />
       <Hero />
       <Services />
-      <Work />
       <Contact />
       <Footer />
     </main>
