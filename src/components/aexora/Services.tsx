@@ -33,7 +33,7 @@ export function Services() {
         </span>
         <div className="md:col-span-7">
           <h2 className="font-display text-5xl md:text-7xl leading-[1.02] tracking-tight">
-            Quatre expertises. Une seule obsession : votre présence.
+            <em className="italic font-light">Quatre expertises. Une seule obsession : votre présence.</em>
           </h2>
         </div>
       </Reveal>
