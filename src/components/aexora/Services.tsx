@@ -1,28 +1,66 @@
 import { Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { Reveal } from "@/components/aexora/Reveal";
+import s01a from "@/assets/srv-01a.mp4.asset.json";
+import s01b from "@/assets/srv-01b.mp4.asset.json";
+import s02a from "@/assets/srv-02a.mp4.asset.json";
+import s02b from "@/assets/srv-02b.mp4.asset.json";
+import s03a from "@/assets/srv-03a.mp4.asset.json";
+import s03b from "@/assets/srv-03b.mp4.asset.json";
+import s04a from "@/assets/srv-04a.mp4.asset.json";
+import s04b from "@/assets/srv-04b.mp4.asset.json";
 
 const services = [
   {
     n: "01",
     title: "Sites Web Luxe",
     desc: "Sites vitrines et landing pages haut de gamme, design éditorial premium et conversions optimisées pour les maisons beauté & mode.",
+    videos: [s01a.url, s01b.url],
   },
   {
     n: "02",
     title: "Production Visuelle IA",
     desc: "Campagnes photo et vidéo générées par IA — mannequins virtuels, shootings produits, lookbooks et contenus social media.",
+    videos: [s02a.url, s02b.url],
   },
   {
     n: "03",
     title: "Acquisition & Analytics",
     desc: "Stratégie de croissance data-driven, campagnes Meta & Google et reporting actionnable pour un ROI mesurable.",
+    videos: [s03a.url, s03b.url],
   },
   {
     n: "04",
     title: "Automatisation Agents IA",
     desc: "Des agents IA qui travaillent 24h/24 — social media, SAV, reporting, prospection automatisée.",
+    videos: [s04a.url, s04b.url],
   },
 ];
+
+function RotatingVideos({ urls }: { urls: string[] }) {
+  const [idx, setIdx] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setIdx((i) => (i + 1) % urls.length), 2000);
+    return () => clearInterval(id);
+  }, [urls.length]);
+  return (
+    <>
+      {urls.map((u, i) => (
+        <video
+          key={u}
+          src={u}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+            i === idx ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
+    </>
+  );
+}
 
 export function Services() {
   return (
@@ -39,13 +77,16 @@ export function Services() {
         </div>
       </Reveal>
 
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t border-l border-ink">
         {services.map((s, i) => (
           <Reveal key={s.n} delay={i * 120} y={32}>
             <Link
               to="/services"
-              className="group relative border-r border-b border-ink min-h-[420px] flex flex-col justify-between overflow-hidden text-ink cursor-pointer bg-bone hover:bg-plum hover:text-bone transition-colors duration-500"
+              className="group relative border-r border-b border-ink min-h-[420px] flex flex-col justify-between overflow-hidden text-bone cursor-pointer"
             >
+              <RotatingVideos urls={s.videos} />
+              <div className="absolute inset-0 bg-ink/50 group-hover:bg-plum/60 transition-colors duration-500" />
               <div className="relative z-10 p-8 flex flex-col justify-between h-full">
                 <div className="flex items-start justify-between">
                   <span className="label-mono text-[10px]">{s.n}</span>
