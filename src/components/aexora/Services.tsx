@@ -33,8 +33,7 @@ export function Services() {
         </span>
         <div className="md:col-span-7">
           <h2 className="font-display text-5xl md:text-7xl leading-[1.02] tracking-tight">
-            Un studio à l'intersection<br />
-            de l'<em className="italic font-light">artisanat</em> et du <em className="italic font-light">code</em>.
+            Quatre expertises. Une seule obsession : votre présence.
           </h2>
         </div>
       </Reveal>
