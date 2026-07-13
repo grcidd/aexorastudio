@@ -5,7 +5,7 @@ const services = [
   {
     n: "01",
     title: "Sites Web Luxe",
-    desc: "Sites vitrines et landing pages haut de gamme, design éditorial premium et conversions optimisées pour les maisons beauté & mode.",
+    desc: "Sites vitrines, e-commerce et landing pages haut de gamme, design éditorial premium et conversions optimisées pour les maisons beauté, mode & joaillerie.",
   },
   {
     n: "02",
