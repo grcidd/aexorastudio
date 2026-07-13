@@ -9,7 +9,7 @@ export function Footer() {
           <span className="label-mono text-[10px] mt-1">STUDIO · PARIS</span>
         </div>
         <div className="label-mono text-[10px]">
-          STUDIO IA FULL-SERVICE — BEAUTÉ MODE & JOAILLERIE
+          AGENCE IA FULL-SERVICE — BEAUTÉ MODE & JOAILLERIE
         </div>
         <div className="flex items-center gap-5">
           <a
