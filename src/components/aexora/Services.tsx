@@ -32,7 +32,7 @@ export function Services() {
           [ 02 — SERVICES
         </span>
         <div className="md:col-span-7">
-          <h2 className="font-display text-5xl md:text-7xl leading-[1.02] tracking-tight">
+          <h2 className="font-display text-5xl md:text-7xl leading-[1.02] tracking-tight italic">
             Quatre expertises. Une seule obsession : votre présence.
           </h2>
         </div>
