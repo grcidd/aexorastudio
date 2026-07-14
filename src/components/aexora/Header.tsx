@@ -18,7 +18,12 @@ export function Header() {
       <header className="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
         <div className="flex items-center justify-between px-6 md:px-10 py-6">
           <Link to="/" className="flex flex-col leading-none text-bone" onClick={() => setOpen(false)}>
-            <span className="text-lg md:text-xl font-light tracking-[0.4em]">AEXORA</span>
+            <img
+              src={logoLight.url}
+              alt="Aexora Studio"
+              className="h-6 md:h-7 w-auto invert-0"
+              loading="eager"
+            />
           </Link>
 
           {/* Desktop nav */}
