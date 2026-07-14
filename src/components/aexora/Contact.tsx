@@ -155,6 +155,7 @@ export function Contact() {
             {submitting ? "ENVOI…" : "ENVOYER LA DEMANDE ↗"}
           </button>
         </form>
+        )}
       </Reveal>
 
       <div className="mt-32 flex items-center justify-center gap-6 text-lavender">
