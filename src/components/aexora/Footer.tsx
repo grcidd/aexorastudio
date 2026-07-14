@@ -9,7 +9,7 @@ export function Footer() {
           <img
             src={logoDark.url}
             alt="Aexora Studio"
-            className="h-6 md:h-7 w-auto"
+            className="h-7 md:h-9 w-auto"
             loading="lazy"
           />
           <span className="label-mono text-[10px] mt-2">STUDIO · PARIS</span>
