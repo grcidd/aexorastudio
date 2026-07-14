@@ -51,6 +51,10 @@ export function Contact() {
       if (!res.ok) throw new Error("submit failed");
       toast.success("Merci — nous vous recontactons rapidement.");
       setForm({ name: "", email: "", company: "", website: "", looking: "", project: "", budget: "", start: "" });
+      setSent(true);
+      if (typeof window !== "undefined") {
+        window.scrollTo({ top: document.getElementById("contact")?.offsetTop ?? 0, behavior: "smooth" });
+      }
     } catch {
       toast.error("Une erreur est survenue. Réessayez.");
     } finally {
