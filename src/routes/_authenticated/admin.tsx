@@ -162,9 +162,10 @@ function NewProjectForm({ onDone }: { onDone: () => void }) {
           </div>
           {error && <p className="md:col-span-2 text-sm text-red-700">{error}</p>}
           <div className="md:col-span-2">
-            <button type="submit" disabled={loading} className="bg-violet text-btn-blue label-mono text-[11px] tracking-widest px-6 py-3 hover:bg-violet-hover disabled:opacity-50">
+            <button type="submit" disabled={loading} className="bg-button-base text-bone label-mono text-[11px] tracking-widest px-6 py-3 hover:bg-button-base-hover disabled:opacity-50">
               {loading ? "CRÉATION..." : "CRÉER LE PROJET & ENVOYER L'INVITATION"}
             </button>
+
           </div>
         </form>
       )}
