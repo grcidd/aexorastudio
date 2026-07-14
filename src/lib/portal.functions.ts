@@ -8,6 +8,32 @@ const SENDER_DOMAIN = "notify.aexorastudio.com";
 const FROM_DOMAIN = "aexorastudio.com";
 const PUBLIC_URL = "https://aexorastudio.com";
 
+function generateToken(): string {
+  const bytes = new Uint8Array(32);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes).map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+async function getOrCreateUnsubscribeToken(supabaseAdmin: any, email: string): Promise<string> {
+  const { data: existing } = await supabaseAdmin
+    .from("email_unsubscribe_tokens")
+    .select("token, used_at")
+    .eq("email", email)
+    .maybeSingle();
+  if (existing && !existing.used_at) return existing.token;
+  if (existing && existing.used_at) throw new Error("Recipient unsubscribed");
+  const token = generateToken();
+  await supabaseAdmin
+    .from("email_unsubscribe_tokens")
+    .upsert({ token, email }, { onConflict: "email", ignoreDuplicates: true });
+  const { data: stored } = await supabaseAdmin
+    .from("email_unsubscribe_tokens")
+    .select("token")
+    .eq("email", email)
+    .maybeSingle();
+  return stored?.token || token;
+}
+
 async function enqueueSimpleEmail(opts: {
   to: string;
   subject: string;
@@ -16,6 +42,17 @@ async function enqueueSimpleEmail(opts: {
   label: string;
 }) {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const recipient = opts.to.toLowerCase();
+
+  const { data: suppressed } = await supabaseAdmin
+    .from("suppressed_emails")
+    .select("id")
+    .eq("email", recipient)
+    .maybeSingle();
+  if (suppressed) throw new Error("Recipient suppressed");
+
+  const unsubscribeToken = await getOrCreateUnsubscribeToken(supabaseAdmin, recipient);
+
   const messageId = crypto.randomUUID();
   await supabaseAdmin.from("email_send_log").insert({
     message_id: messageId,
@@ -36,10 +73,12 @@ async function enqueueSimpleEmail(opts: {
       purpose: "transactional",
       label: opts.label,
       idempotency_key: messageId,
+      unsubscribe_token: unsubscribeToken,
       queued_at: new Date().toISOString(),
     },
   });
 }
+
 
 async function requireAdmin(ctx: { supabase: any; userId: string }) {
   const { data } = await ctx.supabase.rpc("has_role", { _user_id: ctx.userId, _role: "admin" });
