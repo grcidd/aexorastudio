@@ -21,7 +21,7 @@ export function Header() {
             <img
               src={logoLight.url}
               alt="Aexora Studio"
-              className="h-7 md:h-9 w-auto"
+              className="h-8 md:h-10 w-auto"
               loading="eager"
             />
           </Link>
