@@ -375,7 +375,7 @@ function ServicesPage() {
           </h2>
           <Link
             to="/contact"
-            className="inline-flex items-center gap-3 mt-12 label-mono text-[11px] border border-bone/40 text-bone px-8 py-5 hover:bg-bone hover:text-ink transition-colors"
+            className="inline-flex items-center gap-3 mt-12 label-mono text-[11px] bg-violet text-btn-blue px-8 py-5 hover:bg-violet-hover transition-colors"
           >
             DEMANDER UN DEVIS <ArrowUpRight size={18} strokeWidth={1} />
           </Link>

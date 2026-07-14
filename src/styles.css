@@ -19,6 +19,9 @@
   --color-ink: var(--ink);
   --color-plum: var(--plum);
   --color-lavender: var(--lavender);
+  --color-violet: var(--violet);
+  --color-violet-hover: var(--violet-hover);
+  --color-btn-blue: var(--btn-blue);
 
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
@@ -49,6 +52,9 @@
   --ink: #2e2e2e;
   --plum: #190B13;
   --lavender: #c8d0ff;
+  --violet: #7c3aed;
+  --violet-hover: #6d28d9;
+  --btn-blue: #93c5fd;
 
   --background: #f6f6f6;
   --foreground: #2e2e2e;

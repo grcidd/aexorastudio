@@ -104,18 +104,18 @@ function LoginPage() {
             </h1>
           </div>
 
-          <div className="flex label-mono text-[10px] tracking-widest border border-ink mb-8">
+          <div className="flex label-mono text-[10px] tracking-widest border border-violet mb-8">
             <button
               type="button"
               onClick={() => { setMode("signin"); setError(null); setInfo(null); }}
-              className={`flex-1 py-3 transition-colors ${!isSignup ? "bg-ink text-bone" : "hover:bg-ink/5"}`}
+              className={`flex-1 py-3 transition-colors ${!isSignup ? "bg-violet text-btn-blue" : "hover:bg-violet/10 text-violet"}`}
             >
               SE CONNECTER
             </button>
             <button
               type="button"
               onClick={() => { setMode("signup"); setError(null); setInfo(null); }}
-              className={`flex-1 py-3 transition-colors ${isSignup ? "bg-ink text-bone" : "hover:bg-ink/5"}`}
+              className={`flex-1 py-3 transition-colors ${isSignup ? "bg-violet text-btn-blue" : "hover:bg-violet/10 text-violet"}`}
             >
               S'INSCRIRE
             </button>
@@ -163,7 +163,7 @@ function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-ink text-bone label-mono text-[11px] tracking-widest py-4 hover:bg-plum transition-colors disabled:opacity-50"
+              className="w-full bg-violet text-btn-blue label-mono text-[11px] tracking-widest py-4 hover:bg-violet-hover transition-colors disabled:opacity-50"
             >
               {loading
                 ? (isSignup ? "CRÉATION..." : "CONNEXION...")
