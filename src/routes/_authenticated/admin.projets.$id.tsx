@@ -125,11 +125,12 @@ function AdminProjectPage() {
                   <button
                     onClick={() => triggerUpload(s.id)}
                     disabled={uploadingTo === s.id}
-                    className="label-mono text-[10px] tracking-widest bg-violet text-btn-blue px-4 py-2 hover:bg-violet-hover transition-colors flex items-center gap-2 disabled:opacity-50"
+                    className="label-mono text-[10px] tracking-widest bg-button-base text-bone px-4 py-2 hover:bg-button-base-hover transition-colors flex items-center gap-2 disabled:opacity-50"
                   >
                     <Upload size={12} strokeWidth={1.25} />
                     {uploadingTo === s.id ? "ENVOI..." : "AJOUTER UN FICHIER"}
                   </button>
+
                 </div>
               )}
             </div>
