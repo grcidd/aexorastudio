@@ -245,10 +245,11 @@ export function StageRow({
               <button
                 onClick={onValidate}
                 disabled={validating}
-                className="w-full mt-6 bg-violet text-btn-blue label-mono text-[11px] tracking-widest py-4 hover:bg-violet-hover transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                className="w-full mt-6 bg-button-base text-bone label-mono text-[11px] tracking-widest py-4 hover:bg-button-base-hover transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 <Check size={14} strokeWidth={1.5} /> {validating ? "VALIDATION..." : "VALIDER CETTE ÉTAPE"}
               </button>
+
             )}
             {stage.status === "validated" && stage.validated_at && (
               <p className="mt-4 text-xs text-ink/60">Validée le {new Date(stage.validated_at).toLocaleDateString("fr-FR")}</p>
