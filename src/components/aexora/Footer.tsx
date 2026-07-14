@@ -1,12 +1,18 @@
 import { Instagram, Linkedin } from "lucide-react";
+import logoDark from "@/assets/aexora-logo-dark.png.asset.json";
 
 export function Footer() {
   return (
     <footer className="bg-bone text-ink border-t border-ink/20 px-6 md:px-10 py-10">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
         <div className="flex flex-col leading-none">
-          <span className="text-lg tracking-[0.4em] text-ink">AEXORA</span>
-          <span className="label-mono text-[10px] mt-1">STUDIO · PARIS</span>
+          <img
+            src={logoDark.url}
+            alt="Aexora Studio"
+            className="h-8 md:h-10 w-auto"
+            loading="lazy"
+          />
+          <span className="label-mono text-[10px] mt-2">STUDIO · PARIS</span>
         </div>
         <div className="label-mono text-[10px]">
           AGENCE IA FULL-SERVICE — BEAUTÉ MODE & JOAILLERIE

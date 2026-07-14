@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, Instagram, Linkedin } from "lucide-react";
+import logoLight from "@/assets/aexora-logo-light.png.asset.json";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -14,10 +15,15 @@ export function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 mix-blend-difference">
+      <header className="fixed top-0 left-0 right-0 z-50">
         <div className="flex items-center justify-between px-6 md:px-10 py-6">
           <Link to="/" className="flex flex-col leading-none text-bone" onClick={() => setOpen(false)}>
-            <span className="text-lg md:text-xl font-light tracking-[0.4em]">AEXORA</span>
+            <img
+              src={logoLight.url}
+              alt="Aexora Studio"
+              className="h-8 md:h-10 w-auto"
+              loading="eager"
+            />
           </Link>
 
           {/* Desktop nav */}
