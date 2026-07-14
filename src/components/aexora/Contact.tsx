@@ -99,10 +99,11 @@ export function Contact() {
             <button
               type="button"
               onClick={() => setSent(false)}
-              className="mt-4 bg-violet text-btn-blue label-mono text-[11px] py-4 px-6 hover:bg-violet-hover transition-colors"
+              className="mt-4 bg-button-base text-bone label-mono text-[11px] py-4 px-6 hover:bg-button-base-hover transition-colors"
             >
               ENVOYER UNE AUTRE DEMANDE ↗
             </button>
+
           </div>
         ) : (
         <form onSubmit={submit} className="lg:col-span-12 p-8 md:p-12 flex flex-col gap-8">
