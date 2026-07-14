@@ -104,22 +104,23 @@ function LoginPage() {
             </h1>
           </div>
 
-          <div className="flex label-mono text-[10px] tracking-widest border border-violet mb-8">
+          <div className="flex label-mono text-[10px] tracking-widest border border-button-base mb-8">
             <button
               type="button"
               onClick={() => { setMode("signin"); setError(null); setInfo(null); }}
-              className={`flex-1 py-3 transition-colors ${!isSignup ? "bg-violet text-btn-blue" : "hover:bg-violet/10 text-violet"}`}
+              className={`flex-1 py-3 transition-colors ${!isSignup ? "bg-button-base text-bone" : "hover:bg-button-base/10 text-button-base"}`}
             >
               SE CONNECTER
             </button>
             <button
               type="button"
               onClick={() => { setMode("signup"); setError(null); setInfo(null); }}
-              className={`flex-1 py-3 transition-colors ${isSignup ? "bg-violet text-btn-blue" : "hover:bg-violet/10 text-violet"}`}
+              className={`flex-1 py-3 transition-colors ${isSignup ? "bg-button-base text-bone" : "hover:bg-button-base/10 text-button-base"}`}
             >
               S'INSCRIRE
             </button>
           </div>
+
 
           <form onSubmit={onSubmit} className="space-y-5">
             {isSignup && (
