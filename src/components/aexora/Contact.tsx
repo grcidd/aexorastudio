@@ -10,6 +10,7 @@ const inputBase =
 
 export function Contact() {
   const [submitting, setSubmitting] = useState(false);
+  const [sent, setSent] = useState(false);
   const [form, setForm] = useState({
     name: "", email: "", company: "", website: "",
     looking: "", project: "", budget: "", start: "",
@@ -50,6 +51,10 @@ export function Contact() {
       if (!res.ok) throw new Error("submit failed");
       toast.success("Merci — nous vous recontactons rapidement.");
       setForm({ name: "", email: "", company: "", website: "", looking: "", project: "", budget: "", start: "" });
+      setSent(true);
+      if (typeof window !== "undefined") {
+        window.scrollTo({ top: document.getElementById("contact")?.offsetTop ?? 0, behavior: "smooth" });
+      }
     } catch {
       toast.error("Une erreur est survenue. Réessayez.");
     } finally {
@@ -73,6 +78,33 @@ export function Contact() {
       <Reveal as="div" delay={150} className="grid grid-cols-1 lg:grid-cols-12 gap-10">
 
 
+        {sent ? (
+          <div
+            role="status"
+            aria-live="polite"
+            className="lg:col-span-12 p-10 md:p-16 border border-lavender/20 flex flex-col items-center text-center gap-6"
+          >
+            <div className="w-14 h-14 rounded-full border border-lavender/40 flex items-center justify-center">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-lavender">
+                <path d="M4 12l5 5L20 6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+            <span className="label-mono text-[11px] text-lavender">[ DEMANDE ENVOYÉE ]</span>
+            <h3 className="font-display text-4xl md:text-6xl leading-[0.95]">
+              Merci — <em className="italic font-light">message reçu</em>.
+            </h3>
+            <p className="max-w-xl text-bone/70 text-sm md:text-base">
+              Nous avons bien reçu votre demande. Notre équipe vous recontacte sous 24 à 48h ouvrées à l'adresse indiquée.
+            </p>
+            <button
+              type="button"
+              onClick={() => setSent(false)}
+              className="mt-4 bg-transparent text-bone label-mono text-[11px] py-4 px-6 border border-lavender/20 hover:bg-lavender hover:text-ink transition-colors"
+            >
+              ENVOYER UNE AUTRE DEMANDE ↗
+            </button>
+          </div>
+        ) : (
         <form onSubmit={submit} className="lg:col-span-12 p-8 md:p-12 flex flex-col gap-8">
           <Field label="Nom complet">
             <input required value={form.name} onChange={update("name")} className={inputBase} placeholder="JEANNE DUPONT" />
@@ -123,6 +155,7 @@ export function Contact() {
             {submitting ? "ENVOI…" : "ENVOYER LA DEMANDE ↗"}
           </button>
         </form>
+        )}
       </Reveal>
 
       <div className="mt-32 flex items-center justify-center gap-6 text-lavender">
