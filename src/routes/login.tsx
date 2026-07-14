@@ -46,6 +46,20 @@ function LoginPage() {
     setError(null);
     setInfo(null);
 
+    if (mode === "forgot") {
+      const { error: err } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      if (err) {
+        setError(err.message);
+        setLoading(false);
+        return;
+      }
+      setInfo("Si un compte existe pour cet email, un lien de réinitialisation vient d'être envoyé.");
+      setLoading(false);
+      return;
+    }
+
     if (mode === "signin") {
       const { error: err } = await supabase.auth.signInWithPassword({
         email: email.trim(),
@@ -85,6 +99,7 @@ function LoginPage() {
   }
 
   const isSignup = mode === "signup";
+  const isForgot = mode === "forgot";
 
   return (
     <main className="bg-bone text-ink min-h-screen flex flex-col">
