@@ -105,8 +105,10 @@ export function Header() {
               { to: "/services", label: "SERVICES" },
               { to: "/a-propos", label: "À PROPOS" },
               { to: "/contact", label: "CONTACT" },
+              ...(isAdmin ? [{ to: "/admin", label: "ADMIN" }] : []),
               { to: "/login", label: "ESPACE CLIENT" },
             ].map((item, i) => (
+
               <Link
                 key={item.to}
                 to={item.to}
