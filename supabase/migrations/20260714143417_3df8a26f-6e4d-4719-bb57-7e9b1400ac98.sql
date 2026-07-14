@@ -1,0 +1,1 @@
+ALTER TABLE public.projects ADD CONSTRAINT projects_client_id_profiles_fkey FOREIGN KEY (client_id) REFERENCES public.profiles(id) ON DELETE CASCADE;

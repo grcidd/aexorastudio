@@ -30,7 +30,7 @@ function AdminProjectPage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("projects")
-        .select("*, profiles!projects_client_id_fkey(full_name, email)")
+        .select("*, profiles!projects_client_id_profiles_fkey(full_name, email)")
         .eq("id", id)
         .single();
       if (error) throw error;
