@@ -9,6 +9,14 @@ const SITE_NAME = 'aexorastudio'
 const SENDER_DOMAIN = 'notify.aexorastudio.com'
 const FROM_DOMAIN = 'aexorastudio.com'
 
+function generateToken(): string {
+  const bytes = new Uint8Array(32)
+  crypto.getRandomValues(bytes)
+  return Array.from(bytes)
+    .map((byte) => byte.toString(16).padStart(2, '0'))
+    .join('')
+}
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -82,6 +90,47 @@ export const Route = createFileRoute('/api/public/contact/submit')({
         try {
           const entry = TEMPLATES['contact-notification']
           if (!entry || !entry.to) throw new Error('Template missing')
+          const recipientEmail = entry.to.toLowerCase()
+
+          const { data: suppressed, error: suppressionError } = await supabase
+            .from('suppressed_emails')
+            .select('id')
+            .eq('email', recipientEmail)
+            .maybeSingle()
+
+          if (suppressionError) throw suppressionError
+          if (suppressed) throw new Error('Recipient is suppressed')
+
+          let unsubscribeToken = generateToken()
+          const { data: existingToken, error: tokenLookupError } = await supabase
+            .from('email_unsubscribe_tokens')
+            .select('token, used_at')
+            .eq('email', recipientEmail)
+            .maybeSingle()
+
+          if (tokenLookupError) throw tokenLookupError
+
+          if (existingToken && !existingToken.used_at) {
+            unsubscribeToken = existingToken.token
+          } else if (!existingToken) {
+            const { error: tokenInsertError } = await supabase
+              .from('email_unsubscribe_tokens')
+              .upsert(
+                { token: unsubscribeToken, email: recipientEmail },
+                { onConflict: 'email', ignoreDuplicates: true },
+              )
+            if (tokenInsertError) throw tokenInsertError
+
+            const { data: storedToken, error: storedTokenError } = await supabase
+              .from('email_unsubscribe_tokens')
+              .select('token')
+              .eq('email', recipientEmail)
+              .maybeSingle()
+            if (storedTokenError || !storedToken) throw storedTokenError || new Error('Missing unsubscribe token')
+            unsubscribeToken = storedToken.token
+          } else {
+            throw new Error('Recipient is unsubscribed')
+          }
 
           const templateData = {
             name: parsed.name,
@@ -125,6 +174,7 @@ export const Route = createFileRoute('/api/public/contact/submit')({
               purpose: 'transactional',
               label: 'contact-notification',
               idempotency_key: messageId,
+              unsubscribe_token: unsubscribeToken,
               queued_at: new Date().toISOString(),
             },
           })
