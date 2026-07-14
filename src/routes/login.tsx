@@ -104,22 +104,23 @@ function LoginPage() {
             </h1>
           </div>
 
-          <div className="flex label-mono text-[10px] tracking-widest border border-violet mb-8">
+          <div className="flex label-mono text-[10px] tracking-widest border border-button-base mb-8">
             <button
               type="button"
               onClick={() => { setMode("signin"); setError(null); setInfo(null); }}
-              className={`flex-1 py-3 transition-colors ${!isSignup ? "bg-violet text-btn-blue" : "hover:bg-violet/10 text-violet"}`}
+              className={`flex-1 py-3 transition-colors ${!isSignup ? "bg-button-base text-bone" : "hover:bg-button-base/10 text-button-base"}`}
             >
               SE CONNECTER
             </button>
             <button
               type="button"
               onClick={() => { setMode("signup"); setError(null); setInfo(null); }}
-              className={`flex-1 py-3 transition-colors ${isSignup ? "bg-violet text-btn-blue" : "hover:bg-violet/10 text-violet"}`}
+              className={`flex-1 py-3 transition-colors ${isSignup ? "bg-button-base text-bone" : "hover:bg-button-base/10 text-button-base"}`}
             >
               S'INSCRIRE
             </button>
           </div>
+
 
           <form onSubmit={onSubmit} className="space-y-5">
             {isSignup && (
@@ -163,12 +164,14 @@ function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-violet text-btn-blue label-mono text-[11px] tracking-widest py-4 hover:bg-violet-hover transition-colors disabled:opacity-50"
+              className="w-full bg-button-base text-bone label-mono text-[11px] tracking-widest py-4 hover:bg-button-base-hover transition-colors disabled:opacity-50"
             >
               {loading
                 ? (isSignup ? "CRÉATION..." : "CONNEXION...")
                 : (isSignup ? "CRÉER MON COMPTE" : "SE CONNECTER")}
             </button>
+
+
           </form>
 
           <p className="text-xs text-ink/60 mt-8 text-center">
