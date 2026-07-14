@@ -1,10 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, Instagram, Linkedin, UserRound } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { getMyRole } from "@/lib/portal.functions";
 import logoLight from "@/assets/aexora-logo-light.png.asset.json";
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -12,6 +15,33 @@ export function Header() {
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  useEffect(() => {
+    async function checkRole() {
+      const { data } = await supabase.auth.getUser();
+      if (data.user) {
+        try {
+          const { isAdmin } = await getMyRole();
+          setIsAdmin(isAdmin);
+          return;
+        } catch {
+          // silently fall back to signed-out state
+        }
+      }
+      setIsAdmin(false);
+    }
+
+    checkRole();
+    const { data: listener } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "SIGNED_IN" || event === "SIGNED_OUT" || event === "USER_UPDATED") {
+        checkRole();
+      }
+    });
+    return () => {
+      listener?.subscription?.unsubscribe();
+    };
+  }, []);
+
 
   return (
     <>
@@ -31,6 +61,9 @@ export function Header() {
             <Link to="/services" className="hover:opacity-60 transition">SERVICES</Link>
             <Link to="/a-propos" className="hover:opacity-60 transition">À PROPOS</Link>
             <Link to="/contact" className="hover:opacity-60 transition">CONTACT</Link>
+            {isAdmin && (
+              <Link to="/admin" className="hover:opacity-60 transition">ADMIN</Link>
+            )}
             <Link
               to="/login"
               aria-label="Espace client"
@@ -40,6 +73,7 @@ export function Header() {
               <span>CONNEXION</span>
             </Link>
           </nav>
+
 
           {/* Mobile actions */}
           <div className="md:hidden flex items-center gap-3 text-bone">
@@ -71,8 +105,10 @@ export function Header() {
               { to: "/services", label: "SERVICES" },
               { to: "/a-propos", label: "À PROPOS" },
               { to: "/contact", label: "CONTACT" },
+              ...(isAdmin ? [{ to: "/admin", label: "ADMIN" }] : []),
               { to: "/login", label: "ESPACE CLIENT" },
             ].map((item, i) => (
+
               <Link
                 key={item.to}
                 to={item.to}
