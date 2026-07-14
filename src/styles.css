@@ -22,6 +22,9 @@
   --color-violet: var(--violet);
   --color-violet-hover: var(--violet-hover);
   --color-btn-blue: var(--btn-blue);
+  --color-button-base: var(--button-base);
+  --color-button-base-hover: var(--button-base-hover);
+
 
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
