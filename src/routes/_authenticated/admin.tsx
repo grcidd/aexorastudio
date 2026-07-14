@@ -63,10 +63,11 @@ function AdminPage() {
           </div>
           <button
             onClick={() => setShowForm(!showForm)}
-            className="bg-violet text-btn-blue label-mono text-[10px] tracking-widest px-5 py-3 hover:bg-violet-hover flex items-center gap-2"
+            className="bg-button-base text-bone label-mono text-[10px] tracking-widest px-5 py-3 hover:bg-button-base-hover flex items-center gap-2"
           >
             <Plus size={14} strokeWidth={1.5} /> {showForm ? "ANNULER" : "NOUVEAU PROJET"}
           </button>
+
         </div>
 
         {showForm && <NewProjectForm onDone={() => { setShowForm(false); qc.invalidateQueries({ queryKey: ["all-projects"] }); }} />}
