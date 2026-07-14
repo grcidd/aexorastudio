@@ -164,12 +164,13 @@ function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-violet text-btn-blue label-mono text-[11px] tracking-widest py-4 hover:bg-violet-hover transition-colors disabled:opacity-50"
+              className="w-full bg-button-base text-bone label-mono text-[11px] tracking-widest py-4 hover:bg-button-base-hover transition-colors disabled:opacity-50"
             >
               {loading
                 ? (isSignup ? "CRÉATION..." : "CONNEXION...")
-                : (isSignup ? "CRÉER MON COMPTE" : "SE CONNECTER")}
+                : (isSignup ? "CRÉER MON COMPTEX" : "SE CONNECTER")}
             </button>
+
           </form>
 
           <p className="text-xs text-ink/60 mt-8 text-center">
