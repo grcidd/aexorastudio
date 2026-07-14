@@ -277,9 +277,10 @@ export function StageRow({
                 placeholder="Écrire un message..."
                 className="w-full border border-ink/30 bg-transparent p-3 text-sm outline-none focus:border-plum min-h-[80px]"
               />
-              <button type="submit" className="label-mono text-[10px] tracking-widest bg-violet text-btn-blue px-4 py-2 hover:bg-violet-hover transition-colors">
+              <button type="submit" className="label-mono text-[10px] tracking-widest bg-button-base text-bone px-4 py-2 hover:bg-button-base-hover transition-colors">
                 ENVOYER
               </button>
+
             </form>
           </div>
         </div>
