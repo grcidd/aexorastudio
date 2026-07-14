@@ -188,7 +188,6 @@ export const validateStage = createServerFn({ method: "POST" })
 
     // Advance next stage to in_progress
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    await supabaseAdmin.rpc as unknown;
     const { data: stages } = await supabaseAdmin
       .from("project_stages")
       .select("id, stage_order, status")
