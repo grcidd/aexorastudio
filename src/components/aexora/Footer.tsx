@@ -1,4 +1,5 @@
 import { Instagram, Linkedin } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import logoDark from "@/assets/aexora-logo-dark.png.asset.json";
 
 export function Footer() {
@@ -37,8 +38,9 @@ export function Footer() {
             <Linkedin size={20} strokeWidth={1.25} />
           </a>
         </div>
-        <div className="label-mono text-[10px]">
-          © {new Date().getFullYear()} — TOUS DROITS RÉSERVÉS
+        <div className="label-mono text-[10px] flex flex-col md:items-end gap-1">
+          <Link to="/login" className="hover:text-plum">ESPACE CLIENT →</Link>
+          <span>© {new Date().getFullYear()} — TOUS DROITS RÉSERVÉS</span>
         </div>
       </div>
     </footer>

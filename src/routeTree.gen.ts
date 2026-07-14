@@ -11,10 +11,14 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ProjetsRouteImport } from './routes/projets'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AProposRouteImport } from './routes/a-propos'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EmailUnsubscribeRouteImport } from './routes/email/unsubscribe'
+import { Route as AuthenticatedEspaceClientRouteImport } from './routes/_authenticated/espace-client'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
 import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
@@ -22,6 +26,7 @@ import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/e
 import { Route as LovableEmailAuthWebhookRouteImport } from './routes/lovable/email/auth/webhook'
 import { Route as LovableEmailAuthPreviewRouteImport } from './routes/lovable/email/auth/preview'
 import { Route as ApiPublicContactSubmitRouteImport } from './routes/api/public/contact/submit'
+import { Route as AuthenticatedAdminProjetsIdRouteImport } from './routes/_authenticated/admin.projets.$id'
 
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
@@ -31,6 +36,11 @@ const ServicesRoute = ServicesRouteImport.update({
 const ProjetsRoute = ProjetsRouteImport.update({
   id: '/projets',
   path: '/projets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -43,6 +53,10 @@ const AProposRoute = AProposRouteImport.update({
   path: '/a-propos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -52,6 +66,17 @@ const EmailUnsubscribeRoute = EmailUnsubscribeRouteImport.update({
   id: '/email/unsubscribe',
   path: '/email/unsubscribe',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedEspaceClientRoute =
+  AuthenticatedEspaceClientRouteImport.update({
+    id: '/espace-client',
+    path: '/espace-client',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const LovableEmailSuppressionRoute = LovableEmailSuppressionRouteImport.update({
   id: '/lovable/email/suppression',
@@ -91,15 +116,25 @@ const ApiPublicContactSubmitRoute = ApiPublicContactSubmitRouteImport.update({
   path: '/api/public/contact/submit',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminProjetsIdRoute =
+  AuthenticatedAdminProjetsIdRouteImport.update({
+    id: '/projets/$id',
+    path: '/projets/$id',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
   '/contact': typeof ContactRoute
+  '/login': typeof LoginRoute
   '/projets': typeof ProjetsRoute
   '/services': typeof ServicesRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/espace-client': typeof AuthenticatedEspaceClientRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/admin/projets/$id': typeof AuthenticatedAdminProjetsIdRoute
   '/api/public/contact/submit': typeof ApiPublicContactSubmitRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
@@ -111,10 +146,14 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
   '/contact': typeof ContactRoute
+  '/login': typeof LoginRoute
   '/projets': typeof ProjetsRoute
   '/services': typeof ServicesRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/espace-client': typeof AuthenticatedEspaceClientRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/admin/projets/$id': typeof AuthenticatedAdminProjetsIdRoute
   '/api/public/contact/submit': typeof ApiPublicContactSubmitRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
@@ -125,12 +164,17 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/a-propos': typeof AProposRoute
   '/contact': typeof ContactRoute
+  '/login': typeof LoginRoute
   '/projets': typeof ProjetsRoute
   '/services': typeof ServicesRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/_authenticated/espace-client': typeof AuthenticatedEspaceClientRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/_authenticated/admin/projets/$id': typeof AuthenticatedAdminProjetsIdRoute
   '/api/public/contact/submit': typeof ApiPublicContactSubmitRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
   '/lovable/email/auth/webhook': typeof LovableEmailAuthWebhookRoute
@@ -144,10 +188,14 @@ export interface FileRouteTypes {
     | '/'
     | '/a-propos'
     | '/contact'
+    | '/login'
     | '/projets'
     | '/services'
+    | '/admin'
+    | '/espace-client'
     | '/email/unsubscribe'
     | '/lovable/email/suppression'
+    | '/admin/projets/$id'
     | '/api/public/contact/submit'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
@@ -159,10 +207,14 @@ export interface FileRouteTypes {
     | '/'
     | '/a-propos'
     | '/contact'
+    | '/login'
     | '/projets'
     | '/services'
+    | '/admin'
+    | '/espace-client'
     | '/email/unsubscribe'
     | '/lovable/email/suppression'
+    | '/admin/projets/$id'
     | '/api/public/contact/submit'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
@@ -172,12 +224,17 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/a-propos'
     | '/contact'
+    | '/login'
     | '/projets'
     | '/services'
+    | '/_authenticated/admin'
+    | '/_authenticated/espace-client'
     | '/email/unsubscribe'
     | '/lovable/email/suppression'
+    | '/_authenticated/admin/projets/$id'
     | '/api/public/contact/submit'
     | '/lovable/email/auth/preview'
     | '/lovable/email/auth/webhook'
@@ -188,8 +245,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AProposRoute: typeof AProposRoute
   ContactRoute: typeof ContactRoute
+  LoginRoute: typeof LoginRoute
   ProjetsRoute: typeof ProjetsRoute
   ServicesRoute: typeof ServicesRoute
   EmailUnsubscribeRoute: typeof EmailUnsubscribeRoute
@@ -218,6 +277,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjetsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -230,6 +296,13 @@ declare module '@tanstack/react-router' {
       path: '/a-propos'
       fullPath: '/a-propos'
       preLoaderRoute: typeof AProposRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -245,6 +318,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/email/unsubscribe'
       preLoaderRoute: typeof EmailUnsubscribeRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/espace-client': {
+      id: '/_authenticated/espace-client'
+      path: '/espace-client'
+      fullPath: '/espace-client'
+      preLoaderRoute: typeof AuthenticatedEspaceClientRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/lovable/email/suppression': {
       id: '/lovable/email/suppression'
@@ -295,13 +382,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicContactSubmitRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/projets/$id': {
+      id: '/_authenticated/admin/projets/$id'
+      path: '/projets/$id'
+      fullPath: '/admin/projets/$id'
+      preLoaderRoute: typeof AuthenticatedAdminProjetsIdRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
   }
 }
 
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminProjetsIdRoute: typeof AuthenticatedAdminProjetsIdRoute
+}
+
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminProjetsIdRoute: AuthenticatedAdminProjetsIdRoute,
+}
+
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
+  AuthenticatedEspaceClientRoute: typeof AuthenticatedEspaceClientRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
+  AuthenticatedEspaceClientRoute: AuthenticatedEspaceClientRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AProposRoute: AProposRoute,
   ContactRoute: ContactRoute,
+  LoginRoute: LoginRoute,
   ProjetsRoute: ProjetsRoute,
   ServicesRoute: ServicesRoute,
   EmailUnsubscribeRoute: EmailUnsubscribeRoute,
@@ -316,13 +436,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
