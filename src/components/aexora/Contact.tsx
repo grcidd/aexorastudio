@@ -99,7 +99,7 @@ export function Contact() {
             <button
               type="button"
               onClick={() => setSent(false)}
-              className="mt-4 bg-transparent text-bone label-mono text-[11px] py-4 px-6 border border-lavender/20 hover:bg-lavender hover:text-ink transition-colors"
+              className="mt-4 bg-violet text-btn-blue label-mono text-[11px] py-4 px-6 hover:bg-violet-hover transition-colors"
             >
               ENVOYER UNE AUTRE DEMANDE ↗
             </button>
@@ -150,7 +150,7 @@ export function Contact() {
           <button
             type="submit"
             disabled={submitting}
-            className="mt-4 bg-transparent text-bone label-mono text-[11px] py-5 border border-lavender/20 hover:bg-lavender hover:text-ink transition-colors disabled:opacity-50"
+            className="mt-4 bg-violet text-btn-blue label-mono text-[11px] py-5 hover:bg-violet-hover transition-colors disabled:opacity-50"
           >
             {submitting ? "ENVOI…" : "ENVOYER LA DEMANDE ↗"}
           </button>
