@@ -245,7 +245,7 @@ export function StageRow({
               <button
                 onClick={onValidate}
                 disabled={validating}
-                className="w-full mt-6 bg-ink text-bone label-mono text-[11px] tracking-widest py-4 hover:bg-plum transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                className="w-full mt-6 bg-violet text-btn-blue label-mono text-[11px] tracking-widest py-4 hover:bg-violet-hover transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 <Check size={14} strokeWidth={1.5} /> {validating ? "VALIDATION..." : "VALIDER CETTE ÉTAPE"}
               </button>
@@ -276,7 +276,7 @@ export function StageRow({
                 placeholder="Écrire un message..."
                 className="w-full border border-ink/30 bg-transparent p-3 text-sm outline-none focus:border-plum min-h-[80px]"
               />
-              <button type="submit" className="label-mono text-[10px] tracking-widest border border-ink px-4 py-2 hover:bg-ink hover:text-bone transition-colors">
+              <button type="submit" className="label-mono text-[10px] tracking-widest bg-violet text-btn-blue px-4 py-2 hover:bg-violet-hover transition-colors">
                 ENVOYER
               </button>
             </form>

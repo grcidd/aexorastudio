@@ -63,7 +63,7 @@ function AdminPage() {
           </div>
           <button
             onClick={() => setShowForm(!showForm)}
-            className="bg-ink text-bone label-mono text-[10px] tracking-widest px-5 py-3 hover:bg-plum flex items-center gap-2"
+            className="bg-violet text-btn-blue label-mono text-[10px] tracking-widest px-5 py-3 hover:bg-violet-hover flex items-center gap-2"
           >
             <Plus size={14} strokeWidth={1.5} /> {showForm ? "ANNULER" : "NOUVEAU PROJET"}
           </button>
@@ -136,7 +136,7 @@ function NewProjectForm({ onDone }: { onDone: () => void }) {
               <br /><span className="text-xs text-ink/60">(Envoyé au client par email — notez-le en cas de besoin.)</span>
             </p>
           )}
-          <button onClick={() => setResult(null)} className="label-mono text-[10px] tracking-widest mt-4 border border-ink px-4 py-2 hover:bg-ink hover:text-bone">
+          <button onClick={() => setResult(null)} className="label-mono text-[10px] tracking-widest mt-4 bg-violet text-btn-blue px-4 py-2 hover:bg-violet-hover">
             FERMER
           </button>
         </div>
@@ -160,7 +160,7 @@ function NewProjectForm({ onDone }: { onDone: () => void }) {
           </div>
           {error && <p className="md:col-span-2 text-sm text-red-700">{error}</p>}
           <div className="md:col-span-2">
-            <button type="submit" disabled={loading} className="bg-ink text-bone label-mono text-[11px] tracking-widest px-6 py-3 hover:bg-plum disabled:opacity-50">
+            <button type="submit" disabled={loading} className="bg-violet text-btn-blue label-mono text-[11px] tracking-widest px-6 py-3 hover:bg-violet-hover disabled:opacity-50">
               {loading ? "CRÉATION..." : "CRÉER LE PROJET & ENVOYER L'INVITATION"}
             </button>
           </div>
