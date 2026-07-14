@@ -1,4 +1,5 @@
 import { Instagram, Linkedin } from "lucide-react";
+import logoDark from "@/assets/aexora-logo-dark.png.asset.json";
 
 export function Footer() {
   return (

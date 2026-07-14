@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, Instagram, Linkedin } from "lucide-react";
+import logoLight from "@/assets/aexora-logo-light.png.asset.json";
 
 export function Header() {
   const [open, setOpen] = useState(false);
