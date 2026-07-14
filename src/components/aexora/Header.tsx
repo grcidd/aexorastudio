@@ -61,6 +61,9 @@ export function Header() {
             <Link to="/services" className="hover:opacity-60 transition">SERVICES</Link>
             <Link to="/a-propos" className="hover:opacity-60 transition">À PROPOS</Link>
             <Link to="/contact" className="hover:opacity-60 transition">CONTACT</Link>
+            {isAdmin && (
+              <Link to="/admin" className="hover:opacity-60 transition">ADMIN</Link>
+            )}
             <Link
               to="/login"
               aria-label="Espace client"
@@ -70,6 +73,7 @@ export function Header() {
               <span>CONNEXION</span>
             </Link>
           </nav>
+
 
           {/* Mobile actions */}
           <div className="md:hidden flex items-center gap-3 text-bone">
