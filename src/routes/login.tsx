@@ -168,8 +168,9 @@ function LoginPage() {
             >
               {loading
                 ? (isSignup ? "CRÉATION..." : "CONNEXION...")
-                : (isSignup ? "CRÉER MON COMPTEX" : "SE CONNECTER")}
+                : (isSignup ? "CRÉER MON COMPTE" : "SE CONNECTER")}
             </button>
+
 
           </form>
 
