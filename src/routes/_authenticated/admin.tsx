@@ -137,9 +137,10 @@ function NewProjectForm({ onDone }: { onDone: () => void }) {
               <br /><span className="text-xs text-ink/60">(Envoyé au client par email — notez-le en cas de besoin.)</span>
             </p>
           )}
-          <button onClick={() => setResult(null)} className="label-mono text-[10px] tracking-widest mt-4 bg-violet text-btn-blue px-4 py-2 hover:bg-violet-hover">
+          <button onClick={() => setResult(null)} className="label-mono text-[10px] tracking-widest mt-4 bg-button-base text-bone px-4 py-2 hover:bg-button-base-hover">
             FERMER
           </button>
+
         </div>
       ) : (
         <form onSubmit={onSubmit} className="grid md:grid-cols-2 gap-4">
