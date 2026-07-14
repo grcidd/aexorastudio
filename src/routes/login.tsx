@@ -115,26 +115,28 @@ function LoginPage() {
               ESPACE CLIENT
             </div>
             <h1 className="font-display text-4xl leading-tight">
-              {isSignup ? "Créer un compte" : "Connexion"}
+              {isForgot ? "Mot de passe oublié" : isSignup ? "Créer un compte" : "Connexion"}
             </h1>
           </div>
 
-          <div className="flex label-mono text-[10px] tracking-widest border border-button-base mb-8">
-            <button
-              type="button"
-              onClick={() => { setMode("signin"); setError(null); setInfo(null); }}
-              className={`flex-1 py-3 transition-colors ${!isSignup ? "bg-button-base text-bone" : "hover:bg-button-base/10 text-button-base"}`}
-            >
-              SE CONNECTER
-            </button>
-            <button
-              type="button"
-              onClick={() => { setMode("signup"); setError(null); setInfo(null); }}
-              className={`flex-1 py-3 transition-colors ${isSignup ? "bg-button-base text-bone" : "hover:bg-button-base/10 text-button-base"}`}
-            >
-              S'INSCRIRE
-            </button>
-          </div>
+          {!isForgot && (
+            <div className="flex label-mono text-[10px] tracking-widest border border-button-base mb-8">
+              <button
+                type="button"
+                onClick={() => { setMode("signin"); setError(null); setInfo(null); }}
+                className={`flex-1 py-3 transition-colors ${!isSignup ? "bg-button-base text-bone" : "hover:bg-button-base/10 text-button-base"}`}
+              >
+                SE CONNECTER
+              </button>
+              <button
+                type="button"
+                onClick={() => { setMode("signup"); setError(null); setInfo(null); }}
+                className={`flex-1 py-3 transition-colors ${isSignup ? "bg-button-base text-bone" : "hover:bg-button-base/10 text-button-base"}`}
+              >
+                S'INSCRIRE
+              </button>
+            </div>
+          )}
 
 
           <form onSubmit={onSubmit} className="space-y-5">
@@ -160,20 +162,31 @@ function LoginPage() {
                 className="w-full bg-transparent border-b border-ink py-2 outline-none focus:border-plum"
               />
             </div>
-            <div>
-              <label className="label-mono text-[10px] tracking-widest block mb-2">MOT DE PASSE</label>
-              <input
-                type="password"
-                required
-                minLength={isSignup ? 8 : undefined}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-transparent border-b border-ink py-2 outline-none focus:border-plum"
-              />
-              {isSignup && (
-                <p className="text-[11px] text-ink/60 mt-2">Minimum 8 caractères.</p>
-              )}
-            </div>
+            {!isForgot && (
+              <div>
+                <label className="label-mono text-[10px] tracking-widest block mb-2">MOT DE PASSE</label>
+                <input
+                  type="password"
+                  required
+                  minLength={isSignup ? 8 : undefined}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full bg-transparent border-b border-ink py-2 outline-none focus:border-plum"
+                />
+                {isSignup && (
+                  <p className="text-[11px] text-ink/60 mt-2">Minimum 8 caractères.</p>
+                )}
+                {!isSignup && (
+                  <button
+                    type="button"
+                    onClick={() => { setMode("forgot"); setError(null); setInfo(null); }}
+                    className="label-mono text-[10px] tracking-widest text-ink/60 hover:text-plum mt-3"
+                  >
+                    MOT DE PASSE OUBLIÉ ?
+                  </button>
+                )}
+              </div>
+            )}
             {error && <p className="text-sm text-red-700">{error}</p>}
             {info && <p className="text-sm text-ink/80">{info}</p>}
             <button
@@ -182,15 +195,23 @@ function LoginPage() {
               className="w-full bg-button-base text-bone label-mono text-[11px] tracking-widest py-4 hover:bg-button-base-hover transition-colors disabled:opacity-50"
             >
               {loading
-                ? (isSignup ? "CRÉATION..." : "CONNEXION...")
-                : (isSignup ? "CRÉER MON COMPTE" : "SE CONNECTER")}
+                ? (isForgot ? "ENVOI..." : isSignup ? "CRÉATION..." : "CONNEXION...")
+                : (isForgot ? "ENVOYER LE LIEN" : isSignup ? "CRÉER MON COMPTE" : "SE CONNECTER")}
             </button>
 
 
           </form>
 
           <p className="text-xs text-ink/60 mt-8 text-center">
-            {isSignup
+            {isForgot ? (
+              <button
+                type="button"
+                onClick={() => { setMode("signin"); setError(null); setInfo(null); }}
+                className="hover:text-plum underline"
+              >
+                ← Retour à la connexion
+              </button>
+            ) : isSignup
               ? "En créant un compte, vous accédez à votre espace pour suivre vos projets."
               : "Pas encore de compte ? Cliquez sur S'INSCRIRE ci-dessus."}
           </p>
