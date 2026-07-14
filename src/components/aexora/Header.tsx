@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X, Instagram, Linkedin } from "lucide-react";
+import { Menu, X, Instagram, Linkedin, UserRound } from "lucide-react";
 import logoLight from "@/assets/aexora-logo-light.png.asset.json";
 
 export function Header() {
@@ -27,22 +27,35 @@ export function Header() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex gap-10 label-mono text-[11px] text-bone">
+          <nav className="hidden md:flex items-center gap-10 label-mono text-[11px] text-bone">
             <Link to="/services" className="hover:opacity-60 transition">SERVICES</Link>
             <Link to="/a-propos" className="hover:opacity-60 transition">À PROPOS</Link>
             <Link to="/contact" className="hover:opacity-60 transition">CONTACT</Link>
+            <Link
+              to="/login"
+              aria-label="Espace client"
+              className="flex items-center gap-2 hover:opacity-60 transition"
+            >
+              <UserRound size={18} strokeWidth={1.25} />
+              <span>CONNEXION</span>
+            </Link>
           </nav>
 
-          {/* Mobile burger */}
-          <button
-            type="button"
-            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
-            className="md:hidden text-bone p-1"
-          >
-            {open ? <X size={26} strokeWidth={1.25} /> : <Menu size={26} strokeWidth={1.25} />}
-          </button>
+          {/* Mobile actions */}
+          <div className="md:hidden flex items-center gap-3 text-bone">
+            <Link to="/login" aria-label="Espace client" onClick={() => setOpen(false)} className="p-1">
+              <UserRound size={24} strokeWidth={1.25} />
+            </Link>
+            <button
+              type="button"
+              aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+              aria-expanded={open}
+              onClick={() => setOpen((v) => !v)}
+              className="p-1"
+            >
+              {open ? <X size={26} strokeWidth={1.25} /> : <Menu size={26} strokeWidth={1.25} />}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -58,6 +71,7 @@ export function Header() {
               { to: "/services", label: "SERVICES" },
               { to: "/a-propos", label: "À PROPOS" },
               { to: "/contact", label: "CONTACT" },
+              { to: "/login", label: "ESPACE CLIENT" },
             ].map((item, i) => (
               <Link
                 key={item.to}
