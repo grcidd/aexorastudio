@@ -10,6 +10,7 @@ const inputBase =
 
 export function Contact() {
   const [submitting, setSubmitting] = useState(false);
+  const [sent, setSent] = useState(false);
   const [form, setForm] = useState({
     name: "", email: "", company: "", website: "",
     looking: "", project: "", budget: "", start: "",
