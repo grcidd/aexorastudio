@@ -549,12 +549,24 @@ function DocRow({
               </button>
             </>
           )}
-          <button
-            onClick={download}
-            className="label-mono text-[10px] tracking-widest bg-button-base text-bone px-3 py-2 hover:bg-button-base-hover flex items-center gap-1"
-          >
-            <Download size={12} strokeWidth={1.25} /> TÉLÉCHARGER
-          </button>
+          {isLink ? (
+            <a
+              href={doc.link_url!}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="label-mono text-[10px] tracking-widest bg-button-base text-bone px-3 py-2 hover:bg-button-base-hover flex items-center gap-1"
+            >
+              <ExternalLink size={12} strokeWidth={1.25} /> VISITER
+            </a>
+          ) : (
+            <button
+              onClick={download}
+              className="label-mono text-[10px] tracking-widest bg-button-base text-bone px-3 py-2 hover:bg-button-base-hover flex items-center gap-1"
+            >
+              <Download size={12} strokeWidth={1.25} /> TÉLÉCHARGER
+            </button>
+          )}
+
         </div>
       </div>
     </li>
