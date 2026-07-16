@@ -358,6 +358,7 @@ function DocRow({
   const [saving, setSaving] = useState(false);
 
   async function download() {
+    if (!doc.storage_path) return;
     try {
       const { url } = await getFileUrl({ data: { path: doc.storage_path } });
       const a = document.createElement("a");
@@ -371,6 +372,7 @@ function DocRow({
       alert("Erreur : " + e.message);
     }
   }
+
 
   async function save() {
     setSaving(true);
