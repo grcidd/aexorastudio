@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { getMyRole, createClientProject } from "@/lib/portal.functions";
 import { LogOut, Plus } from "lucide-react";
 
-export const Route = createFileRoute("/_authenticated/admin")({
+export const Route = createFileRoute("/_authenticated/admin/")({
   head: () => ({ meta: [{ title: "Admin — Aexora" }, { name: "robots", content: "noindex" }] }),
   component: AdminPage,
 });
