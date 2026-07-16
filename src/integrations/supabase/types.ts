@@ -164,6 +164,68 @@ export type Database = {
         }
         Relationships: []
       }
+      project_documents: {
+        Row: {
+          amount: number | null
+          category: string
+          created_at: string
+          description: string | null
+          file_name: string
+          file_size: number | null
+          id: string
+          mime_type: string | null
+          project_id: string
+          seen_by_client_at: string | null
+          status: string
+          storage_path: string
+          updated_at: string
+          uploaded_by: string | null
+          visible_to_client: boolean
+        }
+        Insert: {
+          amount?: number | null
+          category: string
+          created_at?: string
+          description?: string | null
+          file_name: string
+          file_size?: number | null
+          id?: string
+          mime_type?: string | null
+          project_id: string
+          seen_by_client_at?: string | null
+          status?: string
+          storage_path: string
+          updated_at?: string
+          uploaded_by?: string | null
+          visible_to_client?: boolean
+        }
+        Update: {
+          amount?: number | null
+          category?: string
+          created_at?: string
+          description?: string | null
+          file_name?: string
+          file_size?: number | null
+          id?: string
+          mime_type?: string | null
+          project_id?: string
+          seen_by_client_at?: string | null
+          status?: string
+          storage_path?: string
+          updated_at?: string
+          uploaded_by?: string | null
+          visible_to_client?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_documents_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       project_stages: {
         Row: {
           created_at: string
