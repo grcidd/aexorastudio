@@ -111,11 +111,21 @@ function AdminPage() {
   );
 }
 
+const SERVICE_OPTIONS = [
+  { value: "web-luxe", label: "Sites Web Luxe" },
+  { value: "visual-ia", label: "Production Visuelle IA" },
+  { value: "acquisition", label: "Acquisition & Analytics" },
+  { value: "automation-ia", label: "Automatisation Agents IA" },
+] as const;
+
+type ServiceType = (typeof SERVICE_OPTIONS)[number]["value"];
+
 function NewProjectForm({ onDone }: { onDone: () => void }) {
   const [clientName, setClientName] = useState("");
   const [clientEmail, setClientEmail] = useState("");
   const [projectName, setProjectName] = useState("");
   const [description, setDescription] = useState("");
+  const [serviceType, setServiceType] = useState<ServiceType>("web-luxe");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<{ tempPassword: string | null } | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -126,10 +136,10 @@ function NewProjectForm({ onDone }: { onDone: () => void }) {
     setError(null);
     try {
       const r = await createClientProject({
-        data: { clientName, clientEmail, projectName, description },
+        data: { clientName, clientEmail, projectName, description, serviceType },
       });
       setResult({ tempPassword: r.tempPassword });
-      setClientName(""); setClientEmail(""); setProjectName(""); setDescription("");
+      setClientName(""); setClientEmail(""); setProjectName(""); setDescription(""); setServiceType("web-luxe");
       onDone();
     } catch (e: any) {
       setError(e.message || "Erreur");
@@ -168,6 +178,28 @@ function NewProjectForm({ onDone }: { onDone: () => void }) {
           <div className="md:col-span-2">
             <label className="label-mono text-[10px] tracking-widest block mb-2">NOM DU PROJET</label>
             <input required value={projectName} onChange={(e) => setProjectName(e.target.value)} className="w-full bg-transparent border-b border-ink py-2 outline-none focus:border-plum" />
+          </div>
+          <div className="md:col-span-2">
+            <label className="label-mono text-[10px] tracking-widest block mb-2">TYPE DE SERVICE</label>
+            <div className="grid sm:grid-cols-2 gap-2 mt-1">
+              {SERVICE_OPTIONS.map((opt) => {
+                const active = serviceType === opt.value;
+                return (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setServiceType(opt.value)}
+                    className={`text-left px-4 py-3 border transition-colors label-mono text-[11px] tracking-widest ${
+                      active
+                        ? "border-plum bg-plum/10 text-plum"
+                        : "border-ink/30 hover:border-ink"
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
           <div className="md:col-span-2">
             <label className="label-mono text-[10px] tracking-widest block mb-2">DESCRIPTION (OPTIONNEL)</label>
