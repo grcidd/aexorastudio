@@ -468,6 +468,7 @@ export const updateProjectDocument = createServerFn({ method: "POST" })
     status?: string;
     amount?: number | null;
     description?: string | null;
+    linkUrl?: string | null;
     visibleToClient?: boolean;
   }) =>
     z.object({
@@ -476,6 +477,7 @@ export const updateProjectDocument = createServerFn({ method: "POST" })
       status: z.string().max(50).optional(),
       amount: z.number().nullable().optional(),
       description: z.string().max(1000).nullable().optional(),
+      linkUrl: z.string().url().max(2000).nullable().optional(),
       visibleToClient: z.boolean().optional(),
     }).parse(input),
   )
@@ -492,7 +494,9 @@ export const updateProjectDocument = createServerFn({ method: "POST" })
     if (data.status !== undefined) patch.status = data.status;
     if (data.amount !== undefined) patch.amount = data.amount;
     if (data.description !== undefined) patch.description = data.description;
+    if (data.linkUrl !== undefined) patch.link_url = data.linkUrl;
     if (data.visibleToClient !== undefined) patch.visible_to_client = data.visibleToClient;
+
     if (data.visibleToClient === true && !prev?.visible_to_client) {
       // Reset seen state so client sees it as new
       patch.seen_by_client_at = null;
