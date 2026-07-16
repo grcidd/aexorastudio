@@ -103,13 +103,14 @@ export const getMyRole = createServerFn({ method: "GET" })
 // -----------------------------------------------------------------------------
 export const createClientProject = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { clientEmail: string; clientName: string; projectName: string; description?: string }) =>
+  .inputValidator((input: { clientEmail: string; clientName: string; projectName: string; description?: string; serviceType: string }) =>
     z
       .object({
         clientEmail: z.string().email(),
         clientName: z.string().min(1).max(200),
         projectName: z.string().min(1).max(200),
         description: z.string().max(2000).optional(),
+        serviceType: z.enum(["web-luxe", "visual-ia", "acquisition", "automation-ia"]),
       })
       .parse(input),
   )
@@ -156,13 +157,14 @@ export const createClientProject = createServerFn({ method: "POST" })
         .upsert({ id: userId, email, full_name: data.clientName }, { onConflict: "id" });
     }
 
-    // Create project (stages are auto-seeded by trigger)
+    // Create project (stages are auto-seeded by trigger based on service_type)
     const { data: project, error: projErr } = await supabaseAdmin
       .from("projects")
       .insert({
         client_id: userId,
         name: data.projectName,
         description: data.description || null,
+        service_type: data.serviceType,
       })
       .select()
       .single();
