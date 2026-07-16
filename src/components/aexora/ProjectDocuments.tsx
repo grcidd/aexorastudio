@@ -434,7 +434,8 @@ function DocRow({
           )}
           <div className="label-mono text-[10px] text-ink/60 mt-1 flex flex-wrap gap-x-3 gap-y-1">
             <span>{new Date(doc.created_at).toLocaleDateString("fr-FR")}</span>
-            <span>{formatSize(doc.file_size)}</span>
+            {isLink ? <span className="text-plum">LIEN</span> : <span>{formatSize(doc.file_size)}</span>}
+
             {editing && isAdmin ? (
               <select
                 value={status}
