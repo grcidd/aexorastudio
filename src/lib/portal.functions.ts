@@ -326,210 +326,50 @@ const CATEGORY_LABELS: Record<string, string> = {
   autre: "Autre",
 };
 
-const MAX_INLINE_BYTES = 10 * 1024 * 1024;      // 10 Mo/file → attach
-const MAX_TOTAL_ATTACH_BYTES = 25 * 1024 * 1024; // 25 Mo total → fallback to link
-const SIGNED_URL_TTL = 60 * 60 * 24 * 7;         // 7 days
-const RESEND_FROM = "AEXORA Studio <notifications@aexorastudio.com>";
-
-function categoryOfMime(mime: string | null | undefined): "image" | "video" | "pdf" | "other" {
-  const m = (mime || "").toLowerCase();
-  if (m.startsWith("image/")) return "image";
-  if (m.startsWith("video/")) return "video";
-  if (m === "application/pdf") return "pdf";
-  return "other";
-}
-
-function arrayBufferToBase64(buf: ArrayBuffer): string {
-  const bytes = new Uint8Array(buf);
-  let binary = "";
-  const chunk = 0x8000;
-  for (let i = 0; i < bytes.length; i += chunk) {
-    binary += String.fromCharCode.apply(null, Array.from(bytes.subarray(i, i + chunk)) as any);
-  }
-  return btoa(binary);
-}
-
 async function notifyClientDocumentAvailable(docId: string) {
   try {
-    const apiKey = process.env.RESEND_API_KEY;
-    if (!apiKey) {
-      console.error("RESEND_API_KEY missing");
-      return { notified: false };
-    }
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: doc } = await supabaseAdmin
       .from("project_documents")
-      .select("id, file_name, category, mime_type, file_size, storage_path, link_url, project_id, projects(name, client_id, profiles!projects_client_id_profiles_fkey(email, full_name))")
+      .select("id, file_name, category, project_id, projects(name, client_id, profiles!projects_client_id_profiles_fkey(email, full_name))")
       .eq("id", docId)
       .maybeSingle();
     if (!doc) return { notified: false };
     const project: any = (doc as any).projects;
     const client: any = project?.profiles;
-    const recipient: string | undefined = client?.email;
+    const recipient = client?.email;
     if (!recipient) return { notified: false };
-
-    const { data: suppressed } = await supabaseAdmin
-      .from("suppressed_emails")
-      .select("id")
-      .eq("email", recipient.toLowerCase())
-      .maybeSingle();
-    if (suppressed) return { notified: false };
 
     const firstName = (client?.full_name || "").split(" ")[0] || "";
     const projectName = project?.name || "";
-    const fileName: string = (doc as any).file_name;
-    const catKey: string = (doc as any).category;
-    const catLabel = CATEGORY_LABELS[catKey] || "Document";
-    const mime: string | null = (doc as any).mime_type;
-    const fileSize: number | null = (doc as any).file_size;
-    const storagePath: string | null = (doc as any).storage_path;
-    const linkUrl: string | null = (doc as any).link_url;
-    const kind = categoryOfMime(mime);
+    const catLabel = CATEGORY_LABELS[(doc as any).category] || "Document";
     const dateStr = new Date().toLocaleDateString("fr-FR", {
       day: "2-digit", month: "long", year: "numeric",
     });
     const ctaUrl = `${PUBLIC_URL}/espace-client`;
 
-    let attachments: Array<{ filename: string; content: string; content_type?: string; content_id?: string; disposition?: string }> = [];
-    let inlineImageCid: string | null = null;
-    let signedUrl: string | null = null;
-    let attachedInline = false;
-
-    const shouldTryAttach =
-      !!storagePath &&
-      (catKey === "contrat" || catKey === "devis" ||
-       (catKey === "livrable" && (fileSize == null || fileSize < MAX_INLINE_BYTES)));
-
-    if (shouldTryAttach && storagePath) {
-      try {
-        const { data: blob, error: dlErr } = await supabaseAdmin.storage
-          .from("project-files")
-          .download(storagePath);
-        if (!dlErr && blob) {
-          const buf = await blob.arrayBuffer();
-          if (buf.byteLength <= MAX_TOTAL_ATTACH_BYTES) {
-            const b64 = arrayBufferToBase64(buf);
-            const cid = `doc-${docId}`;
-            const isInlineImage = kind === "image";
-            attachments.push({
-              filename: fileName,
-              content: b64,
-              content_type: mime || "application/octet-stream",
-              ...(isInlineImage ? { content_id: cid, disposition: "inline" } : {}),
-            });
-            if (isInlineImage) inlineImageCid = cid;
-            attachedInline = true;
-          }
-        }
-      } catch (e) {
-        console.error("attach download failed", e);
-      }
-    }
-
-    if (!attachedInline && storagePath) {
-      const { data: sig } = await supabaseAdmin.storage
-        .from("project-files")
-        .createSignedUrl(storagePath, SIGNED_URL_TTL, { download: fileName });
-      signedUrl = sig?.signedUrl || null;
-    }
-
-    let previewHtml = "";
-    if (attachedInline && inlineImageCid) {
-      previewHtml = `<div style="margin:20px 0;text-align:center;">
-        <img src="cid:${inlineImageCid}" alt="${fileName}" style="max-width:100%;height:auto;border:1px solid #e5e0d8;" />
-      </div>`;
-    } else if (kind === "video") {
-      previewHtml = `<div style="margin:20px 0;text-align:center;">
-        <a href="${ctaUrl}" style="display:inline-block;text-decoration:none;">
-          <div style="width:100%;max-width:420px;background:#2e1f26;color:#f4ece0;padding:60px 20px;font-family:'Bodoni Moda',Georgia,serif;font-size:16px;">▶ &nbsp;Voir la vidéo</div>
-        </a>
-      </div>`;
-    } else if (kind === "pdf") {
-      previewHtml = `<div style="margin:20px 0;padding:20px;background:#f4ece0;color:#2e1f26;font-family:Georgia,serif;font-size:13px;text-align:center;border:1px solid #e5e0d8;">📄 Document PDF — ${fileName}</div>`;
-    }
-
-    const downloadBtn = signedUrl
-      ? `<p style="margin:20px 0;text-align:center;">
-          <a href="${signedUrl}" style="display:inline-block;padding:14px 28px;background:#2e1f26;color:#f4ece0;text-decoration:none;font-family:'Jura',monospace;font-size:11px;letter-spacing:0.15em;">TÉLÉCHARGER LE FICHIER</a>
-          <br /><span style="font-family:'Jura',monospace;font-size:10px;color:#8a7a70;letter-spacing:0.1em;">LIEN VALABLE 7 JOURS</span>
-        </p>`
-      : "";
-
-    const attachedNote = attachedInline
-      ? `<p style="font-size:14px;color:#4a3a3a;text-align:center;margin:16px 0;">📎 Fichier joint à ce mail.</p>`
-      : "";
-
-    const linkOnlyBlock = linkUrl && !storagePath
-      ? `<p style="margin:20px 0;text-align:center;">
-          <a href="${linkUrl}" style="display:inline-block;padding:14px 28px;background:#2e1f26;color:#f4ece0;text-decoration:none;font-family:'Jura',monospace;font-size:11px;letter-spacing:0.15em;">VISITER LE SITE</a>
-        </p>`
-      : "";
-
-    const subject = `📄 ${fileName} est disponible — ${projectName}`;
-
-    const html = `<div style="font-family:Georgia,serif;max-width:600px;margin:0 auto;padding:32px 24px;color:#2e1f26;background:#faf6ef;">
-      <h1 style="font-family:'Bodoni Moda',Georgia,serif;font-size:26px;font-weight:400;margin:0 0 24px;text-align:center;">Votre document est prêt</h1>
-      <p style="font-size:15px;line-height:1.6;">Bonjour ${firstName || ""},</p>
-      <p style="font-size:15px;line-height:1.6;">Votre document est prêt.</p>
-      <div style="margin:24px 0;padding:20px;background:#ffffff;border:1px solid #e5e0d8;">
-        <p style="margin:4px 0;font-size:14px;"><strong>${fileName}</strong></p>
-        <p style="margin:4px 0;font-size:13px;color:#6b5a55;">Catégorie : ${catLabel}</p>
-        <p style="margin:4px 0;font-size:13px;color:#6b5a55;">Date : ${dateStr}</p>
-      </div>
-      ${previewHtml}
-      ${attachedNote}
-      ${downloadBtn}
-      ${linkOnlyBlock}
-      <p style="font-size:13px;color:#6b5a55;text-align:center;margin-top:24px;">
-        ${attachedInline ? "Si la pièce jointe ne s'affiche pas correctement :" : "Retrouvez ce document dans votre espace :"}
-      </p>
-      <p style="margin:12px 0 32px;text-align:center;">
-        <a href="${ctaUrl}" style="display:inline-block;padding:12px 24px;background:transparent;color:#2e1f26;text-decoration:none;font-family:'Jura',monospace;font-size:11px;letter-spacing:0.15em;border:1px solid #2e1f26;">ACCÉDER À MON ESPACE</a>
-      </p>
-      <hr style="border:none;border-top:1px solid #e5e0d8;margin:32px 0 20px;" />
-      <p style="font-family:'Bodoni Moda',Georgia,serif;font-style:italic;font-size:15px;color:#6b5a55;text-align:center;margin:0;">Beauty, engineered.</p>
-      <p style="font-family:'Jura',monospace;font-size:11px;color:#8a7a70;text-align:center;margin:8px 0 0;letter-spacing:0.15em;">AEXORA STUDIO</p>
-      <p style="font-size:12px;color:#8a7a70;text-align:center;margin:6px 0 0;">contact@aexorastudio.com</p>
-    </div>`;
-
-    const text = `Bonjour ${firstName},\n\nVotre document est prêt.\n\n${fileName}\nCatégorie : ${catLabel}\nDate : ${dateStr}\n\n${attachedInline ? "Fichier joint à ce mail.\n" : ""}${signedUrl ? `Téléchargement direct (valable 7 jours) : ${signedUrl}\n` : ""}${linkUrl && !storagePath ? `Lien : ${linkUrl}\n` : ""}\nAccéder à votre espace : ${ctaUrl}\n\nBeauty, engineered.\nAEXORA Studio\ncontact@aexorastudio.com`;
-
-    const messageId = crypto.randomUUID();
-    await supabaseAdmin.from("email_send_log").insert({
-      message_id: messageId,
-      template_name: "document-available",
-      recipient_email: recipient,
-      status: "pending",
+    await enqueueSimpleEmail({
+      to: recipient,
+      subject: `📄 Nouveau document disponible — ${projectName}`,
+      label: "document-available",
+      html: `<div style="font-family:Georgia,serif;max-width:560px;margin:0 auto;padding:32px 24px;color:#2e2e2e;">
+        <h1 style="font-family:'Bodoni Moda',Georgia,serif;font-size:24px;font-weight:400;margin:0 0 20px;">Nouveau document disponible</h1>
+        <p style="font-size:15px;line-height:1.6;">Bonjour ${firstName || "et bienvenue"},</p>
+        <p style="font-size:15px;line-height:1.6;">Un nouveau document est disponible dans votre espace projet AEXORA.</p>
+        <div style="margin:24px 0;padding:16px 20px;background:#f6f6f6;border-left:2px solid #2e2e2e;">
+          <p style="margin:4px 0;font-size:14px;"><strong>Document :</strong> ${(doc as any).file_name}</p>
+          <p style="margin:4px 0;font-size:14px;"><strong>Catégorie :</strong> ${catLabel}</p>
+          <p style="margin:4px 0;font-size:14px;"><strong>Date :</strong> ${dateStr}</p>
+        </div>
+        <p style="font-size:15px;line-height:1.6;">Accédez à votre espace pour le consulter et le télécharger :</p>
+        <p style="margin:24px 0;">
+          <a href="${ctaUrl}" style="display:inline-block;padding:14px 24px;background:#2e2e2e;color:#f6f6f6;text-decoration:none;font-family:monospace;font-size:12px;letter-spacing:0.1em;">ACCÉDER À MON ESPACE</a>
+        </p>
+        <p style="margin-top:32px;font-family:'Bodoni Moda',Georgia,serif;font-style:italic;font-size:14px;color:#6b6b6b;">Beauty, engineered.</p>
+        <p style="font-size:13px;color:#6b6b6b;">AEXORA Studio</p>
+      </div>`,
+      text: `Nouveau document disponible\n\nBonjour ${firstName},\n\nUn nouveau document est disponible dans votre espace projet AEXORA.\n\nDocument : ${(doc as any).file_name}\nCatégorie : ${catLabel}\nDate : ${dateStr}\n\n${ctaUrl}\n\nBeauty, engineered.\nAEXORA Studio`,
     });
-
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
-      body: JSON.stringify({
-        from: RESEND_FROM,
-        to: [recipient],
-        subject,
-        html,
-        text,
-        ...(attachments.length ? { attachments } : {}),
-      }),
-    });
-
-    if (!res.ok) {
-      const errBody = await res.text();
-      console.error(`Resend send failed [${res.status}]: ${errBody}`);
-      await supabaseAdmin
-        .from("email_send_log")
-        .update({ status: "failed", error_message: `Resend ${res.status}: ${errBody}`.slice(0, 500) })
-        .eq("message_id", messageId);
-      return { notified: false };
-    }
-
-    await supabaseAdmin
-      .from("email_send_log")
-      .update({ status: "sent" })
-      .eq("message_id", messageId);
-
     return { notified: true, recipient };
   } catch (e) {
     console.error("notifyClientDocumentAvailable failed", e);
