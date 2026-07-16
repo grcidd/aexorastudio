@@ -19,7 +19,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EmailUnsubscribeRouteImport } from './routes/email/unsubscribe'
 import { Route as AuthenticatedEspaceClientRouteImport } from './routes/_authenticated/espace-client'
-import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
 import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
@@ -79,9 +79,9 @@ const AuthenticatedEspaceClientRoute =
     path: '/espace-client',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const LovableEmailSuppressionRoute = LovableEmailSuppressionRouteImport.update({
@@ -124,9 +124,9 @@ const ApiPublicContactSubmitRoute = ApiPublicContactSubmitRouteImport.update({
 } as any)
 const AuthenticatedAdminProjetsIdRoute =
   AuthenticatedAdminProjetsIdRouteImport.update({
-    id: '/projets/$id',
-    path: '/projets/$id',
-    getParentRoute: () => AuthenticatedAdminRoute,
+    id: '/admin/projets/$id',
+    path: '/admin/projets/$id',
+    getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -137,10 +137,10 @@ export interface FileRoutesByFullPath {
   '/projets': typeof ProjetsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRoute
-  '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/espace-client': typeof AuthenticatedEspaceClientRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
   '/admin/projets/$id': typeof AuthenticatedAdminProjetsIdRoute
   '/api/public/contact/submit': typeof ApiPublicContactSubmitRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -157,10 +157,10 @@ export interface FileRoutesByTo {
   '/projets': typeof ProjetsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRoute
-  '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/espace-client': typeof AuthenticatedEspaceClientRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
   '/admin/projets/$id': typeof AuthenticatedAdminProjetsIdRoute
   '/api/public/contact/submit': typeof ApiPublicContactSubmitRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -179,10 +179,10 @@ export interface FileRoutesById {
   '/projets': typeof ProjetsRoute
   '/reset-password': typeof ResetPasswordRoute
   '/services': typeof ServicesRoute
-  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/espace-client': typeof AuthenticatedEspaceClientRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/admin/projets/$id': typeof AuthenticatedAdminProjetsIdRoute
   '/api/public/contact/submit': typeof ApiPublicContactSubmitRoute
   '/lovable/email/auth/preview': typeof LovableEmailAuthPreviewRoute
@@ -201,10 +201,10 @@ export interface FileRouteTypes {
     | '/projets'
     | '/reset-password'
     | '/services'
-    | '/admin'
     | '/espace-client'
     | '/email/unsubscribe'
     | '/lovable/email/suppression'
+    | '/admin/'
     | '/admin/projets/$id'
     | '/api/public/contact/submit'
     | '/lovable/email/auth/preview'
@@ -221,10 +221,10 @@ export interface FileRouteTypes {
     | '/projets'
     | '/reset-password'
     | '/services'
-    | '/admin'
     | '/espace-client'
     | '/email/unsubscribe'
     | '/lovable/email/suppression'
+    | '/admin'
     | '/admin/projets/$id'
     | '/api/public/contact/submit'
     | '/lovable/email/auth/preview'
@@ -242,10 +242,10 @@ export interface FileRouteTypes {
     | '/projets'
     | '/reset-password'
     | '/services'
-    | '/_authenticated/admin'
     | '/_authenticated/espace-client'
     | '/email/unsubscribe'
     | '/lovable/email/suppression'
+    | '/_authenticated/admin/'
     | '/_authenticated/admin/projets/$id'
     | '/api/public/contact/submit'
     | '/lovable/email/auth/preview'
@@ -346,11 +346,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedEspaceClientRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/admin': {
-      id: '/_authenticated/admin'
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
       path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/lovable/email/suppression': {
@@ -404,33 +404,24 @@ declare module '@tanstack/react-router' {
     }
     '/_authenticated/admin/projets/$id': {
       id: '/_authenticated/admin/projets/$id'
-      path: '/projets/$id'
+      path: '/admin/projets/$id'
       fullPath: '/admin/projets/$id'
       preLoaderRoute: typeof AuthenticatedAdminProjetsIdRouteImport
-      parentRoute: typeof AuthenticatedAdminRoute
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
-interface AuthenticatedAdminRouteChildren {
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedEspaceClientRoute: typeof AuthenticatedEspaceClientRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
   AuthenticatedAdminProjetsIdRoute: typeof AuthenticatedAdminProjetsIdRoute
 }
 
-const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
-  AuthenticatedAdminProjetsIdRoute: AuthenticatedAdminProjetsIdRoute,
-}
-
-const AuthenticatedAdminRouteWithChildren =
-  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
-
-interface AuthenticatedRouteRouteChildren {
-  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
-  AuthenticatedEspaceClientRoute: typeof AuthenticatedEspaceClientRoute
-}
-
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
   AuthenticatedEspaceClientRoute: AuthenticatedEspaceClientRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminProjetsIdRoute: AuthenticatedAdminProjetsIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
