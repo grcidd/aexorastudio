@@ -327,11 +327,17 @@ function DocRow({
   }
 
   async function toggleVisible() {
-    await updateProjectDocument({
+    const res = await updateProjectDocument({
       data: { id: doc.id, visibleToClient: !doc.visible_to_client },
     });
     await qc.invalidateQueries({ queryKey: ["project-documents", projectId] });
+    if (!doc.visible_to_client && (res as any)?.notified) {
+      alert("✓ Document rendu visible. Email de notification envoyé au client.");
+    } else if (!doc.visible_to_client) {
+      alert("✓ Document rendu visible au client.");
+    }
   }
+
 
   async function remove() {
     if (!confirm(`Supprimer "${doc.file_name}" ?`)) return;
