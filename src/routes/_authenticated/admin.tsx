@@ -26,7 +26,7 @@ function AdminPage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("projects")
-        .select("*, profiles!projects_client_id_profiles_fkey(full_name, email)")
+        .select("*, profiles!projects_client_id_profiles_fkey(full_name, email), project_stages(status)")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data as any[];
