@@ -88,7 +88,9 @@ function ClientPortal() {
               setOpenStage={setOpenStage}
               userId={roleQ.data?.userId}
             />
+            <ProjectDocuments projectId={project.id} isAdmin={false} />
           </>
+
         )}
       </div>
     </main>
