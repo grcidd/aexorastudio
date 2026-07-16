@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS "client can validate own stage" ON public.project_stages;

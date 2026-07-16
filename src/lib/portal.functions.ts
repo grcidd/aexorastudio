@@ -211,6 +211,7 @@ export const validateStage = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: { stageId: string }) => z.object({ stageId: z.string().uuid() }).parse(input))
   .handler(async ({ data, context }) => {
+    await requireAdmin(context);
     // Fetch stage + project via user-scoped client (RLS ensures ownership)
     const { data: stage, error } = await context.supabase
       .from("project_stages")
@@ -244,7 +245,7 @@ export const validateStage = createServerFn({ method: "POST" })
 
     // Notify admin
     try {
-      const { data: clientProfile } = await supabaseAdmin
+      const { data: actorProfile } = await supabaseAdmin
         .from("profiles")
         .select("full_name, email")
         .eq("id", context.userId)
@@ -256,13 +257,13 @@ export const validateStage = createServerFn({ method: "POST" })
         subject: `✅ Étape validée : ${stage.title} — ${projectName}`,
         label: "stage-validated",
         html: `<div style="font-family:Georgia,serif;max-width:560px;margin:0 auto;padding:32px 24px;color:#2e2e2e;">
-          <h1 style="font-family:'Bodoni Moda',Georgia,serif;font-size:24px;font-weight:400;margin:0 0 16px;">Étape validée par le client</h1>
+          <h1 style="font-family:'Bodoni Moda',Georgia,serif;font-size:24px;font-weight:400;margin:0 0 16px;">Étape validée</h1>
           <p><strong>Projet :</strong> ${projectName}</p>
           <p><strong>Étape :</strong> ${stage.title}</p>
-          <p><strong>Client :</strong> ${clientProfile?.full_name || ""} (${clientProfile?.email || ""})</p>
+          <p><strong>Validée par :</strong> ${actorProfile?.full_name || ""} (${actorProfile?.email || ""})</p>
           <p style="margin-top:24px;"><a href="${PUBLIC_URL}/admin/projets/${stage.project_id}" style="display:inline-block;padding:12px 20px;background:#2e2e2e;color:#f6f6f6;text-decoration:none;font-family:monospace;font-size:12px;letter-spacing:0.1em;">VOIR LE PROJET</a></p>
         </div>`,
-        text: `Étape validée par le client\n\nProjet: ${projectName}\nÉtape: ${stage.title}\nClient: ${clientProfile?.full_name} (${clientProfile?.email})\n\n${PUBLIC_URL}/admin/projets/${stage.project_id}`,
+        text: `Étape validée\n\nProjet: ${projectName}\nÉtape: ${stage.title}\nValidée par: ${actorProfile?.full_name} (${actorProfile?.email})\n\n${PUBLIC_URL}/admin/projets/${stage.project_id}`,
       });
     } catch (e) {
       console.error("Notify admin failed", e);

@@ -241,13 +241,13 @@ export function StageRow({
                 </li>
               ))}
             </ul>
-            {stage.status !== "validated" && (
+            {stage.status !== "validated" && !isClient && (
               <button
                 onClick={onValidate}
                 disabled={validating}
                 className="w-full mt-6 bg-button-base text-bone label-mono text-[11px] tracking-widest py-4 hover:bg-button-base-hover transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
               >
-                <Check size={14} strokeWidth={1.5} /> {validating ? "VALIDATION..." : isClient ? "VALIDER CETTE ÉTAPE" : "VALIDER (ADMIN)"}
+                <Check size={14} strokeWidth={1.5} /> {validating ? "VALIDATION..." : "VALIDER (ADMIN)"}
               </button>
 
             )}
