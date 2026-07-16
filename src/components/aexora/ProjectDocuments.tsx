@@ -355,7 +355,10 @@ function DocRow({
   const [status, setStatus] = useState(doc.status);
   const [amount, setAmount] = useState(doc.amount?.toString() || "");
   const [description, setDescription] = useState(doc.description || "");
+  const [linkUrl, setLinkUrl] = useState(doc.link_url || "");
   const [saving, setSaving] = useState(false);
+  const isLink = !!doc.link_url;
+
 
   async function download() {
     if (!doc.storage_path) return;
