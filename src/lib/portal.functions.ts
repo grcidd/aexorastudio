@@ -445,8 +445,14 @@ export const createProjectDocument = createServerFn({ method: "POST" })
       .select()
       .single();
     if (error) throw error;
-    return row;
+    let notified = false;
+    if (row.visible_to_client) {
+      const r = await notifyClientDocumentAvailable(row.id);
+      notified = !!r.notified;
+    }
+    return { ...row, notified };
   });
+
 
 export const updateProjectDocument = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
