@@ -471,6 +471,26 @@ function DocRow({
               </span>
             )}
           </div>
+          {isLink && (
+            editing && isAdmin ? (
+              <input
+                type="url"
+                value={linkUrl}
+                onChange={(e) => setLinkUrl(e.target.value)}
+                placeholder="https://…"
+                className="w-full mt-2 bg-transparent border border-ink/30 px-2 py-1 text-xs outline-none focus:border-plum"
+              />
+            ) : doc.link_url ? (
+              <a
+                href={doc.link_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-plum hover:underline mt-1 inline-block truncate max-w-full"
+              >
+                {doc.link_url}
+              </a>
+            ) : null
+          )}
           {category === "autre" && (
             editing && isAdmin ? (
               <textarea
@@ -484,6 +504,7 @@ function DocRow({
               <p className="text-xs text-ink/70 mt-1">{doc.description}</p>
             ) : null
           )}
+
         </div>
         <div className="flex items-center gap-2 shrink-0">
           {isAdmin && !editing && (
