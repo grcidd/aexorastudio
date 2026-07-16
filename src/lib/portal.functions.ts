@@ -377,7 +377,9 @@ async function notifyClientDocumentAvailable(docId: string) {
   }
 }
 
+export const listProjectDocuments = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
+
   .inputValidator((input: { projectId: string }) =>
     z.object({ projectId: z.string().uuid() }).parse(input),
   )
