@@ -173,11 +173,12 @@ export type Database = {
           file_name: string
           file_size: number | null
           id: string
+          link_url: string | null
           mime_type: string | null
           project_id: string
           seen_by_client_at: string | null
           status: string
-          storage_path: string
+          storage_path: string | null
           updated_at: string
           uploaded_by: string | null
           visible_to_client: boolean
@@ -190,11 +191,12 @@ export type Database = {
           file_name: string
           file_size?: number | null
           id?: string
+          link_url?: string | null
           mime_type?: string | null
           project_id: string
           seen_by_client_at?: string | null
           status?: string
-          storage_path: string
+          storage_path?: string | null
           updated_at?: string
           uploaded_by?: string | null
           visible_to_client?: boolean
@@ -207,11 +209,12 @@ export type Database = {
           file_name?: string
           file_size?: number | null
           id?: string
+          link_url?: string | null
           mime_type?: string | null
           project_id?: string
           seen_by_client_at?: string | null
           status?: string
-          storage_path?: string
+          storage_path?: string | null
           updated_at?: string
           uploaded_by?: string | null
           visible_to_client?: boolean
