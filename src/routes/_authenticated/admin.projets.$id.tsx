@@ -5,6 +5,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { getMyRole } from "@/lib/portal.functions";
 import { StageRow } from "./espace-client";
 import { Upload, ArrowLeft } from "lucide-react";
+import { ProjectDocuments } from "@/components/aexora/ProjectDocuments";
+
 
 export const Route = createFileRoute("/_authenticated/admin/projets/$id")({
   head: () => ({ meta: [{ title: "Projet — Admin Aexora" }, { name: "robots", content: "noindex" }] }),
