@@ -9,23 +9,25 @@ import {
   markDocumentsSeen,
   getFileUrl,
 } from "@/lib/portal.functions";
-import { Upload, Download, Trash2, Pencil, Eye, EyeOff, Check, X } from "lucide-react";
+import { Upload, Download, Trash2, Pencil, Eye, EyeOff, Check, X, Link as LinkIcon, ExternalLink } from "lucide-react";
 
 type Doc = {
   id: string;
   project_id: string;
   category: "livrable" | "contrat" | "devis" | "autre";
   file_name: string;
-  storage_path: string;
+  storage_path: string | null;
   file_size: number | null;
   mime_type: string | null;
   status: string;
   amount: number | null;
   description: string | null;
+  link_url: string | null;
   visible_to_client: boolean;
   seen_by_client_at: string | null;
   created_at: string;
 };
+
 
 type Category = Doc["category"];
 
