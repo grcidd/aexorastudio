@@ -475,19 +475,35 @@ export const updateProjectDocument = createServerFn({ method: "POST" })
   )
   .handler(async ({ data, context }) => {
     await requireAdmin(context);
+    // Fetch previous visibility to detect false→true transition
+    const { data: prev } = await context.supabase
+      .from("project_documents")
+      .select("visible_to_client")
+      .eq("id", data.id)
+      .maybeSingle();
     const patch: any = {};
     if (data.fileName !== undefined) patch.file_name = data.fileName;
     if (data.status !== undefined) patch.status = data.status;
     if (data.amount !== undefined) patch.amount = data.amount;
     if (data.description !== undefined) patch.description = data.description;
     if (data.visibleToClient !== undefined) patch.visible_to_client = data.visibleToClient;
+    if (data.visibleToClient === true && !prev?.visible_to_client) {
+      // Reset seen state so client sees it as new
+      patch.seen_by_client_at = null;
+    }
     const { error } = await context.supabase
       .from("project_documents")
       .update(patch)
       .eq("id", data.id);
     if (error) throw error;
-    return { ok: true };
+    let notified = false;
+    if (data.visibleToClient === true && !prev?.visible_to_client) {
+      const r = await notifyClientDocumentAvailable(data.id);
+      notified = !!r.notified;
+    }
+    return { ok: true, notified };
   });
+
 
 export const deleteProjectDocument = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
