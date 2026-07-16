@@ -109,8 +109,35 @@ export function ProjectDocuments({
 
   const currentTab = TABS.find((t) => t.key === tab)!;
 
+  const totalUnseen = unseenByCat.livrable + unseenByCat.contrat + unseenByCat.devis + unseenByCat.autre;
+
+  // Notifications journal (client): all visible docs, newest first
+  const journal = useMemo(
+    () =>
+      isAdmin
+        ? []
+        : allDocs
+            .filter((d) => d.visible_to_client)
+            .slice(0, 20),
+    [allDocs, isAdmin],
+  );
+
   return (
     <div className="mt-12">
+      {/* Global notification banner (client only) */}
+      {!isAdmin && totalUnseen > 0 && (
+        <div className="mb-6 border border-plum bg-plum/5 px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="bg-plum text-bone text-[10px] px-2 py-0.5 rounded-full">{totalUnseen}</span>
+            <span className="text-sm">
+              {totalUnseen > 1
+                ? "Nouveaux documents disponibles dans votre espace"
+                : "Nouveau document disponible dans votre espace"}
+            </span>
+          </div>
+        </div>
+      )}
+
       <div className="label-mono text-[10px] tracking-widest text-ink/60 mb-4">
         LIVRABLES & DOCUMENTS
       </div>
@@ -130,7 +157,7 @@ export function ProjectDocuments({
             >
               {t.label}
               {badge > 0 && (
-                <span className="bg-plum text-bone text-[9px] px-1.5 py-0.5 rounded-full">
+                <span className="bg-red-600 text-white text-[9px] px-1.5 py-0.5 rounded-full">
                   {badge}
                 </span>
               )}
@@ -149,9 +176,47 @@ export function ProjectDocuments({
         isAdmin={isAdmin}
         projectId={projectId}
       />
+
+      {/* Notifications journal (client only) */}
+      {!isAdmin && journal.length > 0 && (
+        <div className="mt-16">
+          <div className="label-mono text-[10px] tracking-widest text-ink/60 mb-4">
+            JOURNAL DES NOTIFICATIONS
+          </div>
+          <ul className="border-t border-ink/20">
+            {journal.map((d) => {
+              const isNew = !d.seen_by_client_at;
+              return (
+                <li key={d.id} className="border-b border-ink/20 py-3 px-2 flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3 min-w-0">
+                    {isNew && <span className="w-2 h-2 rounded-full bg-red-600 shrink-0" />}
+                    <div className="min-w-0">
+                      <div className="text-sm truncate">{d.file_name}</div>
+                      <div className="label-mono text-[10px] text-ink/60">
+                        {TABS.find((t) => t.key === d.category)?.label} ·{" "}
+                        {new Date(d.created_at).toLocaleString("fr-FR", {
+                          day: "2-digit", month: "short", year: "numeric",
+                          hour: "2-digit", minute: "2-digit",
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setTab(d.category)}
+                    className="label-mono text-[10px] tracking-widest text-plum hover:underline shrink-0"
+                  >
+                    VOIR →
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
+
 
 function AdminUploader({
   projectId,
@@ -327,11 +392,17 @@ function DocRow({
   }
 
   async function toggleVisible() {
-    await updateProjectDocument({
+    const res = await updateProjectDocument({
       data: { id: doc.id, visibleToClient: !doc.visible_to_client },
     });
     await qc.invalidateQueries({ queryKey: ["project-documents", projectId] });
+    if (!doc.visible_to_client && (res as any)?.notified) {
+      alert("✓ Document rendu visible. Email de notification envoyé au client.");
+    } else if (!doc.visible_to_client) {
+      alert("✓ Document rendu visible au client.");
+    }
   }
+
 
   async function remove() {
     if (!confirm(`Supprimer "${doc.file_name}" ?`)) return;
