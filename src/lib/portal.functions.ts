@@ -103,13 +103,14 @@ export const getMyRole = createServerFn({ method: "GET" })
 // -----------------------------------------------------------------------------
 export const createClientProject = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { clientEmail: string; clientName: string; projectName: string; description?: string }) =>
+  .inputValidator((input: { clientEmail: string; clientName: string; projectName: string; description?: string; serviceType: string }) =>
     z
       .object({
         clientEmail: z.string().email(),
         clientName: z.string().min(1).max(200),
         projectName: z.string().min(1).max(200),
         description: z.string().max(2000).optional(),
+        serviceType: z.enum(["web-luxe", "visual-ia", "acquisition", "automation-ia"]),
       })
       .parse(input),
   )
