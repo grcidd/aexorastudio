@@ -245,30 +245,39 @@ export const validateStage = createServerFn({ method: "POST" })
       }
     }
 
-    // Notify admin
+    // Notify client
     try {
-      const { data: actorProfile } = await supabaseAdmin
-        .from("profiles")
-        .select("full_name, email")
-        .eq("id", context.userId)
-        .maybeSingle();
-
       const projectName = (stage as any).projects?.name || "";
+      const clientId = (stage as any).projects?.client_id as string | undefined;
+
+      let clientEmail: string | null = null;
+      if (clientId) {
+        const { data: clientProfile } = await supabaseAdmin
+          .from("profiles")
+          .select("email")
+          .eq("id", clientId)
+          .maybeSingle();
+        clientEmail = clientProfile?.email ?? null;
+      }
+
+      const recipient = clientEmail || ADMIN_EMAIL;
+      const ctaUrl = `${PUBLIC_URL}/espace-client`;
+
       await enqueueSimpleEmail({
-        to: ADMIN_EMAIL,
+        to: recipient,
         subject: `✅ Étape validée : ${stage.title} — ${projectName}`,
         label: "stage-validated",
         html: `<div style="font-family:Georgia,serif;max-width:560px;margin:0 auto;padding:32px 24px;color:#2e2e2e;">
           <h1 style="font-family:'Bodoni Moda',Georgia,serif;font-size:24px;font-weight:400;margin:0 0 16px;">Étape validée</h1>
           <p><strong>Projet :</strong> ${projectName}</p>
           <p><strong>Étape :</strong> ${stage.title}</p>
-          <p><strong>Validée par :</strong> ${actorProfile?.full_name || ""} (${actorProfile?.email || ""})</p>
-          <p style="margin-top:24px;"><a href="${PUBLIC_URL}/admin/projets/${stage.project_id}" style="display:inline-block;padding:12px 20px;background:#2e2e2e;color:#f6f6f6;text-decoration:none;font-family:monospace;font-size:12px;letter-spacing:0.1em;">VOIR LE PROJET</a></p>
+          <p><strong>Validée par :</strong> AEXORA STUDIO</p>
+          <p style="margin-top:24px;"><a href="${ctaUrl}" style="display:inline-block;padding:12px 20px;background:#2e2e2e;color:#f6f6f6;text-decoration:none;font-family:monospace;font-size:12px;letter-spacing:0.1em;">VOIR MON PROJET</a></p>
         </div>`,
-        text: `Étape validée\n\nProjet: ${projectName}\nÉtape: ${stage.title}\nValidée par: ${actorProfile?.full_name} (${actorProfile?.email})\n\n${PUBLIC_URL}/admin/projets/${stage.project_id}`,
+        text: `Étape validée\n\nProjet: ${projectName}\nÉtape: ${stage.title}\nValidée par: AEXORA STUDIO\n\n${ctaUrl}`,
       });
     } catch (e) {
-      console.error("Notify admin failed", e);
+      console.error("Notify client failed", e);
     }
 
     return { ok: true };
