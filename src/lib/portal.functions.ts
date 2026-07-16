@@ -157,13 +157,14 @@ export const createClientProject = createServerFn({ method: "POST" })
         .upsert({ id: userId, email, full_name: data.clientName }, { onConflict: "id" });
     }
 
-    // Create project (stages are auto-seeded by trigger)
+    // Create project (stages are auto-seeded by trigger based on service_type)
     const { data: project, error: projErr } = await supabaseAdmin
       .from("projects")
       .insert({
         client_id: userId,
         name: data.projectName,
         description: data.description || null,
+        service_type: data.serviceType,
       })
       .select()
       .single();
