@@ -138,7 +138,10 @@ function AdminProjectPage() {
             </div>
           ))}
         </div>
+
+        <ProjectDocuments projectId={id} isAdmin={true} />
       </div>
     </main>
   );
 }
+
