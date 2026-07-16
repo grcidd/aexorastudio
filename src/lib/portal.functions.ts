@@ -313,3 +313,153 @@ export const getFileUrl = createServerFn({ method: "POST" })
     if (error || !signed) throw new Error(error?.message || "Signed URL failed");
     return { url: signed.signedUrl };
   });
+
+// -----------------------------------------------------------------------------
+// Project documents (livrables / contrats / devis / autres)
+// -----------------------------------------------------------------------------
+const DOC_CATEGORIES = ["livrable", "contrat", "devis", "autre"] as const;
+
+export const listProjectDocuments = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: { projectId: string }) =>
+    z.object({ projectId: z.string().uuid() }).parse(input),
+  )
+  .handler(async ({ data, context }) => {
+    // RLS handles filtering: admin sees all, client sees only visible ones on own projects
+    const { data: docs, error } = await context.supabase
+      .from("project_documents")
+      .select("*")
+      .eq("project_id", data.projectId)
+      .order("created_at", { ascending: false });
+    if (error) throw error;
+    return docs;
+  });
+
+export const createProjectDocument = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: {
+    projectId: string;
+    category: string;
+    fileName: string;
+    storagePath: string;
+    fileSize: number;
+    mimeType: string;
+    status?: string;
+    amount?: number | null;
+    description?: string | null;
+    visibleToClient?: boolean;
+  }) =>
+    z.object({
+      projectId: z.string().uuid(),
+      category: z.enum(DOC_CATEGORIES),
+      fileName: z.string().min(1).max(300),
+      storagePath: z.string().min(1).max(500),
+      fileSize: z.number().int().nonnegative(),
+      mimeType: z.string().max(200),
+      status: z.string().max(50).optional(),
+      amount: z.number().nullable().optional(),
+      description: z.string().max(1000).nullable().optional(),
+      visibleToClient: z.boolean().optional(),
+    }).parse(input),
+  )
+  .handler(async ({ data, context }) => {
+    await requireAdmin(context);
+    const defaultStatus =
+      data.category === "livrable" ? "draft" :
+      data.category === "contrat" ? "pending_signature" :
+      data.category === "devis" ? "pending" : "available";
+    const { data: row, error } = await context.supabase
+      .from("project_documents")
+      .insert({
+        project_id: data.projectId,
+        category: data.category,
+        file_name: data.fileName,
+        storage_path: data.storagePath,
+        file_size: data.fileSize,
+        mime_type: data.mimeType,
+        status: data.status || defaultStatus,
+        amount: data.amount ?? null,
+        description: data.description ?? null,
+        visible_to_client: data.visibleToClient ?? false,
+        uploaded_by: context.userId,
+      })
+      .select()
+      .single();
+    if (error) throw error;
+    return row;
+  });
+
+export const updateProjectDocument = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: {
+    id: string;
+    fileName?: string;
+    status?: string;
+    amount?: number | null;
+    description?: string | null;
+    visibleToClient?: boolean;
+  }) =>
+    z.object({
+      id: z.string().uuid(),
+      fileName: z.string().min(1).max(300).optional(),
+      status: z.string().max(50).optional(),
+      amount: z.number().nullable().optional(),
+      description: z.string().max(1000).nullable().optional(),
+      visibleToClient: z.boolean().optional(),
+    }).parse(input),
+  )
+  .handler(async ({ data, context }) => {
+    await requireAdmin(context);
+    const patch: any = {};
+    if (data.fileName !== undefined) patch.file_name = data.fileName;
+    if (data.status !== undefined) patch.status = data.status;
+    if (data.amount !== undefined) patch.amount = data.amount;
+    if (data.description !== undefined) patch.description = data.description;
+    if (data.visibleToClient !== undefined) patch.visible_to_client = data.visibleToClient;
+    const { error } = await context.supabase
+      .from("project_documents")
+      .update(patch)
+      .eq("id", data.id);
+    if (error) throw error;
+    return { ok: true };
+  });
+
+export const deleteProjectDocument = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: { id: string }) => z.object({ id: z.string().uuid() }).parse(input))
+  .handler(async ({ data, context }) => {
+    await requireAdmin(context);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    // Fetch storage path
+    const { data: doc } = await supabaseAdmin
+      .from("project_documents")
+      .select("storage_path")
+      .eq("id", data.id)
+      .maybeSingle();
+    if (doc?.storage_path) {
+      await supabaseAdmin.storage.from("project-files").remove([doc.storage_path]);
+    }
+    const { error } = await supabaseAdmin.from("project_documents").delete().eq("id", data.id);
+    if (error) throw error;
+    return { ok: true };
+  });
+
+export const markDocumentsSeen = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: { projectId: string; category: string }) =>
+    z.object({
+      projectId: z.string().uuid(),
+      category: z.enum(DOC_CATEGORIES),
+    }).parse(input),
+  )
+  .handler(async ({ data, context }) => {
+    const now = new Date().toISOString();
+    // RLS: client can only update visible docs on own project
+    await context.supabase
+      .from("project_documents")
+      .update({ seen_by_client_at: now })
+      .eq("project_id", data.projectId)
+      .eq("category", data.category)
+      .is("seen_by_client_at", null);
+    return { ok: true };
+  });

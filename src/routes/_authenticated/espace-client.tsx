@@ -4,6 +4,8 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { getMyRole, validateStage, addStageComment, getFileUrl } from "@/lib/portal.functions";
 import { ChevronDown, Check, Download, MessageSquare, LogOut } from "lucide-react";
+import { ProjectDocuments } from "@/components/aexora/ProjectDocuments";
+
 
 export const Route = createFileRoute("/_authenticated/espace-client")({
   head: () => ({ meta: [{ title: "Mon espace — Aexora" }, { name: "robots", content: "noindex" }] }),
@@ -86,7 +88,9 @@ function ClientPortal() {
               setOpenStage={setOpenStage}
               userId={roleQ.data?.userId}
             />
+            <ProjectDocuments projectId={project.id} isAdmin={false} />
           </>
+
         )}
       </div>
     </main>
