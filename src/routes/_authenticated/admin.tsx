@@ -26,7 +26,7 @@ function AdminPage() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("projects")
-        .select("*, profiles!projects_client_id_profiles_fkey(full_name, email)")
+        .select("*, profiles!projects_client_id_profiles_fkey(full_name, email), project_stages(status)")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data as any[];
@@ -87,8 +87,21 @@ function AdminPage() {
                   {p.profiles?.full_name || "—"} · {p.profiles?.email}
                 </div>
               </div>
-              <div className="label-mono text-[10px] text-ink/60">
-                {new Date(p.created_at).toLocaleDateString("fr-FR")}
+              <div className="flex items-center gap-6">
+                {(() => {
+                  const stages = p.project_stages || [];
+                  const validated = stages.filter((s: any) => s.status === "validated").length;
+                  const total = stages.length || 4;
+                  const done = validated === total && total > 0;
+                  return (
+                    <span className={`label-mono text-[10px] tracking-widest ${done ? "text-green-700" : "text-plum"}`}>
+                      {done ? "✓ TERMINÉ" : `${validated}/${total} ÉTAPES`}
+                    </span>
+                  );
+                })()}
+                <div className="label-mono text-[10px] text-ink/60">
+                  {new Date(p.created_at).toLocaleDateString("fr-FR")}
+                </div>
               </div>
             </Link>
           ))}
