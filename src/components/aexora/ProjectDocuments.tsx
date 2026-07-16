@@ -387,10 +387,12 @@ function DocRow({
           status,
           amount: category === "devis" ? (amount ? parseFloat(amount) : null) : undefined,
           description: category === "autre" ? description || null : undefined,
+          linkUrl: isLink ? (linkUrl.trim() || null) : undefined,
         },
       });
       await qc.invalidateQueries({ queryKey: ["project-documents", projectId] });
       setEditing(false);
+
     } catch (e: any) {
       alert("Erreur : " + e.message);
     } finally {
