@@ -9,23 +9,25 @@ import {
   markDocumentsSeen,
   getFileUrl,
 } from "@/lib/portal.functions";
-import { Upload, Download, Trash2, Pencil, Eye, EyeOff, Check, X } from "lucide-react";
+import { Upload, Download, Trash2, Pencil, Eye, EyeOff, Check, X, Link as LinkIcon, ExternalLink } from "lucide-react";
 
 type Doc = {
   id: string;
   project_id: string;
   category: "livrable" | "contrat" | "devis" | "autre";
   file_name: string;
-  storage_path: string;
+  storage_path: string | null;
   file_size: number | null;
   mime_type: string | null;
   status: string;
   amount: number | null;
   description: string | null;
+  link_url: string | null;
   visible_to_client: boolean;
   seen_by_client_at: string | null;
   created_at: string;
 };
+
 
 type Category = Doc["category"];
 
@@ -231,7 +233,13 @@ function AdminUploader({
   const [dragOver, setDragOver] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [mode, setMode] = useState<"file" | "link">("file");
+  const [linkUrl, setLinkUrl] = useState("");
+  const [linkTitle, setLinkTitle] = useState("");
+  const [addingLink, setAddingLink] = useState(false);
   const qc = useQueryClient();
+
+  const canLink = category === "livrable";
 
   async function upload(files: FileList | File[]) {
     const arr = Array.from(files);
@@ -272,46 +280,130 @@ function AdminUploader({
     }
   }
 
+  async function addLink() {
+    setError(null);
+    const url = linkUrl.trim();
+    const title = linkTitle.trim();
+    if (!url) { setError("URL requise"); return; }
+    if (!title) { setError("Titre requis"); return; }
+    try {
+      new URL(url);
+    } catch {
+      setError("URL invalide (ex: https://mon-site.com)");
+      return;
+    }
+    setAddingLink(true);
+    try {
+      await createProjectDocument({
+        data: {
+          projectId,
+          category,
+          fileName: title,
+          linkUrl: url,
+          visibleToClient: false,
+        },
+      });
+      setLinkUrl("");
+      setLinkTitle("");
+      await qc.invalidateQueries({ queryKey: ["project-documents", projectId] });
+    } catch (e: any) {
+      setError(e.message || "Erreur");
+    } finally {
+      setAddingLink(false);
+    }
+  }
+
   return (
-    <div
-      onDragOver={(e) => {
-        e.preventDefault();
-        setDragOver(true);
-      }}
-      onDragLeave={() => setDragOver(false)}
-      onDrop={(e) => {
-        e.preventDefault();
-        setDragOver(false);
-        if (e.dataTransfer.files) upload(e.dataTransfer.files);
-      }}
-      className={`border-2 border-dashed p-6 mb-6 text-center transition-colors ${
-        dragOver ? "border-plum bg-plum/5" : "border-ink/30"
-      }`}
-    >
-      <input
-        ref={inputRef}
-        type="file"
-        multiple
-        accept={accept}
-        className="hidden"
-        onChange={(e) => e.target.files && upload(e.target.files)}
-      />
-      <Upload size={20} strokeWidth={1.25} className="mx-auto mb-2 opacity-60" />
-      <p className="text-sm text-ink/70 mb-2">
-        Glissez vos fichiers ici ou
-      </p>
-      <button
-        type="button"
-        onClick={() => inputRef.current?.click()}
-        disabled={uploading}
-        className="bg-button-base text-bone label-mono text-[10px] tracking-widest px-4 py-2 hover:bg-button-base-hover disabled:opacity-50"
-      >
-        {uploading ? "ENVOI..." : "SÉLECTIONNER"}
-      </button>
-      {error && <p className="text-xs text-red-700 mt-2">{error}</p>}
+    <div className="mb-6">
+      {canLink && (
+        <div className="flex gap-2 mb-3">
+          <button
+            type="button"
+            onClick={() => { setMode("file"); setError(null); }}
+            className={`label-mono text-[10px] tracking-widest px-3 py-2 border ${mode === "file" ? "border-plum text-plum" : "border-ink/30 text-ink/60 hover:text-ink"}`}
+          >
+            FICHIER
+          </button>
+          <button
+            type="button"
+            onClick={() => { setMode("link"); setError(null); }}
+            className={`label-mono text-[10px] tracking-widest px-3 py-2 border flex items-center gap-1 ${mode === "link" ? "border-plum text-plum" : "border-ink/30 text-ink/60 hover:text-ink"}`}
+          >
+            <LinkIcon size={12} strokeWidth={1.25} /> LIEN / SITE WEB
+          </button>
+        </div>
+      )}
+
+      {mode === "file" || !canLink ? (
+        <div
+          onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+          onDragLeave={() => setDragOver(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            setDragOver(false);
+            if (e.dataTransfer.files) upload(e.dataTransfer.files);
+          }}
+          className={`border-2 border-dashed p-6 text-center transition-colors ${
+            dragOver ? "border-plum bg-plum/5" : "border-ink/30"
+          }`}
+        >
+          <input
+            ref={inputRef}
+            type="file"
+            multiple
+            accept={accept}
+            className="hidden"
+            onChange={(e) => e.target.files && upload(e.target.files)}
+          />
+          <Upload size={20} strokeWidth={1.25} className="mx-auto mb-2 opacity-60" />
+          <p className="text-sm text-ink/70 mb-2">Glissez vos fichiers ici ou</p>
+          <button
+            type="button"
+            onClick={() => inputRef.current?.click()}
+            disabled={uploading}
+            className="bg-button-base text-bone label-mono text-[10px] tracking-widest px-4 py-2 hover:bg-button-base-hover disabled:opacity-50"
+          >
+            {uploading ? "ENVOI..." : "SÉLECTIONNER"}
+          </button>
+          {error && <p className="text-xs text-red-700 mt-2">{error}</p>}
+        </div>
+      ) : (
+        <div className="border-2 border-dashed border-ink/30 p-6 space-y-3">
+          <div>
+            <label className="label-mono text-[10px] tracking-widest text-ink/60 block mb-1">TITRE DU SITE</label>
+            <input
+              value={linkTitle}
+              onChange={(e) => setLinkTitle(e.target.value)}
+              placeholder="Ex : Site vitrine — v1"
+              className="w-full bg-transparent border border-ink/30 px-2 py-2 text-sm outline-none focus:border-plum"
+            />
+          </div>
+          <div>
+            <label className="label-mono text-[10px] tracking-widest text-ink/60 block mb-1">URL</label>
+            <input
+              type="url"
+              value={linkUrl}
+              onChange={(e) => setLinkUrl(e.target.value)}
+              placeholder="https://mon-site.com"
+              className="w-full bg-transparent border border-ink/30 px-2 py-2 text-sm outline-none focus:border-plum"
+            />
+          </div>
+          <button
+            type="button"
+            onClick={addLink}
+            disabled={addingLink}
+            className="bg-button-base text-bone label-mono text-[10px] tracking-widest px-4 py-2 hover:bg-button-base-hover disabled:opacity-50 flex items-center gap-1"
+          >
+            <LinkIcon size={12} strokeWidth={1.25} />
+            {addingLink ? "AJOUT..." : "AJOUTER LE LIEN"}
+          </button>
+          {error && <p className="text-xs text-red-700">{error}</p>}
+        </div>
+      )}
     </div>
   );
 }
+
 
 function DocList({
   docs,
@@ -353,9 +445,13 @@ function DocRow({
   const [status, setStatus] = useState(doc.status);
   const [amount, setAmount] = useState(doc.amount?.toString() || "");
   const [description, setDescription] = useState(doc.description || "");
+  const [linkUrl, setLinkUrl] = useState(doc.link_url || "");
   const [saving, setSaving] = useState(false);
+  const isLink = !!doc.link_url;
+
 
   async function download() {
+    if (!doc.storage_path) return;
     try {
       const { url } = await getFileUrl({ data: { path: doc.storage_path } });
       const a = document.createElement("a");
@@ -370,6 +466,7 @@ function DocRow({
     }
   }
 
+
   async function save() {
     setSaving(true);
     try {
@@ -380,10 +477,12 @@ function DocRow({
           status,
           amount: category === "devis" ? (amount ? parseFloat(amount) : null) : undefined,
           description: category === "autre" ? description || null : undefined,
+          linkUrl: isLink ? (linkUrl.trim() || null) : undefined,
         },
       });
       await qc.invalidateQueries({ queryKey: ["project-documents", projectId] });
       setEditing(false);
+
     } catch (e: any) {
       alert("Erreur : " + e.message);
     } finally {
@@ -425,7 +524,8 @@ function DocRow({
           )}
           <div className="label-mono text-[10px] text-ink/60 mt-1 flex flex-wrap gap-x-3 gap-y-1">
             <span>{new Date(doc.created_at).toLocaleDateString("fr-FR")}</span>
-            <span>{formatSize(doc.file_size)}</span>
+            {isLink ? <span className="text-plum">LIEN</span> : <span>{formatSize(doc.file_size)}</span>}
+
             {editing && isAdmin ? (
               <select
                 value={status}
@@ -461,6 +561,26 @@ function DocRow({
               </span>
             )}
           </div>
+          {isLink && (
+            editing && isAdmin ? (
+              <input
+                type="url"
+                value={linkUrl}
+                onChange={(e) => setLinkUrl(e.target.value)}
+                placeholder="https://…"
+                className="w-full mt-2 bg-transparent border border-ink/30 px-2 py-1 text-xs outline-none focus:border-plum"
+              />
+            ) : doc.link_url ? (
+              <a
+                href={doc.link_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-plum hover:underline mt-1 inline-block truncate max-w-full"
+              >
+                {doc.link_url}
+              </a>
+            ) : null
+          )}
           {category === "autre" && (
             editing && isAdmin ? (
               <textarea
@@ -474,6 +594,7 @@ function DocRow({
               <p className="text-xs text-ink/70 mt-1">{doc.description}</p>
             ) : null
           )}
+
         </div>
         <div className="flex items-center gap-2 shrink-0">
           {isAdmin && !editing && (
@@ -518,12 +639,24 @@ function DocRow({
               </button>
             </>
           )}
-          <button
-            onClick={download}
-            className="label-mono text-[10px] tracking-widest bg-button-base text-bone px-3 py-2 hover:bg-button-base-hover flex items-center gap-1"
-          >
-            <Download size={12} strokeWidth={1.25} /> TÉLÉCHARGER
-          </button>
+          {isLink ? (
+            <a
+              href={doc.link_url!}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="label-mono text-[10px] tracking-widest bg-button-base text-bone px-3 py-2 hover:bg-button-base-hover flex items-center gap-1"
+            >
+              <ExternalLink size={12} strokeWidth={1.25} /> VISITER
+            </a>
+          ) : (
+            <button
+              onClick={download}
+              className="label-mono text-[10px] tracking-widest bg-button-base text-bone px-3 py-2 hover:bg-button-base-hover flex items-center gap-1"
+            >
+              <Download size={12} strokeWidth={1.25} /> TÉLÉCHARGER
+            </button>
+          )}
+
         </div>
       </div>
     </li>

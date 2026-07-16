@@ -400,9 +400,10 @@ export const createProjectDocument = createServerFn({ method: "POST" })
     projectId: string;
     category: string;
     fileName: string;
-    storagePath: string;
-    fileSize: number;
-    mimeType: string;
+    storagePath?: string | null;
+    fileSize?: number | null;
+    mimeType?: string | null;
+    linkUrl?: string | null;
     status?: string;
     amount?: number | null;
     description?: string | null;
@@ -412,13 +413,16 @@ export const createProjectDocument = createServerFn({ method: "POST" })
       projectId: z.string().uuid(),
       category: z.enum(DOC_CATEGORIES),
       fileName: z.string().min(1).max(300),
-      storagePath: z.string().min(1).max(500),
-      fileSize: z.number().int().nonnegative(),
-      mimeType: z.string().max(200),
+      storagePath: z.string().min(1).max(500).nullable().optional(),
+      fileSize: z.number().int().nonnegative().nullable().optional(),
+      mimeType: z.string().max(200).nullable().optional(),
+      linkUrl: z.string().url().max(2000).nullable().optional(),
       status: z.string().max(50).optional(),
       amount: z.number().nullable().optional(),
       description: z.string().max(1000).nullable().optional(),
       visibleToClient: z.boolean().optional(),
+    }).refine((v) => !!v.storagePath || !!v.linkUrl, {
+      message: "storagePath ou linkUrl requis",
     }).parse(input),
   )
   .handler(async ({ data, context }) => {
@@ -433,9 +437,10 @@ export const createProjectDocument = createServerFn({ method: "POST" })
         project_id: data.projectId,
         category: data.category,
         file_name: data.fileName,
-        storage_path: data.storagePath,
-        file_size: data.fileSize,
-        mime_type: data.mimeType,
+        storage_path: data.storagePath ?? null,
+        file_size: data.fileSize ?? null,
+        mime_type: data.mimeType ?? null,
+        link_url: data.linkUrl ?? null,
         status: data.status || defaultStatus,
         amount: data.amount ?? null,
         description: data.description ?? null,
@@ -454,6 +459,7 @@ export const createProjectDocument = createServerFn({ method: "POST" })
   });
 
 
+
 export const updateProjectDocument = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: {
@@ -462,6 +468,7 @@ export const updateProjectDocument = createServerFn({ method: "POST" })
     status?: string;
     amount?: number | null;
     description?: string | null;
+    linkUrl?: string | null;
     visibleToClient?: boolean;
   }) =>
     z.object({
@@ -470,6 +477,7 @@ export const updateProjectDocument = createServerFn({ method: "POST" })
       status: z.string().max(50).optional(),
       amount: z.number().nullable().optional(),
       description: z.string().max(1000).nullable().optional(),
+      linkUrl: z.string().url().max(2000).nullable().optional(),
       visibleToClient: z.boolean().optional(),
     }).parse(input),
   )
@@ -486,7 +494,9 @@ export const updateProjectDocument = createServerFn({ method: "POST" })
     if (data.status !== undefined) patch.status = data.status;
     if (data.amount !== undefined) patch.amount = data.amount;
     if (data.description !== undefined) patch.description = data.description;
+    if (data.linkUrl !== undefined) patch.link_url = data.linkUrl;
     if (data.visibleToClient !== undefined) patch.visible_to_client = data.visibleToClient;
+
     if (data.visibleToClient === true && !prev?.visible_to_client) {
       // Reset seen state so client sees it as new
       patch.seen_by_client_at = null;
