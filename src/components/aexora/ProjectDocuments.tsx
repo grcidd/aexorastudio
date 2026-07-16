@@ -233,7 +233,13 @@ function AdminUploader({
   const [dragOver, setDragOver] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [mode, setMode] = useState<"file" | "link">("file");
+  const [linkUrl, setLinkUrl] = useState("");
+  const [linkTitle, setLinkTitle] = useState("");
+  const [addingLink, setAddingLink] = useState(false);
   const qc = useQueryClient();
+
+  const canLink = category === "livrable";
 
   async function upload(files: FileList | File[]) {
     const arr = Array.from(files);
@@ -274,46 +280,130 @@ function AdminUploader({
     }
   }
 
+  async function addLink() {
+    setError(null);
+    const url = linkUrl.trim();
+    const title = linkTitle.trim();
+    if (!url) { setError("URL requise"); return; }
+    if (!title) { setError("Titre requis"); return; }
+    try {
+      new URL(url);
+    } catch {
+      setError("URL invalide (ex: https://mon-site.com)");
+      return;
+    }
+    setAddingLink(true);
+    try {
+      await createProjectDocument({
+        data: {
+          projectId,
+          category,
+          fileName: title,
+          linkUrl: url,
+          visibleToClient: false,
+        },
+      });
+      setLinkUrl("");
+      setLinkTitle("");
+      await qc.invalidateQueries({ queryKey: ["project-documents", projectId] });
+    } catch (e: any) {
+      setError(e.message || "Erreur");
+    } finally {
+      setAddingLink(false);
+    }
+  }
+
   return (
-    <div
-      onDragOver={(e) => {
-        e.preventDefault();
-        setDragOver(true);
-      }}
-      onDragLeave={() => setDragOver(false)}
-      onDrop={(e) => {
-        e.preventDefault();
-        setDragOver(false);
-        if (e.dataTransfer.files) upload(e.dataTransfer.files);
-      }}
-      className={`border-2 border-dashed p-6 mb-6 text-center transition-colors ${
-        dragOver ? "border-plum bg-plum/5" : "border-ink/30"
-      }`}
-    >
-      <input
-        ref={inputRef}
-        type="file"
-        multiple
-        accept={accept}
-        className="hidden"
-        onChange={(e) => e.target.files && upload(e.target.files)}
-      />
-      <Upload size={20} strokeWidth={1.25} className="mx-auto mb-2 opacity-60" />
-      <p className="text-sm text-ink/70 mb-2">
-        Glissez vos fichiers ici ou
-      </p>
-      <button
-        type="button"
-        onClick={() => inputRef.current?.click()}
-        disabled={uploading}
-        className="bg-button-base text-bone label-mono text-[10px] tracking-widest px-4 py-2 hover:bg-button-base-hover disabled:opacity-50"
-      >
-        {uploading ? "ENVOI..." : "SÉLECTIONNER"}
-      </button>
-      {error && <p className="text-xs text-red-700 mt-2">{error}</p>}
+    <div className="mb-6">
+      {canLink && (
+        <div className="flex gap-2 mb-3">
+          <button
+            type="button"
+            onClick={() => { setMode("file"); setError(null); }}
+            className={`label-mono text-[10px] tracking-widest px-3 py-2 border ${mode === "file" ? "border-plum text-plum" : "border-ink/30 text-ink/60 hover:text-ink"}`}
+          >
+            FICHIER
+          </button>
+          <button
+            type="button"
+            onClick={() => { setMode("link"); setError(null); }}
+            className={`label-mono text-[10px] tracking-widest px-3 py-2 border flex items-center gap-1 ${mode === "link" ? "border-plum text-plum" : "border-ink/30 text-ink/60 hover:text-ink"}`}
+          >
+            <LinkIcon size={12} strokeWidth={1.25} /> LIEN / SITE WEB
+          </button>
+        </div>
+      )}
+
+      {mode === "file" || !canLink ? (
+        <div
+          onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+          onDragLeave={() => setDragOver(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            setDragOver(false);
+            if (e.dataTransfer.files) upload(e.dataTransfer.files);
+          }}
+          className={`border-2 border-dashed p-6 text-center transition-colors ${
+            dragOver ? "border-plum bg-plum/5" : "border-ink/30"
+          }`}
+        >
+          <input
+            ref={inputRef}
+            type="file"
+            multiple
+            accept={accept}
+            className="hidden"
+            onChange={(e) => e.target.files && upload(e.target.files)}
+          />
+          <Upload size={20} strokeWidth={1.25} className="mx-auto mb-2 opacity-60" />
+          <p className="text-sm text-ink/70 mb-2">Glissez vos fichiers ici ou</p>
+          <button
+            type="button"
+            onClick={() => inputRef.current?.click()}
+            disabled={uploading}
+            className="bg-button-base text-bone label-mono text-[10px] tracking-widest px-4 py-2 hover:bg-button-base-hover disabled:opacity-50"
+          >
+            {uploading ? "ENVOI..." : "SÉLECTIONNER"}
+          </button>
+          {error && <p className="text-xs text-red-700 mt-2">{error}</p>}
+        </div>
+      ) : (
+        <div className="border-2 border-dashed border-ink/30 p-6 space-y-3">
+          <div>
+            <label className="label-mono text-[10px] tracking-widest text-ink/60 block mb-1">TITRE DU SITE</label>
+            <input
+              value={linkTitle}
+              onChange={(e) => setLinkTitle(e.target.value)}
+              placeholder="Ex : Site vitrine — v1"
+              className="w-full bg-transparent border border-ink/30 px-2 py-2 text-sm outline-none focus:border-plum"
+            />
+          </div>
+          <div>
+            <label className="label-mono text-[10px] tracking-widest text-ink/60 block mb-1">URL</label>
+            <input
+              type="url"
+              value={linkUrl}
+              onChange={(e) => setLinkUrl(e.target.value)}
+              placeholder="https://mon-site.com"
+              className="w-full bg-transparent border border-ink/30 px-2 py-2 text-sm outline-none focus:border-plum"
+            />
+          </div>
+          <button
+            type="button"
+            onClick={addLink}
+            disabled={addingLink}
+            className="bg-button-base text-bone label-mono text-[10px] tracking-widest px-4 py-2 hover:bg-button-base-hover disabled:opacity-50 flex items-center gap-1"
+          >
+            <LinkIcon size={12} strokeWidth={1.25} />
+            {addingLink ? "AJOUT..." : "AJOUTER LE LIEN"}
+          </button>
+          {error && <p className="text-xs text-red-700">{error}</p>}
+        </div>
+      )}
     </div>
   );
 }
+
 
 function DocList({
   docs,
