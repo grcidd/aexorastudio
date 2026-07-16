@@ -319,7 +319,64 @@ export const getFileUrl = createServerFn({ method: "POST" })
 // -----------------------------------------------------------------------------
 const DOC_CATEGORIES = ["livrable", "contrat", "devis", "autre"] as const;
 
-export const listProjectDocuments = createServerFn({ method: "POST" })
+const CATEGORY_LABELS: Record<string, string> = {
+  livrable: "Livrables",
+  contrat: "Contrat",
+  devis: "Devis",
+  autre: "Autre",
+};
+
+async function notifyClientDocumentAvailable(docId: string) {
+  try {
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const { data: doc } = await supabaseAdmin
+      .from("project_documents")
+      .select("id, file_name, category, project_id, projects(name, client_id, profiles!projects_client_id_profiles_fkey(email, full_name))")
+      .eq("id", docId)
+      .maybeSingle();
+    if (!doc) return { notified: false };
+    const project: any = (doc as any).projects;
+    const client: any = project?.profiles;
+    const recipient = client?.email;
+    if (!recipient) return { notified: false };
+
+    const firstName = (client?.full_name || "").split(" ")[0] || "";
+    const projectName = project?.name || "";
+    const catLabel = CATEGORY_LABELS[(doc as any).category] || "Document";
+    const dateStr = new Date().toLocaleDateString("fr-FR", {
+      day: "2-digit", month: "long", year: "numeric",
+    });
+    const ctaUrl = `${PUBLIC_URL}/espace-client`;
+
+    await enqueueSimpleEmail({
+      to: recipient,
+      subject: `📄 Nouveau document disponible — ${projectName}`,
+      label: "document-available",
+      html: `<div style="font-family:Georgia,serif;max-width:560px;margin:0 auto;padding:32px 24px;color:#2e2e2e;">
+        <h1 style="font-family:'Bodoni Moda',Georgia,serif;font-size:24px;font-weight:400;margin:0 0 20px;">Nouveau document disponible</h1>
+        <p style="font-size:15px;line-height:1.6;">Bonjour ${firstName || "et bienvenue"},</p>
+        <p style="font-size:15px;line-height:1.6;">Un nouveau document est disponible dans votre espace projet AEXORA.</p>
+        <div style="margin:24px 0;padding:16px 20px;background:#f6f6f6;border-left:2px solid #2e2e2e;">
+          <p style="margin:4px 0;font-size:14px;"><strong>Document :</strong> ${(doc as any).file_name}</p>
+          <p style="margin:4px 0;font-size:14px;"><strong>Catégorie :</strong> ${catLabel}</p>
+          <p style="margin:4px 0;font-size:14px;"><strong>Date :</strong> ${dateStr}</p>
+        </div>
+        <p style="font-size:15px;line-height:1.6;">Accédez à votre espace pour le consulter et le télécharger :</p>
+        <p style="margin:24px 0;">
+          <a href="${ctaUrl}" style="display:inline-block;padding:14px 24px;background:#2e2e2e;color:#f6f6f6;text-decoration:none;font-family:monospace;font-size:12px;letter-spacing:0.1em;">ACCÉDER À MON ESPACE</a>
+        </p>
+        <p style="margin-top:32px;font-family:'Bodoni Moda',Georgia,serif;font-style:italic;font-size:14px;color:#6b6b6b;">Beauty, engineered.</p>
+        <p style="font-size:13px;color:#6b6b6b;">AEXORA Studio</p>
+      </div>`,
+      text: `Nouveau document disponible\n\nBonjour ${firstName},\n\nUn nouveau document est disponible dans votre espace projet AEXORA.\n\nDocument : ${(doc as any).file_name}\nCatégorie : ${catLabel}\nDate : ${dateStr}\n\n${ctaUrl}\n\nBeauty, engineered.\nAEXORA Studio`,
+    });
+    return { notified: true, recipient };
+  } catch (e) {
+    console.error("notifyClientDocumentAvailable failed", e);
+    return { notified: false };
+  }
+}
+
   .middleware([requireSupabaseAuth])
   .inputValidator((input: { projectId: string }) =>
     z.object({ projectId: z.string().uuid() }).parse(input),
