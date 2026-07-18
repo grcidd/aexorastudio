@@ -34,6 +34,21 @@ function AdminPage() {
     enabled: roleQ.data?.isAdmin === true,
   });
 
+  const newDemandesQ = useQuery({
+    queryKey: ["contact-submissions", "count-new"],
+    queryFn: async () => {
+      const { count, error } = await supabase
+        .from("contact_submissions")
+        .select("id", { count: "exact", head: true })
+        .eq("status", "new");
+      if (error) throw error;
+      return count ?? 0;
+    },
+    enabled: roleQ.data?.isAdmin === true,
+    refetchInterval: 30000,
+  });
+
+
   async function signOut() {
     await qc.cancelQueries();
     qc.clear();
@@ -56,6 +71,25 @@ function AdminPage() {
       </header>
 
       <div className="max-w-5xl mx-auto px-6 md:px-10 py-12 md:py-16">
+
+        <Link
+          to="/admin/demandes"
+          className="block mb-10 border border-ink/20 hover:border-plum transition-colors p-5 flex items-center justify-between"
+        >
+          <div>
+            <div className="label-mono text-[10px] tracking-widest text-ink/60 mb-1">CRM · CONTACT</div>
+            <div className="font-display text-xl">Demandes de contact</div>
+          </div>
+          <div className="flex items-center gap-3">
+            {(newDemandesQ.data ?? 0) > 0 && (
+              <span className="label-mono text-[10px] tracking-widest bg-plum text-bone px-2 py-1">
+                {newDemandesQ.data} NOUVELLE{(newDemandesQ.data ?? 0) > 1 ? "S" : ""}
+              </span>
+            )}
+            <span className="label-mono text-[10px] tracking-widest text-plum">VOIR →</span>
+          </div>
+        </Link>
+
         <div className="flex items-end justify-between mb-10">
           <div>
             <div className="label-mono text-[10px] tracking-widest text-ink/60 mb-3">ADMINISTRATION</div>
@@ -69,6 +103,7 @@ function AdminPage() {
           </button>
 
         </div>
+
 
         {showForm && <NewProjectForm onDone={() => { setShowForm(false); qc.invalidateQueries({ queryKey: ["all-projects"] }); }} />}
 

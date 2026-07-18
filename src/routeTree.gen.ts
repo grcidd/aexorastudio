@@ -21,6 +21,7 @@ import { Route as EmailUnsubscribeRouteImport } from './routes/email/unsubscribe
 import { Route as AuthenticatedEspaceClientRouteImport } from './routes/_authenticated/espace-client'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as LovableEmailSuppressionRouteImport } from './routes/lovable/email/suppression'
+import { Route as AuthenticatedAdminDemandesRouteImport } from './routes/_authenticated/admin.demandes'
 import { Route as LovableEmailTransactionalSendRouteImport } from './routes/lovable/email/transactional/send'
 import { Route as LovableEmailTransactionalPreviewRouteImport } from './routes/lovable/email/transactional/preview'
 import { Route as LovableEmailQueueProcessRouteImport } from './routes/lovable/email/queue/process'
@@ -89,6 +90,12 @@ const LovableEmailSuppressionRoute = LovableEmailSuppressionRouteImport.update({
   path: '/lovable/email/suppression',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminDemandesRoute =
+  AuthenticatedAdminDemandesRouteImport.update({
+    id: '/admin/demandes',
+    path: '/admin/demandes',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const LovableEmailTransactionalSendRoute =
   LovableEmailTransactionalSendRouteImport.update({
     id: '/lovable/email/transactional/send',
@@ -139,6 +146,7 @@ export interface FileRoutesByFullPath {
   '/services': typeof ServicesRoute
   '/espace-client': typeof AuthenticatedEspaceClientRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
+  '/admin/demandes': typeof AuthenticatedAdminDemandesRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/admin/projets/$id': typeof AuthenticatedAdminProjetsIdRoute
@@ -159,6 +167,7 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesRoute
   '/espace-client': typeof AuthenticatedEspaceClientRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
+  '/admin/demandes': typeof AuthenticatedAdminDemandesRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/admin/projets/$id': typeof AuthenticatedAdminProjetsIdRoute
@@ -181,6 +190,7 @@ export interface FileRoutesById {
   '/services': typeof ServicesRoute
   '/_authenticated/espace-client': typeof AuthenticatedEspaceClientRoute
   '/email/unsubscribe': typeof EmailUnsubscribeRoute
+  '/_authenticated/admin/demandes': typeof AuthenticatedAdminDemandesRoute
   '/lovable/email/suppression': typeof LovableEmailSuppressionRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/admin/projets/$id': typeof AuthenticatedAdminProjetsIdRoute
@@ -203,6 +213,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/espace-client'
     | '/email/unsubscribe'
+    | '/admin/demandes'
     | '/lovable/email/suppression'
     | '/admin/'
     | '/admin/projets/$id'
@@ -223,6 +234,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/espace-client'
     | '/email/unsubscribe'
+    | '/admin/demandes'
     | '/lovable/email/suppression'
     | '/admin'
     | '/admin/projets/$id'
@@ -244,6 +256,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/_authenticated/espace-client'
     | '/email/unsubscribe'
+    | '/_authenticated/admin/demandes'
     | '/lovable/email/suppression'
     | '/_authenticated/admin/'
     | '/_authenticated/admin/projets/$id'
@@ -360,6 +373,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LovableEmailSuppressionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/demandes': {
+      id: '/_authenticated/admin/demandes'
+      path: '/admin/demandes'
+      fullPath: '/admin/demandes'
+      preLoaderRoute: typeof AuthenticatedAdminDemandesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/lovable/email/transactional/send': {
       id: '/lovable/email/transactional/send'
       path: '/lovable/email/transactional/send'
@@ -414,12 +434,14 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedEspaceClientRoute: typeof AuthenticatedEspaceClientRoute
+  AuthenticatedAdminDemandesRoute: typeof AuthenticatedAdminDemandesRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
   AuthenticatedAdminProjetsIdRoute: typeof AuthenticatedAdminProjetsIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedEspaceClientRoute: AuthenticatedEspaceClientRoute,
+  AuthenticatedAdminDemandesRoute: AuthenticatedAdminDemandesRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   AuthenticatedAdminProjetsIdRoute: AuthenticatedAdminProjetsIdRoute,
 }
