@@ -71,7 +71,7 @@ function AdminPage() {
       </header>
 
       <div className="max-w-5xl mx-auto px-6 md:px-10 py-12 md:py-16">
-      <div className="max-w-5xl mx-auto px-6 md:px-10 py-12 md:py-16">
+
         <Link
           to="/admin/demandes"
           className="block mb-10 border border-ink/20 hover:border-plum transition-colors p-5 flex items-center justify-between"
