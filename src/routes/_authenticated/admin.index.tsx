@@ -34,6 +34,21 @@ function AdminPage() {
     enabled: roleQ.data?.isAdmin === true,
   });
 
+  const newDemandesQ = useQuery({
+    queryKey: ["contact-submissions", "count-new"],
+    queryFn: async () => {
+      const { count, error } = await supabase
+        .from("contact_submissions")
+        .select("id", { count: "exact", head: true })
+        .eq("status", "new");
+      if (error) throw error;
+      return count ?? 0;
+    },
+    enabled: roleQ.data?.isAdmin === true,
+    refetchInterval: 30000,
+  });
+
+
   async function signOut() {
     await qc.cancelQueries();
     qc.clear();
