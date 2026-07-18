@@ -16,6 +16,7 @@ export type Database = {
     Tables: {
       contact_submissions: {
         Row: {
+          admin_notes: string | null
           budget: string | null
           company: string | null
           created_at: string
@@ -25,9 +26,13 @@ export type Database = {
           name: string
           project: string | null
           start_when: string | null
+          status: Database["public"]["Enums"]["contact_submission_status"]
+          updated_at: string
+          viewed_at: string | null
           website: string | null
         }
         Insert: {
+          admin_notes?: string | null
           budget?: string | null
           company?: string | null
           created_at?: string
@@ -37,9 +42,13 @@ export type Database = {
           name: string
           project?: string | null
           start_when?: string | null
+          status?: Database["public"]["Enums"]["contact_submission_status"]
+          updated_at?: string
+          viewed_at?: string | null
           website?: string | null
         }
         Update: {
+          admin_notes?: string | null
           budget?: string | null
           company?: string | null
           created_at?: string
@@ -49,6 +58,9 @@ export type Database = {
           name?: string
           project?: string | null
           start_when?: string | null
+          status?: Database["public"]["Enums"]["contact_submission_status"]
+          updated_at?: string
+          viewed_at?: string | null
           website?: string | null
         }
         Relationships: []
@@ -470,6 +482,13 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "client"
+      contact_submission_status:
+        | "new"
+        | "in_progress"
+        | "contacted"
+        | "won"
+        | "lost"
+        | "archived"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -598,6 +617,14 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "client"],
+      contact_submission_status: [
+        "new",
+        "in_progress",
+        "contacted",
+        "won",
+        "lost",
+        "archived",
+      ],
     },
   },
 } as const
