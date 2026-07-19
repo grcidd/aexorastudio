@@ -10,9 +10,9 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "AEXORA STUDIO — Brand & AI Experience Studio" },
-      { name: "description", content: "AEXORA is an AI-powered creative studio designing identities, content and digital experiences for beauty & fashion brands." },
+      { name: "description", content: "AEXORA Studio — Agence IA créative spécialisée beauté, mode & joaillerie. Sites web luxe, production visuelle IA, acquisition & analytics, automatisation agents IA. Paris." },
       { property: "og:title", content: "AEXORA STUDIO — Brand & AI Experience Studio" },
-      { property: "og:description", content: "We build brands that feel inevitable. Branding, Content AI, Web Design & Strategy for beauty and fashion." },
+      { property: "og:description", content: "AEXORA Studio — Agence IA créative spécialisée beauté, mode & joaillerie. Sites web luxe, production visuelle IA, acquisition & analytics, automatisation agents IA. Paris." },
     ],
   }),
   component: Index,
