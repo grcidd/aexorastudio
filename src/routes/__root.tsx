@@ -89,12 +89,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:site", content: "@aexorastudio" },
       { name: "twitter:title", content: "AEXORA STUDIO — Agence IA beauté, mode & joaillerie" },
       { name: "twitter:description", content: "Agence IA créative spécialisée beauté, mode & joaillerie | Sites web, production visuelle IA, campagnes digitales & automatisation agents IA pour marques premium. Paris." },
-      { property: "og:image", content: "https://aexorastudio.com/__l5e/assets-v1/64d8479b-81ab-4a07-9889-f944554df5e5/aexora-logo-dark.png" },
-      { name: "twitter:image", content: "https://aexorastudio.com/__l5e/assets-v1/64d8479b-81ab-4a07-9889-f944554df5e5/aexora-logo-dark.png" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/3dresocMk1aD656OY7dPEiiRnX62/social-images/social-1781300089223-Logo_aexora.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/3dresocMk1aD656OY7dPEiiRnX62/social-images/social-1781300089223-Logo_aexora.webp" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", type: "image/png", href: "/__l5e/assets-v1/d95bfa2a-1800-42dc-8232-0a90b52c8861/favicon.png" },
+      { rel: "icon", type: "image/png", href: "/favicon.png" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
